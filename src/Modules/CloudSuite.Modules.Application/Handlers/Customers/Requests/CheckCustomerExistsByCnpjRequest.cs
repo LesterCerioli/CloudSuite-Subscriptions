@@ -1,5 +1,5 @@
 using CloudSuite.Modules.Application.Handlers.Customers.Responses;
-using CloudSuite.Modules.Domain.ValueObjects;
+using CloudSuite.Modules.Commons.Valueobjects;
 using MediatR;
 
 namespace CloudSuite.Modules.Application.Handlers.Customers.Requests

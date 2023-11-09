@@ -1,12 +1,12 @@
-using CloudSuite.Modules.Application.Handlers.Customers.Responses;
 using CustomerEntity = CloudSuite.Modules.Domain.Models.Customer;
-using CloudSuite.Modules.Domain.ValueObjects;
 using MediatR;
-using System;
+using CloudSuite.Modules.Commons.Valueobjects;
+using CloudSuite.Modules.Application.Handlers.Customers.Requests;
+using CloudSuite.Modules.Domain.Models;
 
 namespace CloudSuite.Modules.Application.Handlers.Customers
 {
-    public class CreateCustomerCommand : IRequest<CreateCustomerResponse>
+    public class CreateCustomerCommand : IRequest<CheckCustomerExistsByCnpjRequest>
     {
         public CreateCustomerCommand()
         {
@@ -25,9 +25,10 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
             );
         }
 
+
         public Guid Id { get; private set; }
 
-        public string? Name { get; set; }
+        public Name Name { get; set; }
 
         public Cnpj Cnpj { get; set; }
 

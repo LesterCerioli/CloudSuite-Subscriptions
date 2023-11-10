@@ -14,8 +14,6 @@ namespace CloudSuite.Modules.Domain.Contracts
 
         Task<Customer> GetByCreatedOn(DateTimeOffset createdOn);
 
-        Task<Customer> GetByCompany(Company company);
-
         Task<IEnumerable<Customer>> GetList();
 
         Task Add(Customer customer);

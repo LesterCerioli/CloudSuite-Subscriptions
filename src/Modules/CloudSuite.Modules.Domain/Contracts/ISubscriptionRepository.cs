@@ -1,15 +1,16 @@
-namespace CloudSuite.Modules.Domain.Contracts
+using CloudSuite.Modules.Domain.Models;
+
+namespace CloudSuite.Modules.Domain.Contracts;
+
+public interface ISubscriptionRepository
 {
-    public interface ISubscriptionRepository
-    {
-        Subscription GetSubscriptionById(int id);
+    Task<Subscription> GetBySubscriptionNumber(string subscriptionNumber);
 
-        IEnumerable<Subscription> GetAllSubscriptions();
+    Task<Subscription> GetByCreateDate(DateTime createDate);
 
-        void AddSubscription(Subscription subscription);
+    Task<Subscription> GetByLastUpdateDate(DateTime lastUpdateDeate);
 
-        void UpdateSubscription(Subscription subscription);
+    Task<Subscription> GetByExpireDate(DateTime expireDate);
 
-        void RemoveSubscription(int id);
-    }
+    Task<Subscription> GetByActive(bool active);
 }

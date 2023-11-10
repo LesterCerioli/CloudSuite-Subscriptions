@@ -1,15 +1,31 @@
+using CloudSuite.Modules.Domain.Models;
+
 namespace CloudSuite.Modules.Domain.Contracts
 {
     public interface IPaymentRepository
     {
-        Payment GetPaymentById(int id);
+        Task<Payment> GetByNumber(string number);
 
-        IEnumerable<Payment> GetAllPayments();
+        Task<Payment> GetByPaidDate(DateTime? paidDate);
 
-        void AddPayment(Payment payment);
+        Task<Payment> GetByExpireDate(DateTime? expireDate);
 
-        void UpdatePayment(Payment payment);
+        Task<Payment> GetByTotal(decimal total);
 
-        void RemovePayment(int id);
+        Task<Payment> GetByTotalPaid(decimal totalPaid);
+
+        Task<Payment> GetByPayer(string payer);
+
+        Task<Payment> GetByCnpj(Cnpj cnpj);
+
+        Task<Payment> GetByEmail(Email email);
+
+        Task<IEnumerable<Payment>> GetList();
+
+        Task Add(Payment payment);
+
+        void Update(Payment payment);
+
+        void Remove(Payment payment);
     }
 }

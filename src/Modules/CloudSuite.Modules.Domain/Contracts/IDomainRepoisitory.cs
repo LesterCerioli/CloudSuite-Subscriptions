@@ -1,16 +1,22 @@
-namespace CloudSuite.Modules.Domain
+using CloudSuite.Modules.Domain.Models
+
+namespace CloudSuite.Modules.Domain.Contracts
 
 public interface IDomainRepository
 {
-    Task<Domian> GetByDns(string dns);
+    Task<Domain> GetByDns(string dns);
 
-    Task<Domaian> GetByOwnerName(string ownerName);
+    Task<Domain> GetByOwnerName(string ownerName);
 
-    Task<Domian> GetByCreationDate(DateTimeOffset creationDate);
+    Task<Domain> GetByCreationDate(DateTimeOffset creationDate);
 
-    void UpdateDomainEntity(DomainEntity entity);
+    Task<IEnumerable<Domain>> GetList();
 
-    void RemoveDomainEntity(int id);
+    Task Add(Domain company);
+
+    void UpdateDomainEntity(Domain domain);
+
+    void RemoveDomainEntity(Domain domain);
 }
 
 

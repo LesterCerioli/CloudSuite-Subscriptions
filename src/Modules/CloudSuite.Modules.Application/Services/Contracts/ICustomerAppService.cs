@@ -12,7 +12,7 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 
         Task<CustomerViewModel> GetByCreatedOn(DateTimeOffset createdOn);
 
-        Task<CustomerViewModel> GetByCompany(Company company);
+        
          
     }
 }

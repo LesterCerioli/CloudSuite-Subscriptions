@@ -1,3 +1,4 @@
+using CloudSuite.Modules.Application.Handlers.Customers;
 using CloudSuite.Modules.Application.ViewModels;
 
 namespace CloudSuite.Modules.Application.Services.Contracts
@@ -12,6 +13,7 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 
         Task<CustomerViewModel> GetByCreatedOn(DateTimeOffset createdOn);
 
+        Task Save(CreateCustomerCommand commandCreate);
         
          
     }

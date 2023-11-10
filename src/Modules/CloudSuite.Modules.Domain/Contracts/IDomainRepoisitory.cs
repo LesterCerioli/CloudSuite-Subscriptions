@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Generic;
+namespace CloudSuite.Modules.Domain
 
-namespace CloudSuite.Modules.Domain.Contracts
+public interface IDomainRepository
 {
-    public interface IDomainRepository
-    {
-        DomainEntity GetDomainEntityById(int id);
+    Task<Domian> GetByDns(string dns);
 
-        IEnumerable<DomainEntity> GetAllDomainEntities();
+    Task<Domaian> GetByOwnerName(string ownerName);
 
-        void AddDomainEntity(DomainEntity entity);
+    Task<Domian> GetByCreationDate(DateTimeOffset creationDate);
 
-        void UpdateDomainEntity(DomainEntity entity);
+    void UpdateDomainEntity(DomainEntity entity);
 
-        void RemoveDomainEntity(int id);
-    }
-
-    
-
-    
-    
+    void RemoveDomainEntity(int id);
 }
+
+
+
+
+

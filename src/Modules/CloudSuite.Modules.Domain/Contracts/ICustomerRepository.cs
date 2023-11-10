@@ -1,19 +1,27 @@
 using CloudSuite.Modules.Domain.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CloudSuite.Modules.Domain.Contracts
 {
     public interface ICustomerRepository
     {
-        Task<Customer> GetCustomerById(int customerId);
+        Task<Customer> GetByName(string name);
 
-        Task<IEnumerable<Customer>> GetAllCustomers();
+        Task<Customer> GetByCnpj(Cnpj cnpj);
 
-        Task AddCustomer(Customer customer);
+        Task<Customer> GetByEmail(string email);
 
-        Task UpdateCustomer(Customer customer);
+        Task<Customer> GetByBusinessOwner(string BusinessOwner);
 
-        Task DeleteCustomer(int customerId);
+        Task<Customer> GetByCreatedOn(DateTimeOffset createdOn);
+
+        Task<Customer> GetByCompany(Company company);
+
+        Task<IEnumerable<Customer>> GetList();
+
+        Task Add(Customer customer);
+
+        void Update(Customer customer);
+
+        void Remove(Customer customer);
     }
 }

@@ -12,7 +12,6 @@ namespace CloudSuite.Modules.Domain.Contracts
         Task<Company> GetByCnpj(Cnpj cnpj);
 
         Task<Company> GetByFantasyName(string fantasyName);
-
         
         Task<IEnumerable<Company>> GetList();
 

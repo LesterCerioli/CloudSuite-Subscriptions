@@ -13,4 +13,12 @@ public interface ISubscriptionRepository
     Task<Subscription> GetByExpireDate(DateTime expireDate);
 
     Task<Subscription> GetByActive(bool active);
+
+    Task<IEnumerable<Subscription>> GetList();
+
+    Task Add(Subscription subscription);
+
+    void Update(Subscription subscription);
+
+    void Remove(Subscription subscription);
 }

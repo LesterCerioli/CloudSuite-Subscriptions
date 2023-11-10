@@ -1,6 +1,7 @@
 using CloudSuite.Modules.Domain.Models;
 using Sytem.Collection.Generic;
 using System.Theading.Tasks;
+using CloudSuite.Modules.Commons.Valueobjects;
 
 namespace CloudSuite.Modules.Domain.Contracts
 {
@@ -12,16 +13,7 @@ namespace CloudSuite.Modules.Domain.Contracts
 
         Task<Company> GetByFantasyName(string fantasyName);
 
-        Task<Company> GetByCorporateReason(string corporateReason);
-
-        Task<Company> getByContact(string contact);
-
-        Task<Company> getByTelephone(Telephone telephone);
-
-        Task<Company> getByCell(Cell cell);
-
-        Task<Company> getByDateOfBirth(DateOfBirth dateOfBirth);
-
+        
         Task<IEnumerable<Company>> GetList();
 
         Task Add(Company company);

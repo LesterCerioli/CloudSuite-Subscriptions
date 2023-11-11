@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using CloudSuite.Modules.Domain.Models;
 using Moq;
@@ -15,39 +16,46 @@ namespace CloudSuite.Modules.Application.Tests.Services
         [Fact]
         public async Task GetByCnpj_ShouldReturnCompanyViewModel()
         {
-            // Arrange
-            var mockCompanyRepository = new Mock<ICompanyRepository>();
-            var mockMediatorHandler = new Mock<IMediatorHandler>();
-            var mockMapper = new Mock<IMapper>();
-
-            var companyAppService = new CompanyAppService(
-                mockCompanyRepository.Object,
-                mockMediatorHandler.Object,
-                mockMapper.Object
-            );
-
-            var mockCompany = new Company
+            using (var context = new MyDbContext(_dbContextOptions))
             {
-                // Set up your mock Company object as needed
-            };
+                // Mock dependencies
+                var mockCompanyRepository = new Mock<ICompanyRepository>();
+                var mockMediatorHandler = new Mock<IMediatorHandler>();
+                var mockMapper = new Mock<IMapper>();
 
-            var expectedViewModel = new CompanyViewModel
-            {
-                // Set up your expected ViewModel object as needed
-            };
+                // Create an instance of CompanyRepository using the in-memory database context
+                var companyRepository = new CompanyRepository(context);
 
-            mockCompanyRepository.Setup(repo => repo.GetByCnpj(It.IsAny<Cnpj>()))
-                .ReturnsAsync(mockCompany);
+                var companyAppService = new CompanyAppService(
+                    companyRepository,
+                    mockMediatorHandler.Object,
+                    mockMapper.Object
+                );
 
-            mockMapper.Setup(m => m.Map<CompanyViewModel>(It.IsAny<Company>()))
-                .Returns(expectedViewModel);
+                var mockCompany = new Company(new Cnpj("12345678901234"), "MockSocialName", "MockFantasyName");
 
-            // Act
-            var result = await companyAppService.GetByCnpj(new Cnpj("your_cnpj_here"));
+                var expectedViewModel = new CompanyViewModel
+                {
+                    // Set up your expected ViewModel object as needed
+                };
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(expectedViewModel, result);
+                // Seed the in-memory database with a mock company
+                context.Companies.Add(mockCompany);
+                context.SaveChanges();
+
+                mockCompanyRepository.Setup(repo => repo.GetByCnpj(It.IsAny<Cnpj>()))
+                    .ReturnsAsync(mockCompany);
+
+                mockMapper.Setup(m => m.Map<CompanyViewModel>(It.IsAny<Company>()))
+                    .Returns(expectedViewModel);
+
+                // Act
+                var result = await companyAppService.GetByCnpj(new Cnpj("12345678901234"));
+
+                // Assert
+                Assert.NotNull(result);
+                Assert.Equal(expectedViewModel, result);
+            }
 
         }
 

@@ -1,3 +1,4 @@
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Models;
 
 namespace CloudSuite.Modules.Domain.Contracts

@@ -1,4 +1,6 @@
+using CloudSuite.Modules.Application.Core;
 using CloudSuite.Modules.Commons.Valueobjects;
+using MediatR;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments
 {
@@ -10,8 +12,8 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
         public decimal? Total {  get; set; }
         public decimal? TotalPaid {  get; set; }
         public string? Payer { get; set; }
-        public Cnpj cnpj { get; private set; }
-        public Email email { get; private set; }
+        public string? Cnpj { get; private set; }
+        public string? Email { get; private set; }
 
         public PaymentEntity GetEntity()
         {
@@ -22,8 +24,8 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 this.Total,
                 this.TotalPaid,
                 this.Payer,
-                this.cnpj,
-                this.email
+                this.Cnpj,
+                this.Email
                 );
         }
 

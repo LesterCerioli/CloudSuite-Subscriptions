@@ -18,6 +18,8 @@ namespace CloudSuite.Modules.Domain.Models
         public string? SocialName { get; private set; }
 
         public string? FantasyName { get; private set; }
+
+        public DateTime FundationDate { get; private set; }
         
     }
 }

@@ -1,5 +1,6 @@
 using CloudSuite.Modules.Application.Core;
 using System.ComponentModel.DataAnnotations;
+using FluentValidation.Results;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
 {
@@ -10,7 +11,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
         public CreatePaymentResponse(Guid requestId, ValidationResult result)
         {
             RequestId = requestId;
-            foreach (var item in result.MemberNames)
+            foreach (var item in result.Errors)
             {
                 this.AddError(item.ErrorMessage);
             }

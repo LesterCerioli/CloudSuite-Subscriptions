@@ -2,7 +2,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Requests
 {
     public class CheckPaymentExistsByCnpjRequest
     {
-        /*public class CheckExistsPaymentByCnpjRequest : IRequest<CheckExistsPaymentByCnpjRequest>
+        public class CheckExistsPaymentByCnpjRequest : IRequest<CheckExistsPaymentByCnpjRequest>
         {
             public Guid Id { get; private set; }
 
@@ -13,6 +13,6 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Requests
                 Id = Guid.NewGuid();
                 Cnpj = cnpj;
             }
-        }*/
+        }
     }
 }

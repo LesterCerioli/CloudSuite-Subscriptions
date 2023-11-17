@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments
 {
-    public class CheckPaymentExistsByTotalPaidHandlers: IRequestHandler<CheckPaymentExistsByTotalPaidRequest, CheckPaymentExistsByTotalPaidResponse>
+    public class CheckPaymentExistsByTotalPaidHandlers : IRequestHandler<CheckPaymentExistsByTotalPaidRequest, CheckPaymentExistsByTotalPaidResponse>
     {
         private IPaymentRepository _repositorioPayment;
         private readonly ILogger<CheckPaymentExistsByTotalPaidHandlers> _logger;
@@ -33,7 +33,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 }catch (Exception ex)
                 {
                     _logger.LogCritical(ex.Message);
-                    return await Task.FromResult(new CheckPaymentExistsByNumberResponse(request.Id, "Não foi possível processar sua solicitação."));
+                    return await Task.FromResult(new CheckPaymentExistsByTotalPaidResponse(request.Id, "Não foi possível processar sua solicitação."));
                 }
             }
             return await Task.FromResult(new CheckPaymentExistsByTotalPaidResponse(request.Id, false, validationResult));

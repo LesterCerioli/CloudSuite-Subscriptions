@@ -30,7 +30,9 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 {
                     var payment = await _repositorioPayment.GetByCnpj(new Cnpj(request.Cnpj));
                     if (payment != null)
+                    {
                         return await Task.FromResult(new CheckPaymentExistsByCnpjResponse(request.Id, true, validationResult));
+                    }
                 }catch (Exception ex)
                 {
                     _logger.LogCritical(ex.Message);

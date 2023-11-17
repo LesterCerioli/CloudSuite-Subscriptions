@@ -35,7 +35,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 }catch(Exception ex)
                 {
                     _logger.LogCritical(ex.Message);
-                    return await Task.FromResult(new CheckPaymentExistsByNumberResponse(request.Id, "Não foi possível processar sua solicitação."));
+                    return await Task.FromResult(new CheckPaymentExistsByNumberResponse(request.Id, "Failed to process the request."));
                 }
             }
 

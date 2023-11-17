@@ -19,7 +19,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
             _logger = logger;
         }
 
-        public async Task<CheckPaymentExistsByCnpjHandlers> Handle(CheckPaymentExistsByCnpjRequest request, CancellationToken cancellationToken)
+        public async Task<CheckPaymentExistsByCnpjResponse> Handle(CheckPaymentExistsByCnpjRequest request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"CheckPaymentExistsByCnpjRequest: {JsonSerializer.Serialize(request)}");
             var validationResult = new CheckPaymentExistsByCnpjRequestValidation().Validate(request);

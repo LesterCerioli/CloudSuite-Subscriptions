@@ -1,5 +1,5 @@
-using MediatR;
 using CloudSuite.Modules.Application.Handlers.Payments.Responses;
+using MediatR;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments.Requests
 {

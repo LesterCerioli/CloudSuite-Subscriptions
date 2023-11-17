@@ -16,7 +16,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
         }
 
         public CheckPaymentExistsByNumberResponse(Guid requestId, string falhaValidacao) {
-            RequestId = requestId;
+            RequestId=requestId;
             Exists = false;
             this.AddError(falhaValidacao);
         }

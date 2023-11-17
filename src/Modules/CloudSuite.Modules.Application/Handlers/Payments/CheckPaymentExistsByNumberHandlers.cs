@@ -18,7 +18,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
             _logger = logger;
         }
 
-        public async Task<CheckPaymentExistsByNumberHandlers>Handle(CheckPaymentExistsByNumberRequest request, CancellationToken cancellationToken)
+        public async Task<CheckPaymentExistsByNumberResponse>Handle(CheckPaymentExistsByNumberRequest request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"CheckPaymentExistsByNumberRequest:{JsonSerializer.Serialize(request)}");
             var validationResult = new CheckPaymentExistsByNumberRequestValidation().Validate(request);

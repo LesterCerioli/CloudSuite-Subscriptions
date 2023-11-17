@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\CloudSuite.Modules.Domain\CloudSuite.Modules.Domain.csproj" />
@@ -11,10 +11,6 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validation\Payments\" />
   </ItemGroup>
 
   <PropertyGroup>

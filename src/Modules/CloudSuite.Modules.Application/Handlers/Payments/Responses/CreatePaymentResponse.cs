@@ -1,5 +1,4 @@
 using CloudSuite.Modules.Application.Core;
-using System.ComponentModel.DataAnnotations;
 using FluentValidation.Results;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
@@ -19,7 +18,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
         
         public CreatePaymentResponse(Guid requestId, string falhaValidacao)
         {
-            RequestId = RequestId;
+            RequestId = requestId;
             this.AddError(falhaValidacao);
         }
     }

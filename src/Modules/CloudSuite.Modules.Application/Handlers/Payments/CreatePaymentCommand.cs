@@ -8,7 +8,6 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
 {
     public class CreatePaymentCommand: IRequest<CreatePaymentResponse>
     {
-            
         public Guid Id { get; private set; }
         public string? Number { get; set; }
         public DateTime? PaidTime {  get; set; }
@@ -19,7 +18,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
         public string? Cnpj { get; private set; }
         public string? Email { get; private set; }
 
-        public PaymentEntity()
+        public CreatePaymentCommand()
         {
             Id = Guid.NewGuid();
         }

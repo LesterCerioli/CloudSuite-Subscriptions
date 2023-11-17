@@ -1,5 +1,5 @@
 using CloudSuite.Modules.Application.Core;
-using System.ComponentModel.DataAnnotations;
+using FluentValidation.Results;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
 {
@@ -8,7 +8,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
         public Guid RequestId { get; private set; }
         public bool Exists { get; set; }
 
-        public CheckPaymentExistsByTotalPaidResponse(Guid requestId, bool exists, ValidationResult) {
+        public CheckPaymentExistsByTotalPaidResponse(Guid requestId, bool exists, ValidationResult result) {
             RequestId = requestId;
             Exists = exists;
             foreach (var item in result.Errors) {

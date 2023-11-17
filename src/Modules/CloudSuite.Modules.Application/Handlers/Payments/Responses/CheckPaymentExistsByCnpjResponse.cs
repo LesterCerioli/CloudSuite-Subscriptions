@@ -1,5 +1,4 @@
 using CloudSuite.Modules.Application.Core;
-using System.ComponentModel.DataAnnotations;
 using FluentValidation.Results;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
@@ -23,7 +22,6 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
             RequestId = requestId;
             Exists = false;
             this.AddError(falhaValidacao);
-
         }
     }
 }

@@ -1,11 +1,13 @@
 using CloudSuite.Modules.Application.Handlers.Payments.Requests;
 using CloudSuite.Modules.Application.Handlers.Payments.Responses;
+using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System.Text.Json;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments
 {
-    public class CheckPaymentExistsByNumberHandlers: IRequestHandler<CheckPaymentExistsByNumberRequest, CheckPaymentExistsByNumberResponse>
+    public class CheckPaymentExistsByNumberHandlers : IRequestHandler<CheckPaymentExistsByNumberRequest, CheckPaymentExistsByNumberResponse>
     {
         private IPaymentRepository _repositorioPayment;
         private readonly ILogger<CheckPaymentExistsByNumberHandlers> _logger;
@@ -16,7 +18,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
             _logger = logger;
         }
 
-        public async Task<CheckPaymentExistsByNumberHandlers> Handle(CheckPaymentExistsByNumberRequest request, CancellationToken cancellationToken)
+        public async Task<CheckPaymentExistsByNumberHandlers>Handle(CheckPaymentExistsByNumberRequest request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"CheckPaymentExistsByNumberRequest:{JsonSerializer.Serialize(request)}");
             var validationResult = new CheckPaymentExistsByNumberRequestValidation().Validate(request);
@@ -28,7 +30,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                     var payment = await _repositorioPayment.GetByNumber(request.Number);
                     if(payment != null)
                     {
-                        return await Task.FromResult(new CheckPaymentExistsByNumberResponse(request.Id, true, validationResult);
+                        return await Task.FromResult(new CheckPaymentExistsByNumberResponse(request.Id, true, validationResult));
                     }
                 }catch(Exception ex)
                 {

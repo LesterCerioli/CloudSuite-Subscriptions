@@ -1,5 +1,5 @@
 using CloudSuite.Modules.Application.Core;
-using System.ComponentModel.DataAnnotations;
+using FluentValidation.Results;
 
 namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
 {
@@ -15,9 +15,9 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
             }
         }
 
-        public CheckPaymentExistsByCnpjResponse(Guid requestId, string falhaValidacao) {
+        public CheckPaymentExistsByNumberResponse(Guid requestId, string falhaValidacao) {
             RequestId = requestId;
-            Exists = falhaValidacao;
+            Exists = false;
             this.AddError(falhaValidacao);
         }
     }

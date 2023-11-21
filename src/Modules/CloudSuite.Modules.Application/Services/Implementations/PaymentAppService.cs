@@ -52,7 +52,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 
         public async Task<PaymentViewModel> GetByTotal(decimal total)
         {
-            return _mapper.Map<PaymentViewModel>(await _paymentRepository.)
+            return _mapper.Map<PaymentViewModel>(await _paymentRepository.GetByTotal(total));
         }
 
         public void Dispose()

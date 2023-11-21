@@ -1,5 +1,6 @@
 using CloudSuite.Modules.Application.Handlers.Payments.Requests;
 using CloudSuite.Modules.Application.Handlers.Payments.Responses;
+using CloudSuite.Modules.Application.Validation.Payments;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;

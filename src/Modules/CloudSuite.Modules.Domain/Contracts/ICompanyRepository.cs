@@ -1,6 +1,4 @@
 using CloudSuite.Modules.Domain.Models;
-using Sytem.Collection.Generic;
-using System.Theading.Tasks;
 using CloudSuite.Modules.Commons.Valueobjects;
 
 namespace CloudSuite.Modules.Domain.Contracts

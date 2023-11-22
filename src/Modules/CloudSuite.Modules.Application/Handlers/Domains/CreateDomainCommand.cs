@@ -10,7 +10,7 @@ namespace CloudSuite.Modules.Application.Handlers.Domains
 
         public string? DNS;
         public string? OwnerName;
-        public DateTime? CreatedAt;
+        public DateTime CreatedAt;
 
         public CreateDomainCommand() { 
             Id = Guid.NewGuid();

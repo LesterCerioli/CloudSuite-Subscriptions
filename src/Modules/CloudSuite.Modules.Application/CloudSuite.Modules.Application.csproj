@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <None Remove="Services\Contracts\ICompanyAppService.cs~RF76b5b79.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CloudSuite.Modules.Domain\CloudSuite.Modules.Domain.csproj" />
   </ItemGroup>
 

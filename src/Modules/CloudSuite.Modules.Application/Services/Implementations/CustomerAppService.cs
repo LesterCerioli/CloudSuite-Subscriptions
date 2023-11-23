@@ -32,7 +32,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 
         public async Task<CustomerViewModel> GetByCreatedOn(DateTimeOffset createdOn)
         {
-            return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByCreatedOn(createdOn))
+            return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByCreatedOn(createdOn));
         }
 
         public async Task<CustomerViewModel> GetByEmail(string email)
@@ -50,9 +50,9 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             GC.SuppressFinalize(this);
         }
 
-		public Task Save(CreateCustomerCommand commandCreate)
+		public async Task Save(CreateCustomerCommand commandCreate)
 		{
-			throw new NotImplementedException();
+            await _customerRepository.Add(commandCreate.GetEntity());
 		}
 
 		

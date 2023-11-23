@@ -50,9 +50,9 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             GC.SuppressFinalize(this);
         }
 
-		public Task Save(CreateCustomerCommand commandCreate)
+		public async Task Save(CreateCustomerCommand commandCreate)
 		{
-			throw new NotImplementedException();
+            await _customerRepository.Add(commandCreate.GetEntity());
 		}
 
 		

@@ -60,10 +60,10 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             GC.SuppressFinalize(this);
         }
         
-        //public async Task Save(CreatePaymentCommand commandCreate)
-        //{
-            //await _paymentRepository.Save(commandCreate.GetEntity());
+        public async Task Save(CreatePaymentCommand commandCreate)
+        {
+            await _paymentRepository.Add(commandCreate.GetEntity());
             
-        //}
+        }
     }
 }

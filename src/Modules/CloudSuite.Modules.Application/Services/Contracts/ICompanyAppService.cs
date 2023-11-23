@@ -1,4 +1,5 @@
 using CloudSuite.Modules.Application.ViewModels;
+using CloudSuite.Modules.Commons.Valueobjects;
 
 namespace CloudSuite.Modules.Application.Services.Contracts
 {

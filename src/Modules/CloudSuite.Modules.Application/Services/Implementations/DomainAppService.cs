@@ -33,7 +33,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 
         public async Task<DomainViewModel> GetByDns(string dns)
         {
-            return _mapper.Map<DomainViewModel>(await _domainRepository.etByDns(dns));
+            return _mapper.Map<DomainViewModel>(await _domainRepository.GetByDns(dns));
         }
 
         public async Task<DomainViewModel> GetByOwnerName(string ownerName)
@@ -46,9 +46,9 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             GC.SuppressFinalize(this);
         }
 
-        //public async Task Save(CreateDomainCommand commandCreate)
-        //{
-            //await _domainRepository.Save(commandCreate.GetEntity());
-        //}
+        public async Task Save(CreateDomainCommand commandCreate)
+        {
+			await _domainRepository.Add(commandCreate.GetEntity());
+		}
     }
 }

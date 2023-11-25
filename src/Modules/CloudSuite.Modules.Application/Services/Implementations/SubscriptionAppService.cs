@@ -56,9 +56,9 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             GC.SuppressFinalize(this);
         }
 
-        //public async Task Save(CreateSubscriptionCommand commandCreate)
-        //{
-            //await _subscriptionRepository.Save(commandCreate.GetEntity());
-        //}
+        public async Task Save(CreateSubscriptionCommand commandCreate)
+        {
+            await _subscriptionRepository.Save(commandCreate.GetEntity());
+        }
     }
 }

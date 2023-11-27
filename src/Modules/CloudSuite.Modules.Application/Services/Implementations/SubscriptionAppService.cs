@@ -58,7 +58,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 
         public async Task Save(CreateSubscriptionCommand commandCreate)
         {
-            await _subscriptionRepository.Save(commandCreate.GetEntity());
+            await _subscriptionRepository.Add(commandCreate.GetEntity());
         }
     }
 }

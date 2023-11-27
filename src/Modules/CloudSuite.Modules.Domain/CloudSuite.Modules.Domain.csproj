@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CloudSuite.Modules.Commons\CloudSuite.Modules.Commons.csproj" />
+    
   </ItemGroup>
 
 </Project>

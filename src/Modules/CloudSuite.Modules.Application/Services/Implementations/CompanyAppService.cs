@@ -23,10 +23,10 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             _mapper = mapper;
             _mediator = mediator;
             _companyRepository = companyRepository;
-            
+
 
         }
-        
+
         public async Task<CompanyViewModel> GetByCnpj(Cnpj cnpj)
         {
             return _mapper.Map<CompanyViewModel>(await _companyRepository.GetByCnpj(cnpj));
@@ -49,7 +49,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 
         //public async Task Save(CreateCompanyCommand commandCreate)
         //{
-            //await _companyRepository.Add(commandCreate.GetEntity());
+        //await _companyRepository.Add(commandCreate.GetEntity());
         //}
     }
 }

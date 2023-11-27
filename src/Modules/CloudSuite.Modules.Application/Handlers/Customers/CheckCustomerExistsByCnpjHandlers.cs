@@ -38,7 +38,7 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
                 catch (Exception ex)
                 {
                     _logger.LogCritical(ex.Message);
-                    return await Task.FromResult(new CheckCustomerExistsByCnpjResponse(request.Id, "Não foi poss[ivel processar a solicitação."));
+                    return await Task.FromResult(new CheckCustomerExistsByCnpjResponse(request.Id, "Não foi possivel processar a solicitação."));
                 }
             }
             return await Task.FromResult(new CheckCustomerExistsByCnpjResponse(request.Id, false, validationResult));

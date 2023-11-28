@@ -16,19 +16,19 @@ using Xunit;
 namespace CloudSuite.Modules.Application.Tests.Services
 {
     public class PaymentAppServiceTests
-    {/*
-        //[Fact]
+    {
+        [Fact]
         public async Task GetByCnpj_ShouldReturnMappedViewModel()
         {
             // Arrange
             var number = "1234567891234567";
             var paidDate = new DateTime(2022, 10, 23);
             var expireDate = new DateTime(2022, 10, 23);
-            var total = "22.12";
-            var totalPaid = "20.00";
+            var total = 22.5m;
+            var totalPaid = 20.0m;
             var payer = "john";
-            var cnpj = "76.883.915/0001-54";
-            var email = "john@seudominio.com";
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var email = new Email("john@seudominio.com");
             var payment = 'a';
             var paymentRepositoryMock = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -40,7 +40,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var paynmentEntity = new Payment(payment, number, paidDate, expireDate, total, totalPaid, payer, cnpj, email);
+            var paynmentEntity = new Payment(number, paidDate, expireDate, cnpj, total, totalPaid, payer, email);
             paymentRepositoryMock.Setup(repo => repo.GetByCnpj(cnpj)).ReturnsAsync(paynmentEntity);
 
             var expectedViewModel = new PaymentViewModel();
@@ -53,18 +53,18 @@ namespace CloudSuite.Modules.Application.Tests.Services
             Assert.Equal(expectedViewModel, result);
         }
 
-        //[Fact]
+        [Fact]
         public async Task GetByExpireDate_ShouldReturnMappedViewModel()
         {
             // Arrange
             var number = "1234567891234567";
             var paidDate = new DateTime(2022, 10, 23);
             var expireDate = new DateTime(2022, 10, 23);
-            var total = "22.12";
-            var totalPaid = "20.00";
+            var total = 22.5m;
+            var totalPaid = 20.0m;
             var payer = "john";
-            var cnpj = "76.883.915/0001-54";
-            var email = "john@seudominio.com";
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var email = new Email("john@seudominio.com");
             var payment = 'a';
             var paymentRepositoryMock = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -76,7 +76,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var paynmentEntity = new Payment(payment, number, paidDate, expireDate, total, totalPaid, payer, cnpj, email);
+            var paynmentEntity = new Payment(number, paidDate, expireDate, cnpj, total, totalPaid, payer, email);
             paymentRepositoryMock.Setup(repo => repo.GetByExpireDate(expireDate)).ReturnsAsync(paynmentEntity);
 
             var expectedViewModel = new PaymentViewModel();
@@ -89,18 +89,18 @@ namespace CloudSuite.Modules.Application.Tests.Services
             Assert.Equal(expectedViewModel, result);
         }
 
-        //[Fact]
+        [Fact]
         public async Task GetByNumber_ShouldReturnMappedViewModel()
         {
             // Arrange
             var number = "1234567891234567";
             var paidDate = new DateTime(2022, 10, 23);
             var expireDate = new DateTime(2022, 10, 23);
-            var total = "22.12";
-            var totalPaid = "20.00";
+            var total = 22.5m;
+            var totalPaid = 20.0m;
             var payer = "john";
-            var cnpj = "76.883.915/0001-54";
-            var email = "john@seudominio.com";
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var email = new Email("john@seudominio.com");
             var payment = 'a';
             var paymentRepositoryMock = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -112,7 +112,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var paynmentEntity = new Payment(payment, number, paidDate, expireDate, total, totalPaid, payer, cnpj, email);
+            var paynmentEntity = new Payment(number, paidDate, expireDate, cnpj, total, totalPaid, payer, email);
             paymentRepositoryMock.Setup(repo => repo.GetByNumber(number)).ReturnsAsync(paynmentEntity);
 
             var expectedViewModel = new PaymentViewModel();
@@ -125,18 +125,18 @@ namespace CloudSuite.Modules.Application.Tests.Services
             Assert.Equal(expectedViewModel, result);
         }
 
-        //[Fact]
+        [Fact]
         public async Task GetByPaidDate_ShouldReturnMappedViewModel()
         {
             // Arrange
             var number = "1234567891234567";
             var paidDate = new DateTime(2022, 10, 23);
             var expireDate = new DateTime(2022, 10, 23);
-            var total = "22.12";
-            var totalPaid = "20.00";
+            var total = 22.5m;
+            var totalPaid = 20.0m;
             var payer = "john";
-            var cnpj = "76.883.915/0001-54";
-            var email = "john@seudominio.com";
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var email = new Email("john@seudominio.com");
             var payment = 'a';
             var paymentRepositoryMock = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -148,7 +148,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var paynmentEntity = new Payment(payment, number, paidDate, expireDate, total, totalPaid, payer, cnpj, email);
+            var paynmentEntity = new Payment(number, paidDate, expireDate, cnpj, total, totalPaid, payer, email);
             paymentRepositoryMock.Setup(repo => repo.GetByPaidDate(paidDate)).ReturnsAsync(paynmentEntity);
 
             var expectedViewModel = new PaymentViewModel();
@@ -161,18 +161,18 @@ namespace CloudSuite.Modules.Application.Tests.Services
             Assert.Equal(expectedViewModel, result);
         }
 
-        //[Fact]
+        [Fact]
         public async Task GetByPayer_ShouldReturnMappedViewModel()
         {
             // Arrange
             var number = "1234567891234567";
             var paidDate = new DateTime(2022, 10, 23);
             var expireDate = new DateTime(2022, 10, 23);
-            var total = "22.12";
-            var totalPaid = "20.00";
+            var total = 22.5m;
+            var totalPaid = 20.0m;
             var payer = "john";
-            var cnpj = "76.883.915/0001-54";
-            var email = "john@seudominio.com";
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var email = new Email("john@seudominio.com");
             var payment = 'a';
             var paymentRepositoryMock = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -184,7 +184,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var paynmentEntity = new Payment(payment, number, paidDate, expireDate, total, totalPaid, payer, cnpj, email);
+            var paynmentEntity = new Payment(number, paidDate, expireDate, cnpj, total, totalPaid, payer, email);
             paymentRepositoryMock.Setup(repo => repo.GetByPayer(payer)).ReturnsAsync(paynmentEntity);
 
             var expectedViewModel = new PaymentViewModel();
@@ -197,18 +197,18 @@ namespace CloudSuite.Modules.Application.Tests.Services
             Assert.Equal(expectedViewModel, result);
         }
 
-        //[Fact]
+        [Fact]
         public async Task GetByTotal_ShouldReturnMappedViewModel()
         {
             // Arrange
             var number = "1234567891234567";
             var paidDate = new DateTime(2022, 10, 23);
             var expireDate = new DateTime(2022, 10, 23);
-            var total = 22.12;
-            var totalPaid = 20.0;
+            var total = 22.5m;
+            var totalPaid = 20.0m;
             var payer = "john";
-            var cnpj = "76.883.915/0001-54";
-            var email = "john@seudominio.com";
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var email = new Email("john@seudominio.com");
             var payment = 'a';
             var paymentRepositoryMock = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -220,7 +220,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var paynmentEntity = new Payment(payment, number, paidDate, expireDate, total, totalPaid, payer, cnpj, email);
+            var paynmentEntity = new Payment(number, paidDate, expireDate, cnpj, total, totalPaid, payer, email);
             paymentRepositoryMock.Setup(repo => repo.GetByTotal(total)).ReturnsAsync(paynmentEntity);
 
             var expectedViewModel = new PaymentViewModel();
@@ -233,7 +233,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             Assert.Equal(expectedViewModel, result);
         }
 
-        */
+        
 
     }
 }

@@ -89,7 +89,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
         [Fact]
         public async Task GetByEmail_ShouldReturnMappedViewModel()
         {
-          /*  // Arrange
+            // Arrange
             var cnpj = new Cnpj("76.883.915/0001-54");
             var name = new Name("Lojas", "Americanas");
             var email = new Email("americanas@dominio.com");
@@ -117,13 +117,13 @@ namespace CloudSuite.Modules.Application.Tests.Services
             var result = await customerAppService.GetByEmail(email);
 
             // Assert
-            Assert.Equal(expectedViewModel, result);*/
+            Assert.Equal(expectedViewModel, result);
         }
 
         [Fact]
         public async Task GetByCnpj_ShouldReturnMappedViewModel()
         {
-          /*  // Arrange
+            // Arrange
             var cnpj = new Cnpj("76.883.915/0001-54");
             var name = new Name("Lojas", "Americanas");
             var email = new Email("americanas@dominio.com");
@@ -148,16 +148,16 @@ namespace CloudSuite.Modules.Application.Tests.Services
             mapperMock.Setup(mapper => mapper.Map<CustomerViewModel>(customerEntity)).Returns(expectedViewModel);
 
             // Act
-            var result = await customerAppService.GetByCnpj(createdOn);
+            var result = await customerAppService.GetByCnpj(cnpj);
 
             // Assert
-            Assert.Equal(expectedViewModel, result); */
+            Assert.Equal(expectedViewModel, result); 
         }
 
         [Fact]
         public async Task GetByName_ShouldReturnMappedViewModel()
         {
-          /*  // Arrange
+            // Arrange
             var cnpj = new Cnpj("76.883.915/0001-54");
             var name = new Name("Lojas", "Americanas");
             var email = new Email("americanas@dominio.com");
@@ -185,7 +185,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             var result = await customerAppService.GetByName(name);
 
             // Assert
-            Assert.Equal(expectedViewModel, result); */
+            Assert.Equal(expectedViewModel, result); 
         }
     }
 }

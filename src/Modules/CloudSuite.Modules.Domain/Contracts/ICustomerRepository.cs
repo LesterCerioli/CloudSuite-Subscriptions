@@ -9,7 +9,7 @@ namespace CloudSuite.Modules.Domain.Contracts
 
         Task<Customer> GetByCnpj(Cnpj cnpj);
 
-        Task<Customer> GetByEmail(string email);
+        Task<Customer> GetByEmail(Email email);
 
         Task<Customer> GetByBusinessOwner(string BusinessOwner);
 

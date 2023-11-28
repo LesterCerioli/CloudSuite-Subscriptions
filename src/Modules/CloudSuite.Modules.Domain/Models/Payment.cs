@@ -21,7 +21,7 @@ namespace CloudSuite.Modules.Domain.Models
         
         public Email Email { get; private set; }
 
-        public Payment(string? payment, DateTime? paidDate, DateTime? expireDate, decimal? total, decimal? totalPaid, string? payer, string? cnpj, string? email)
+        public Payment(string? number, DateTime? paidDate, DateTime? expireDate, Cnpj cnpj, decimal? total, decimal? totalPaid, string? payer, string? cnpj, string? email)
         {
             Number = number;
             PaidDate = paidDate;
@@ -29,8 +29,8 @@ namespace CloudSuite.Modules.Domain.Models
             Total = total;
             TotalPaid = totalPaid;
             Payer = payer;
-            Cnpj = new Cnpj(cnpj);
-            Email = new Email(email);
+            Cnpj = cnpj(cnpj);
+            Email = email(email);
         }
         
     }

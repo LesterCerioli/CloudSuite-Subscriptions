@@ -1,5 +1,6 @@
 ﻿using CloudSuite.Modules.Application.Handlers.Subscriptions.Requests;
 using CloudSuite.Modules.Application.Handlers.Subscriptions.Responses;
+using CloudSuite.Modules.Application.Validation.Subscription;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;

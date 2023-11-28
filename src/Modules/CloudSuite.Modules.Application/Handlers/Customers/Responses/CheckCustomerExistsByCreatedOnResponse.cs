@@ -17,7 +17,7 @@ namespace CloudSuite.Modules.Application.Handlers.Customers.Responses
             }
         }
 
-        public CheckCustomerExistsByCreatedONResponse(Guid requestId, string falhaValidacao)
+        public CheckCustomerExistsByCreatedOnResponse(Guid requestId, string falhaValidacao)
         {
             RequestId = requestId;
             Exists = false;

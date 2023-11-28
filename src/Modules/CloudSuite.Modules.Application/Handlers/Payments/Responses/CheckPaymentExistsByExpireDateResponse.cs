@@ -18,7 +18,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Responses
             RequestId = requestId;
             Exists = exists;
             foreach(var item in result.Errors) {
-                this.AddError(item.ErrorMessage)
+                this.AddError(item.ErrorMessage);
             }
         }
 

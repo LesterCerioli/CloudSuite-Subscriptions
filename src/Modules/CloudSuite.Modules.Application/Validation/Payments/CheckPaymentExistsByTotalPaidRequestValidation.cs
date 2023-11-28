@@ -8,12 +8,9 @@ namespace CloudSuite.Modules.Application.Validation.Payments
         public CheckPaymentExistsByTotalPaidRequestValidation()
         {
             RuleFor(a => a.TotalPaid)
-                .NotEmpty()
-                .WithMessage("O campo é obrigatório.")
-                .NotNull()
-                .WithMessage("O campo não pode ser nulo.")
-                .LessThan(0)
-                .WithMessage("O campo não pode ser negativo.");
+                .GreaterThanOrEqualTo(0)
+                .When(a => a.TotalPaid.HasValue)
+                .WithMessage("O valor total pago deve ser maior ou igual a 0.");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CloudSuite.Modules.Application.Handlers.Customers.Requests;
 using CloudSuite.Modules.Application.Handlers.Customers.Responses;
+using CloudSuite.Modules.Application.Validation.Customer;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
         {
 
             _logger.LogInformation($"CheckCustomerExistsByBusinessOwnerRequest: {JsonSerializer.Serialize(request)}");
-            var validationResult = new CheckCustomerExistsByBusinessOwnerRequestValidation.Validate(request);
+            var validationResult = new CheckCustomerExistsByBusinessOwnerRequestValidation().Validate(request);
 
             if(validationResult.IsValid )
             {

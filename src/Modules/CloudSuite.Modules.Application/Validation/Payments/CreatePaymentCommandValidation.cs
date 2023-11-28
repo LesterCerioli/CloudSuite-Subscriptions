@@ -32,8 +32,8 @@ namespace CloudSuite.Modules.Application.Validation.Payments
                 .WithMessage("O campo é obrigatório.")
                 .NotNull()
                 .WithMessage("O campo não pode ser nulo")
-                .LessThanOrEqualTo(DateTime.Now)
-                .WithMessage("O campo ExpireTime deve ser uma data e hora no passado ou presente.");
+                .GreaterThanOrEqualTo(DateTime.Now)
+                .WithMessage("O campo ExpireTime deve ser uma data no futuro ou presente.");
 
             RuleFor(a => a.ExpireTime)
                 .NotEmpty()
@@ -41,7 +41,7 @@ namespace CloudSuite.Modules.Application.Validation.Payments
                 .NotNull()
                 .WithMessage("O campo não pode ser nulo")
                 .GreaterThanOrEqualTo(DateTime.Now)
-                .WithMessage("O campo ExpireTime deve ser uma data e hora no passado ou presente.");
+                .WithMessage("O campo ExpireTime deve ser uma data no futuro ou presente.");
 
             RuleFor(a => a.Total)
                 .NotEmpty()
@@ -50,10 +50,9 @@ namespace CloudSuite.Modules.Application.Validation.Payments
                 .WithMessage("O campo não pode ser nulo");
 
             RuleFor(a => a.TotalPaid)
-                .NotEmpty()
-                .WithMessage("O campo é obrigatório.")
-                .NotNull()
-                .WithMessage("O campo não pode ser nulo");
+                .GreaterThanOrEqualTo(0)
+                .When(a => a.TotalPaid.HasValue)
+                .WithMessage("O valor total deve ser maior ou igual a 0.");
 
             RuleFor(a => a.Payer)
                 .NotEmpty()

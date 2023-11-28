@@ -1,5 +1,6 @@
 ﻿using CloudSuite.Modules.Application.Handlers.Payments.Requests;
 using CloudSuite.Modules.Application.Handlers.Payments.Responses;
+using CloudSuite.Modules.Application.Validation.Payments;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -22,7 +23,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
         {
 
             _logger.LogInformation($"CheckPaymentExistsByPaidDateRequest: {JsonSerializer.Serialize(request)}");
-            var validationResult = new CheckPaymentExistsByPaidDateRequestValiditon().Validate(request);
+            var validationResult = new CheckPaymentExistsByPaidDateRequestValidation().Validate(request);
 
             if (validationResult.IsValid)
             {

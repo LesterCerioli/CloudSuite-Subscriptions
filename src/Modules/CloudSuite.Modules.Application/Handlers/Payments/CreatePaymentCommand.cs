@@ -15,8 +15,8 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
         public decimal? Total {  get; set; }
         public decimal? TotalPaid {  get; set; }
         public string? Payer { get; set; }
-        public string? Cnpj { get; private set; }
-        public string? Email { get; private set; }
+        public Cnpj Cnpj { get; private set; }
+        public Email Email { get; private set; }
 
         public CreatePaymentCommand()
         {
@@ -29,10 +29,10 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 this.Number,
                 this.PaidTime,
                 this.ExpireTime,
+                this.Cnpj,
                 this.Total,
                 this.TotalPaid,
                 this.Payer,
-                this.Cnpj,
                 this.Email
                 );
         }

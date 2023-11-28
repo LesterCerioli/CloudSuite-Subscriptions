@@ -11,9 +11,8 @@ namespace CloudSuite.Modules.Application.Validation.Payments
                 .NotEmpty()
                 .WithMessage("O campo é obrigatório.")
                 .NotNull()
-                .WithMessage("O campo não pode ser nulo.")
-                .EmailAddress()
-                .WithMessage("Formato incorreto.");
+                .WithMessage("O campo não pode ser nulo.");
+                
 
             RuleFor(a => a.Cnpj)
                 .NotEmpty()

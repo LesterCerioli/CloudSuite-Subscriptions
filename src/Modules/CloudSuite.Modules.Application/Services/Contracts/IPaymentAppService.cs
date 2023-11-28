@@ -14,9 +14,13 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 
         Task<PaymentViewModel> GetByTotal(decimal total);
 
-        Task<PaymentViewModel> GetByPayer(string payer); 
+        Task<PaymentViewModel> GetByTotalPaid(decimal totalPaid);
+
+        Task<PaymentViewModel> GetByPayer(string payer);
 
         Task<PaymentViewModel> GetByCnpj(Cnpj cnpj);
+
+        Task<PaymentViewModel> GetByEmail(Email email);
 
         Task Save(CreatePaymentCommand commandCreate);
     }

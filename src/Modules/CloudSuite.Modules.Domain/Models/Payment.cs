@@ -23,14 +23,14 @@ namespace CloudSuite.Modules.Domain.Models
 
         public Payment(string? payment, DateTime? paidDate, DateTime? expireDate, decimal? total, decimal? totalPaid, string? payer, string? cnpj, string? email)
         {
-            this.Number = Number;
-            this.PaidDate = paidDate;
-            this.ExpireDate = expireDate;
-            this.Total = total;
-            this.TotalPaid = totalPaid;
-            this.Payer = payer;
-            this.Cnpj = new Cnpj(cnpj);
-            this.Email = new Email(email);
+            Number = number;
+            PaidDate = paidDate;
+            ExpireDate = expireDate;
+            Total = total;
+            TotalPaid = totalPaid;
+            Payer = payer;
+            Cnpj = new Cnpj(cnpj);
+            Email = new Email(email);
         }
         
     }

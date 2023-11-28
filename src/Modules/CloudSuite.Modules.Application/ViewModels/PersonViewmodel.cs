@@ -8,14 +8,14 @@ namespace CloudSuite.Modules.Application.ViewModels
         [Key]
         public Guid Id { get; private set; }
 
-        [Required(ErrorMessage = "O nome deve ser informado.")]
-        [MaxLength(100)]
         [DisplayName("Nome")]
+        [MaxLength(100)]
+        [Required(ErrorMessage = "O nome deve ser informado.")]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "A idade deve ser informado.")]
-        [MaxLength(3)]
         [DisplayName("Idade")]
+        [MaxLength(3)]
+        [Required(ErrorMessage = "A idade deve ser informado.")]
         public string? Age { get; set; }
     }
 }

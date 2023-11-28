@@ -2,6 +2,7 @@ using AutoMapper;
 using CloudSuite.Modules.Application.Handlers.Customers;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.ViewModels;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using NetDevPack.Mediator;
 
@@ -35,7 +36,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByCreatedOn(createdOn));
         }
 
-        public async Task<CustomerViewModel> GetByEmail(string email)
+        public async Task<CustomerViewModel> GetByEmail(Email email)
         {
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByEmail(email));
         }
@@ -44,6 +45,13 @@ namespace CloudSuite.Modules.Application.Services.Implementations
         {
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByName(name));
         }
+
+        public async Task<CustomerViewModel> GetCnpj(Cnpj cnpj)
+        {
+            return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByCnpj(cnpj));
+        }
+
+
 
         public void Dispose()
         {

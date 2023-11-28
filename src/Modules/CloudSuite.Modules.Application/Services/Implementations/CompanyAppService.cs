@@ -1,4 +1,5 @@
 using AutoMapper;
+using CloudSuite.Modules.Application.Handlers.Company;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.ViewModels;
 using CloudSuite.Modules.Commons.Valueobjects;
@@ -47,9 +48,9 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             GC.SuppressFinalize(this);
         }
 
-        //public async Task Save(CreateCompanyCommand commandCreate)
-        //{
-            //await _companyRepository.Add(commandCreate.GetEntity());
-        //}
+        public async Task Save(CreateCompanyCommand commandCreate)
+        {
+            await _companyRepository.Add(commandCreate.GetEntity());
+        }
     }
 }

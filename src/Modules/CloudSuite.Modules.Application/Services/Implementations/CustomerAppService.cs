@@ -41,12 +41,12 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByEmail(email));
         }
 
-        public async Task<CustomerViewModel> GetByName(string name)
+        public async Task<CustomerViewModel> GetByName(Name name)
         {
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByName(name));
         }
 
-        public async Task<CustomerViewModel> GetCnpj(Cnpj cnpj)
+        public async Task<CustomerViewModel> GetByCnpj(Cnpj cnpj)
         {
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByCnpj(cnpj));
         }
@@ -62,7 +62,5 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 		{
             await _customerRepository.Add(commandCreate.GetEntity());
 		}
-
-		
-	}
+    }
 }

@@ -55,6 +55,16 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             return _mapper.Map<PaymentViewModel>(await _paymentRepository.GetByTotal(total));
         }
 
+        public async Task<PaymentViewModel> GetByTotalPaid(decimal totalPaid)
+        {
+            return _mapper.Map<PaymentViewModel>(await _paymentRepository.GetByTotalPaid(totalPaid));
+        }
+
+        public async Task<PaymentViewModel> GetByEmail(Email email)
+        {
+            return _mapper.Map<PaymentViewModel>( await _paymentRepository.GetByEmail(email));
+        }
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);

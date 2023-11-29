@@ -10,6 +10,8 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 
         Task<CustomerViewModel> GetByEmail(Email email);
 
+        Task<CustomerViewModel> GetByCnpj(Cnpj cnpj);
+
         Task<CustomerViewModel> GetByBusinessOwner(string BusinessOwner);
 
         Task<CustomerViewModel> GetByCreatedOn(DateTimeOffset createdOn);

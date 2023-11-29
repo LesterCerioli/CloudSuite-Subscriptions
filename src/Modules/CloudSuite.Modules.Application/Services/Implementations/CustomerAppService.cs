@@ -46,7 +46,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByName(name));
         }
 
-        public async Task<CustomerViewModel> GetCnpj(Cnpj cnpj)
+        public async Task<CustomerViewModel> GetByCnpj(Cnpj cnpj)
         {
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByCnpj(cnpj));
         }

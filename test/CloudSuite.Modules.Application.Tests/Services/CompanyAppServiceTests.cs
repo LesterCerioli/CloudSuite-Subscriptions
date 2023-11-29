@@ -22,7 +22,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 		{
 			var cnpj = new Cnpj("49.859.881/0001-90");
 			var companyRepositoryMock = new Mock<ICompanyRepository>();
-			var mediatorHandlerMock = new Mock<MediatorHandler>();
+			var mediatorHandlerMock = new Mock<IMediatorHandler>();
 			var mapperMock = new Mock<IMapper>();
 
 			var companyAppService = new CompanyAppService(
@@ -48,9 +48,9 @@ namespace CloudSuite.Modules.Application.Tests.Services
 		public async Task GetCompanyByCnpj_ShouldReturnsNullForNonExistentCompany()
 		{
 			// Arrange
-			var cnpj = new Cnpj("nonexistent-cnpj");
+			var cnpj = new Cnpj("00.000.000/0000-00");
 			var companyRepositoryMock = new Mock<ICompanyRepository>();
-			var mediatorHandlerMock = new Mock<MediatorHandler>();
+			var mediatorHandlerMock = new Mock<IMediatorHandler>();
 			var mapperMock = new Mock<IMapper>();
 
 			var companyAppService = new CompanyAppService(

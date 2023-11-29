@@ -20,7 +20,7 @@ namespace CloudSuite.Modules.Domain.Models
 		void UpdateDomainEntity(Domain domain);
 
 		void RemoveDomainEntity(Domain domain);
-		void Add(Modules.Domain domain);
+		
 	}
 
 

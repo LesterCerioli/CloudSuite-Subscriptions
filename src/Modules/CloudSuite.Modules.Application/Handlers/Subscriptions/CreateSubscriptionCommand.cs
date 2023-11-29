@@ -9,10 +9,10 @@ namespace CloudSuite.Modules.Application.Handlers.Subscriptions
     {
         public Guid Id {  get; private set; }
         public string? SubscriptionNumber { get; set; }
-        public DateTime? CreateDate {  get; set; }
-        public DateTime? LastUpdateDate { get; set;}
-        public DateTime? ExpirteDate { get; set; }
-        public bool? Active {  get; set; }
+        public DateTime CreateDate {  get; set; }
+        public DateTime LastUpdateDate { get; set;}
+        public DateTime ExpirteDate { get; set; }
+        public bool Active {  get; set; }
 
         public CreateSubscriptionCommand()
         {

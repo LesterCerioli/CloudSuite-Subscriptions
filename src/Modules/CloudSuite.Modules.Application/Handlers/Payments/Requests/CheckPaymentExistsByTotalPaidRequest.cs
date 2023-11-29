@@ -7,7 +7,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments.Requests
     {
         public Guid Id { get; private set; }
 
-        public decimal? TotalPaid { get; private set; }
+        public decimal TotalPaid { get; private set; }
 
         public CheckPaymentExistsByTotalPaidRequest(decimal totalPaid)
         {

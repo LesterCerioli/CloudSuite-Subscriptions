@@ -49,6 +49,23 @@ namespace CloudSuite.Modules.Application.Validation.Customer
                 .LessThanOrEqualTo(DateTimeOffset.Now)
                 .WithMessage("O campo CreatedOn deve ser uma data e hora no passado ou presente.");
 
+            RuleFor(a => a.Company.Cnpj.CnpjNumber)
+                .Must(cnpj => IsValid(cnpj))
+                .WithMessage("O campo cnpj é inválido");
+
+            RuleFor(a => a.Company.SocialName)
+                .NotEmpty()
+                .WithMessage("O campo é obrigatório.")
+                .NotNull()
+                .WithMessage("O campo não pode ser nulo");
+
+            RuleFor(a => a.Company.FantasyName)
+                .NotEmpty()
+                .WithMessage("O campo é obrigatório.")
+                .NotNull()
+                .WithMessage("O campo não pode ser nulo");
+                
+
         }
 
         private bool IsValid(string cnpj)

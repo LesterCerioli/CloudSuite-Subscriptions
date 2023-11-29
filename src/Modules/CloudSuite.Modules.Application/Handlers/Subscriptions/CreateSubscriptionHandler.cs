@@ -26,8 +26,13 @@ namespace CloudSuite.Modules.Application.Handlers.Subscriptions
             if (validationResult.IsValid)
             {
                 try{
-                    var subscription = await _repositorioSubscription.GetBySubscriptionNumber(command.SubscriptionNumber);
-                    if (subscription != null)
+                    var subscriptionIsActive = await _repositorioSubscription.GetByActive(command.Active);
+                    var subscriptionCreateDate = await _repositorioSubscription.GetByCreateDate(command.CreateDate);
+                    var subscriptionExpireDate = await _repositorioSubscription.GetByExpireDate(command.ExpirteDate);
+                    var subscriptionLastUpdateDate = await _repositorioSubscription.GetByLastUpdateDate(command.LastUpdateDate);
+                    var subscriptionNumber = await _repositorioSubscription.GetBySubscriptionNumber(command.SubscriptionNumber);
+
+                    if (subscriptionIsActive != null && subscriptionCreateDate != null && subscriptionExpireDate != null && subscriptionLastUpdateDate != null && subscriptionNumber != null)
                     {
                         return await Task.FromResult(new CreateSubscriptionResponse(command.Id, "Subscription já criada."));
                     }

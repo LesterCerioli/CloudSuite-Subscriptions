@@ -1,6 +1,7 @@
 ﻿using CloudSuite.Modules.Application.Handlers.Customers.Requests;
 using CloudSuite.Modules.Application.Handlers.Customers.Responses;
 using CloudSuite.Modules.Application.Validation.Customer;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
             {
                 try
                 {
-                    var customer = await _repositorioCustomer.GetByEmail(request.Email);
+                    var customer = await _repositorioCustomer.GetByEmail(new Email(request.Email));
                     if (customer != null)
                     {
                         return await Task.FromResult(new CheckCustomerExistsByEmailResponse(request.Id, true, validationResult));

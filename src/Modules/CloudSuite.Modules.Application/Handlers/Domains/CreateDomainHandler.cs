@@ -27,8 +27,10 @@ namespace CloudSuite.Modules.Application.Handlers.Domains
             {
                 try
                 {
-                    var domain = await _repositorioDomain.GetByDns(command.DNS);
-                    if (domain != null)
+                    var domainDNS = await _repositorioDomain.GetByDns(command.DNS);
+                    var domainCreationDate = await _repositorioDomain.GetByCreationDate(command.CreatedAt);
+                    var domainOwnerName = await _repositorioDomain.GetByOwnerName(command.OwnerName);
+                    if (domainDNS != null && domainCreationDate != null && domainOwnerName != null)
                     {
                         return await Task.FromResult(new CreateDomainResponse(command.Id, "Domínio já foi cadastrado."));
                     }

@@ -9,9 +9,7 @@ namespace CloudSuite.Modules.Application.Validation.Payments
         {
             RuleFor(a => a.Total)
                 .GreaterThanOrEqualTo(0)
-                .When(a => a.Total.HasValue)
                 .WithMessage("O valor total deve ser maior ou igual a 0.");
-
         }
     }
 }

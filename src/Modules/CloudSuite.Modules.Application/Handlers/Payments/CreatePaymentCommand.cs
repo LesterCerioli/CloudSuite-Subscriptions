@@ -33,7 +33,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 this.TotalPaid,
                 this.Payer,
                 this.Cnpj,
-                this.Email
+                new Email(this.Email)
                 );
         }
 

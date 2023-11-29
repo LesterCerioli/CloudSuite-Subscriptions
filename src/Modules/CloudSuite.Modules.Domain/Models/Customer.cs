@@ -5,7 +5,11 @@ namespace CloudSuite.Modules.Domain.Models
 {
     public class Customer : Entity, IAggregateRoot
     {
-        public Customer(Name name, Cnpj cnpj, Email email, string? businessOwner, DateTimeOffset? createdOn,
+		public Customer()
+		{
+		}
+
+		public Customer(Name name, Cnpj cnpj, Email email, string? businessOwner, DateTimeOffset? createdOn,
             Company company)
         {
             Name = name;

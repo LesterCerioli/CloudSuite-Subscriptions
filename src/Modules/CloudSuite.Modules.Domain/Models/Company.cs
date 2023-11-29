@@ -6,7 +6,11 @@ namespace CloudSuite.Modules.Domain.Models
 {
     public class Company : Entity, IAggregateRoot
     {
-        public Company(Cnpj cnpj, string? socialName, string? fantasyName)
+		public Company()
+		{
+		}
+
+		public Company(Cnpj cnpj, string? socialName, string? fantasyName)
         {
             Cnpj = cnpj;
             SocialName = socialName;

@@ -66,5 +66,66 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			// Assert
 			Assert.Null(result);
 		}
-	}
+
+        [Fact]
+        public async Task GetBySocialName_ShouldReturnMappedViewModel()
+        {
+            // Arrange
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var socialName = "Americanas";
+            var fantasyName = "Lojas Americanas";
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            var companyEntity = new Company(cnpj, socialName, fantasyName);
+            companyRepositoryMock.Setup(repo => repo.GetBySocialName(socialName)).ReturnsAsync(companyEntity);
+
+            var expectedViewModel = new CompanyViewModel();
+            mapperMock.Setup(mapper => mapper.Map<CompanyViewModel>(companyEntity)).Returns(expectedViewModel);
+
+            // Act
+            var result = await companyAppService.GetBySocialName(socialName);
+
+            // Assert
+            Assert.Equal(expectedViewModel, result);
+        }
+
+        [Fact]
+        public async Task GetByFantasyName_ShouldReturnMappedViewModel()
+        {
+            // Arrange
+            var cnpj = new Cnpj("76.883.915/0001-54");
+            var socialName = "Americanas";
+            var fantasyName = "Lojas Americanas";
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            var companyEntity = new Company(cnpj, socialName, fantasyName);
+            companyRepositoryMock.Setup(repo => repo.GetByFantasyName(socialName)).ReturnsAsync(companyEntity);
+
+            var expectedViewModel = new CompanyViewModel();
+            mapperMock.Setup(mapper => mapper.Map<CompanyViewModel>(companyEntity)).Returns(expectedViewModel);
+
+            // Act
+            var result = await companyAppService.GetByFantasyName(socialName);
+
+            // Assert
+            Assert.Equal(expectedViewModel, result);
+        }
+
+    }
 }

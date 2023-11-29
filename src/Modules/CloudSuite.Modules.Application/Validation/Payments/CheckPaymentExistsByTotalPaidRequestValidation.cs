@@ -8,8 +8,9 @@ namespace CloudSuite.Modules.Application.Validation.Payments
         public CheckPaymentExistsByTotalPaidRequestValidation()
         {
             RuleFor(a => a.TotalPaid)
+                .NotEmpty()
+                .WithMessage("O campo não pode estar vazio.")
                 .GreaterThanOrEqualTo(0)
-                .When(a => a.TotalPaid.HasValue)
                 .WithMessage("O valor total pago deve ser maior ou igual a 0.");
         }
     }

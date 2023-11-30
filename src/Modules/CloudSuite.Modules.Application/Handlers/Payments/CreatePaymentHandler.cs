@@ -26,8 +26,16 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
             {
                 try
                 {
-                    var payment = await _repositorioPayment.GetByCnpj(new Cnpj(command.Cnpj));
-                    if (payment != null)
+                    var paymentCnpj = await _repositorioPayment.GetByCnpj(new Cnpj(command.Cnpj));
+                    var paymentEmail = await _repositorioPayment.GetByEmail(new Email(command.Email));
+                    var paymentExpireDate = await _repositorioPayment.GetByExpireDate(command.ExpireTime);
+                    var paymentNumber = await _repositorioPayment.GetByNumber(command.Number);
+                    var paymentPaidDate = await _repositorioPayment.GetByPaidDate(command.PaidTime);
+                    var paymentPayer = await _repositorioPayment.GetByPayer(command.Payer);
+                    var paymentTotal = await _repositorioPayment.GetByTotal(command.Total);
+                    var paymentTotalPaid = await _repositorioPayment.GetByTotalPaid(command.TotalPaid);
+
+                    if (paymentCnpj != null && paymentEmail != null && paymentExpireDate != null && paymentNumber != null && paymentPaidDate != null && paymentPayer != null && paymentTotal != null && paymentTotalPaid != null)
                     {
                         return await Task.FromResult(new CreatePaymentResponse(command.Id, "Pagamento já cadastrado."));
                     }

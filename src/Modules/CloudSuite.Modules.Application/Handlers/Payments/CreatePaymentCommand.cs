@@ -12,8 +12,8 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
         public string? Number { get; set; }
         public DateTime? PaidTime {  get; set; }
         public DateTime? ExpireTime {  get; set; }
-        public decimal? Total {  get; set; }
-        public decimal? TotalPaid {  get; set; }
+        public decimal Total {  get; set; }
+        public decimal TotalPaid {  get; set; }
         public string? Payer { get; set; }
         public string? Cnpj { get; private set; }
         public string? Email { get; private set; }

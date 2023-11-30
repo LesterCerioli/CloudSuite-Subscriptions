@@ -28,48 +28,44 @@ namespace CloudSuite.Modules.Application.Validation.Customer
                 }
             });
 
-            RuleFor(a => a.Email).Custom((numDoc, context) => {
-                try
-                {
-                    new Email(numDoc);
-                }
-                catch (Exception ex)
-                {
-                    context.AddFailure(ex.Message);
-                }
-            });
+            RuleFor(a => a.Email)
+                .NotEmpty()
+                .WithMessage("O campo Email é obrigatório.")
+                .Length(1, 80)
+                .WithMessage("O campo Email deve ter entre 1 e 450 caracteres.")
+                .EmailAddress()
+                .WithMessage("O campo Email deve ser um endereço de email válido.");
 
             RuleFor(a => a.BusinessOwner)
                 .NotEmpty()
-                .WithMessage("O campo é obrigatório");
+                .WithMessage("O campo BusinessOwner é obrigatório.")
+                .WithMessage("O campo BusinessOwner deve ter entre 1 e 100 caracteres.")
+                .Matches(@"^[a-zA-Z\s]*$")
+                .WithMessage("O campo BusinessOwner deve conter apenas letras e espaços.")
+                .NotNull()
+                .WithMessage("O campo BusinessOwner não pode ser nulo.");
 
             RuleFor(a => a.CreatedOn)
                 .LessThanOrEqualTo(DateTimeOffset.Now)
                 .WithMessage("O campo CreatedOn deve ser uma data e hora no passado ou presente.");
 
-            RuleFor(a => a.Company.Cnpj)
-                .Must(cnpj => IsValid(cnpj.CnpjNumber))
+            RuleFor(a => a.Company.Cnpj.CnpjNumber)
+                .Must(cnpj => IsValid(cnpj))
                 .WithMessage("O campo cnpj é inválido");
 
-                RuleFor(a => a.Company.SocialName)
+            RuleFor(a => a.Company.SocialName)
                 .NotEmpty()
-                .WithMessage("O campo SocialName é obrigatório.")
-                .Length(1, 100)
-                .WithMessage("O campo SocialName deve ter entre 1 e 100 caracteres.")
-                .Matches(@"^[a-zA-Z\s]*$")
-                .WithMessage("O campo SocialName deve conter apenas letras e espaços.")
+                .WithMessage("O campo é obrigatório.")
                 .NotNull()
-                .WithMessage("O campo SocialName não pode ser nulo.");
+                .WithMessage("O campo não pode ser nulo");
 
             RuleFor(a => a.Company.FantasyName)
                 .NotEmpty()
-                .WithMessage("O campo FantasyName é obrigatório.")
-                .Length(1, 100)
-                .WithMessage("O campo FantasyName deve ter entre 1 e 100 caracteres.")
-                .Matches(@"^[a-zA-Z\s]*$")
-                .WithMessage("O campo FantasyName deve conter apenas letras e espaços.")
+                .WithMessage("O campo é obrigatório.")
                 .NotNull()
-                .WithMessage("O campo FantasyName não pode ser nulo.");
+                .WithMessage("O campo não pode ser nulo");
+                
+
         }
 
         private bool IsValid(string cnpj)
@@ -130,3 +126,4 @@ namespace CloudSuite.Modules.Application.Validation.Customer
         }
     }
 }
+

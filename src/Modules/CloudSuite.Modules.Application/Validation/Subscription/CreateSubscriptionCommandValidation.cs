@@ -25,11 +25,15 @@ namespace CloudSuite.Modules.Application.Validation.Subscription
              .LessThanOrEqualTo(DateTime.Now)
              .WithMessage("O campo LatestUpdatedOn deve ser uma data no passado ou presente.");
 
+            RuleFor(a => a.Active)
+              .NotNull()
+              .WithMessage("O campo Active não pode ser nulo.");
+
             RuleFor(a => a.ExpirteDate)
-            .NotEmpty()
-            .WithMessage("O campo é obrigatório")
-            .GreaterThan(a => a.CreateDate)
-            .WithMessage("O Campo ExpireDate deve ser uma data e hora posterior a CreateDate");
+             .NotEmpty()
+             .WithMessage("O campo é obrigatório")
+             .GreaterThan(a => a.CreateDate)
+             .WithMessage("O Campo ExpireDate deve ser uma data e hora posterior a CreateDate");
         }
     }
 }

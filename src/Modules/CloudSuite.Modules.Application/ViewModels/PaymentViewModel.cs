@@ -7,7 +7,7 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class PaymentViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("Número do Pagamento")]
         [Required(ErrorMessage = "O campo Numero deve ser preenchido.")]

@@ -6,7 +6,7 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class SubscriptionViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("Número da Assinatura")]
         [Required(ErrorMessage = "O campo Numero da Assinatura deve ser preenchido.")]

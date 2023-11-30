@@ -184,7 +184,11 @@ namespace CloudSuite.Modules.Application.Tests.Services
             // Arrange
             var createDomainCommand = new CreateSubscriptionCommand()
             {
-
+                SubscriptionNumber = "SUB12345",
+                CreateDate = DateTime.Now,
+                LastUpdateDate = DateTime.Now,
+                ExpirteDate = DateTime.Now.AddDays(30),
+                Active = true
             };
 
             var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();

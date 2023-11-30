@@ -8,7 +8,7 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class CustomerViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("Nomde da Empresa")]
         [Required(ErrorMessage = "O campo Nome deve ser preenchido.")]

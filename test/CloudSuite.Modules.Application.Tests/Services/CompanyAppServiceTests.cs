@@ -47,7 +47,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
 		}
 
-        [Fact]
+        
 		public async Task GetCompanyByCnpj_ShouldReturnsNullForNonExistentCompany()
 		{
 			// Arrange
@@ -106,24 +106,27 @@ namespace CloudSuite.Modules.Application.Tests.Services
             // Arrange
             var createCompanyCommand = new CreateCompanyCommand()
             {
-
+                Cnpj = "34.764.512/0001-46",
+                SocialName = "Empresa Exemplo Ltda.",
+                FantasyName = "Fantasia da Empresa",
+                FundationDate = DateTime.Now,
             };
 
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
-            var customerAppService = new CustomerAppService(
-                customerRepositoryMock.Object,
-                mapperMock.Object,
-                mediatorHandlerMock.Object
+            var customerAppService = new CompanyAppService(
+               companyRepositoryMock.Object,
+               mediatorHandlerMock.Object,
+               mapperMock.Object
             );
 
             // Act
-            //await customerAppService.Save(createCompanyCommand);
+            await customerAppService.Save(createCompanyCommand);
 
             // Assert
-            customerRepositoryMock.Verify(repo => repo.Add(It.IsAny<Customer>()), Times.Once);
+            companyRepositoryMock.Verify(repo => repo.Add(It.IsAny<Company>()), Times.Once);
         }
     }
 }

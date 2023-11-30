@@ -113,7 +113,9 @@ namespace CloudSuite.Modules.Application.Tests.Services
             // Arrange
             var createDomainCommand = new CreateDomainCommand()
 			{
-
+                DNS = "example.com",
+				OwnerName = "Thiago Farias",
+                CreatedAt = DateTime.Now
 			};
             var domainRepositoryMock = new Mock<IDomainRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();

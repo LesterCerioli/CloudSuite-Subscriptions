@@ -6,7 +6,7 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class DomainViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("DNS do domínio")]
         [Required(ErrorMessage = "O campo Dns deve ser preenchido.")]

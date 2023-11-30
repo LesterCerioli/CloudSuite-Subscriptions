@@ -8,9 +8,9 @@ namespace CloudSuite.Modules.Application.Handlers.Domains
     {
         public Guid Id { get; private set; }
 
-        public string? DNS;
-        public string? OwnerName;
-        public DateTime CreatedAt;
+        public string? DNS { get; set; }
+        public string? OwnerName { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public CreateDomainCommand() { 
             Id = Guid.NewGuid();

@@ -241,7 +241,14 @@ namespace CloudSuite.Modules.Application.Tests.Services
             // Arrange
             var createPaymentCommand = new CreatePaymentCommand()
             {
-
+                Number = "12345",
+                PaidTime = DateTime.Now,
+                ExpireTime = DateTime.Now.AddDays(30),
+                Total = 100.00m,
+                TotalPaid = 0.00m,
+                Payer = "John Doe",
+                Cnpj = "57.117.190/0001-49",
+                Email = "johndoe@example.com"
             };
             var paymentRepositoryMock = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();

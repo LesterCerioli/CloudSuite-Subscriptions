@@ -6,7 +6,7 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class PersonViewmodel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("Nome")]
         [Required(ErrorMessage = "O campo Nome deve ser preenchido.")]

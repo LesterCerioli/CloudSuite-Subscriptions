@@ -27,8 +27,11 @@ namespace CloudSuite.Modules.Application.Handlers.Company
             {
                 try
                 {
-                    var payment = await _repositorioCompany.GetByCnpj(new Cnpj(command.Cnpj));
-                    if (payment != null)
+                    var paymentCnpj = await _repositorioCompany.GetByCnpj(new Cnpj(command.Cnpj));
+                    var paymentFantasyName = await _repositorioCompany.GetByFantasyName(command.FantasyName);
+                    var paymentSocial = await _repositorioCompany.GetBySocialName(command.SocialName);
+
+                    if (paymentCnpj != null && paymentFantasyName != null && paymentSocial != null)
                     {
                         return await Task.FromResult(new CreateCompanyResponse(command.Id, "Compania já cadastrado."));
                     }

@@ -9,11 +9,9 @@ namespace CloudSuite.Modules.Application.Validation.Payments
         {
             RuleFor(a => a.TotalPaid)
                 .NotEmpty()
-                .WithMessage("O campo é obrigatório.")
-                .NotNull()
-                .WithMessage("O campo não pode ser nulo.")
-                .LessThan(0)
-                .WithMessage("O campo não pode ser negativo.");
+                .WithMessage("O campo não pode estar vazio.")
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("O valor total pago deve ser maior ou igual a 0.");
         }
     }
 }

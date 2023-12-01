@@ -10,11 +10,12 @@ namespace CloudSuite.Modules.Domain.Models
 		{
 		}
 
-		public Company(Cnpj cnpj, string? socialName, string? fantasyName)
+		public Company(Cnpj cnpj, string? socialName, string? fantasyName, DateTime fundationDate)
         {
             Cnpj = cnpj;
             SocialName = socialName;
             FantasyName = fantasyName;
+            FundationDate = fundationDate;
         }
 
         public Cnpj Cnpj { get; private set; }

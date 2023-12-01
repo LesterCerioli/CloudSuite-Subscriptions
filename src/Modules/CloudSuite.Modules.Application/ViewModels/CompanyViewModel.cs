@@ -21,5 +21,8 @@ namespace CloudSuite.Modules.Application.ViewModels
         [Required(ErrorMessage = "O campo Nome Fantasya deve ser preenchido.")]
         public string? FantasyName { get; set; }
 
+        [DisplayName("Data de Fundação da Empresa")]
+        [Required(ErrorMessage = "O campo Data de Fundação deve ser preenchido.")]
+        public DateTime FundationDate { get; set; }
     }
 }

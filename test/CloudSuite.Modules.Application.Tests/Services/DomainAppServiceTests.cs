@@ -18,13 +18,13 @@ namespace CloudSuite.Modules.Application.Tests.Services
 {
 	public class DomainAppServiceTests
 	{
-		[Fact]
-		public async Task GetDomainByCreationDate_ShouldReturnDomainViewModel()
+		[Theory]
+		[InlineData("example.com", "Thiago Farias", "2009-06-25T00:00:00+00:00")]
+        [InlineData("example1.com", "João Silva", "2010-07-26T01:01:01+00:00")]
+        [InlineData("example2.com", "Maria Santos", "2011-08-27T02:02:02+00:00")]
+        public async Task GetDomainByCreationDate_ShouldReturnDomainViewModel(string dns, string ownerName, DateTimeOffset creationDate)
 		{
             // Arrange
-            var dns = "example.com";
-            var OwnerName = "Thiago Farias";
-            var creationDate = DateTimeOffset.Now;
 			var domainRepositoryMock = new Mock<IDomainRepository>();
 			var mediatorHandlerMock = new Mock<IMediatorHandler>();
 			var mapperMock = new Mock<IMapper>();
@@ -35,10 +35,16 @@ namespace CloudSuite.Modules.Application.Tests.Services
 				mediatorHandlerMock.Object
 			);
 
-            var domainEntity = new DomainEntity(dns, OwnerName, creationDate);
+            var domainEntity = new DomainEntity(dns, ownerName, creationDate);
             domainRepositoryMock.Setup(repo => repo.GetByCreationDate(creationDate)).ReturnsAsync(domainEntity);
 
-            var expectedViewModel = new DomainViewModel();
+            var expectedViewModel = new DomainViewModel()
+			{
+				Id = domainEntity.Id,
+				DNS = dns,
+				OwnerName = ownerName,
+				CreationDate = creationDate
+			};
             mapperMock.Setup(mapper => mapper.Map<DomainViewModel>(domainEntity)).Returns(expectedViewModel);
 
             // Act
@@ -49,11 +55,13 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
         }
 
-		[Fact]
-		public async Task GetDomainByDns_ShouldReturnDomainViewModel()
+		[Theory]
+        [InlineData("example3.com", "Pedro Costa", "2012-09-28T03:03:03+00:00")]
+        [InlineData("example4.com", "Ana Pereira", "2013-10-29T04:04:04+00:00")]
+        [InlineData("example5.com", "Lucas Oliveira", "2014-11-30T05:05:05+00:00")]
+        public async Task GetDomainByDns_ShouldReturnDomainViewModel(string dns, string ownerName, DateTimeOffset creationDate)
 		{
 			// Arrange
-			var dns = "example.com";
 			var domainRepositoryMock = new Mock<IDomainRepository>();
 			var mediatorHandlerMock = new Mock<IMediatorHandler>();
 			var mapperMock = new Mock<IMapper>();
@@ -64,10 +72,16 @@ namespace CloudSuite.Modules.Application.Tests.Services
 				mediatorHandlerMock.Object
 			);
 
-			var domainEntity = new DomainEntity();
+			var domainEntity = new DomainEntity(dns, ownerName, creationDate);
 			domainRepositoryMock.Setup(repo => repo.GetByDns(dns)).ReturnsAsync(domainEntity);
 
-			var expectedViewModel = new DomainViewModel();
+			var expectedViewModel = new DomainViewModel()
+			{
+                Id = domainEntity.Id,
+                DNS = dns,
+                OwnerName = ownerName,
+                CreationDate = creationDate
+            };
 			mapperMock.Setup(mapper => mapper.Map<DomainViewModel>(domainEntity)).Returns(expectedViewModel);
 
 			// Act
@@ -77,13 +91,13 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			Assert.Equal(expectedViewModel, result);
 		}
 
-		[Fact]
-		public async Task GetDomainByOwnerName_ShouldReturnDomainViewModel()
+		[Theory]
+        [InlineData("example6.com", "Beatriz Souza", "2015-12-31T06:06:06+00:00")]
+        [InlineData("example7.com", "Gabriel Lima", "2016-01-01T07:07:07+00:00")]
+        [InlineData("example8.com", "Julia Carvalho", "2017-02-02T08:08:08+00:00")]
+        public async Task GetDomainByOwnerName_ShouldReturnDomainViewModel(string dns, string ownerName, DateTimeOffset creationDate)
 		{
             // Arrange
-            var dns = "example.com";
-            var ownerName = "Thiago Farias";
-            var creationDate =DateTimeOffset.Now;
 			var domainRepositoryMock = new Mock<IDomainRepository>();
 			var mediatorHandlerMock = new Mock<IMediatorHandler>();
 			var mapperMock = new Mock<IMapper>();
@@ -97,7 +111,13 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			var domainEntity = new DomainEntity(dns, ownerName, creationDate);
 			domainRepositoryMock.Setup(repo => repo.GetByOwnerName(ownerName)).ReturnsAsync(domainEntity);
 
-			var expectedViewModel = new DomainViewModel();
+			var expectedViewModel = new DomainViewModel()
+			{
+                Id = domainEntity.Id,
+                DNS = dns,
+                OwnerName = ownerName,
+                CreationDate = creationDate
+            };
 			mapperMock.Setup(mapper => mapper.Map<DomainViewModel>(domainEntity)).Returns(expectedViewModel);
 
 			// Act
@@ -107,8 +127,11 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			Assert.Equal(expectedViewModel, result);
 		}
 
-        [Fact]
-        public async Task Save_ShouldAddDomainToRepository()
+        [Theory]
+        [InlineData("example9.com", "Rafael Gomes", "2018-03-03T09:09:09+00:00")]
+        [InlineData("example10.com", "Isabella Rocha", "2019-04-04T10:10:10+00:00")]
+        [InlineData("example11.com", "Mateus Alves", "2020-05-05T11:11:11+00:00")]
+        public async Task Save_ShouldAddDomainToRepository(string dns, string ownerName, DateTimeOffset creationDate)
         {
             // Arrange
             var createDomainCommand = new CreateDomainCommand()

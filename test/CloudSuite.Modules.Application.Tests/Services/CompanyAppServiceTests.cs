@@ -5,6 +5,7 @@ using CloudSuite.Modules.Application.ViewModels;
 using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using CloudSuite.Modules.Domain.Models;
+using FluentValidation;
 using Moq;
 using NetDevPack.Mediator;
 using System;
@@ -18,7 +19,8 @@ namespace CloudSuite.Modules.Application.Tests.Services
 {
 	public class CompanyAppServiceTests
 	{
-		[Theory]
+
+    	[Theory]
         [InlineData("49.859.881/0001-90", "Americanas", "Lojas Americanas", "2017-3-1")]
         [InlineData("27.562.604/0001-88", "Walmart", "Walmart Brasil", "1999-9-12")]
         [InlineData("54.628.754/0001-10", "Carrefour", "Carrefour Brasil", "2000-5-11")]
@@ -58,7 +60,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
         [InlineData("00.000.000/0000-00")]
         [InlineData(null)]
         [InlineData("62.628.381/0001-10")]
-        public async Task GetCompanyByCnpj_ShouldReturnsNullForNonExistentCompany(string cnpj)
+        public async Task GetCompanyByCnpj_ShouldReturnsNonExistentCompany(string cnpj)
         {
             var companyRepositoryMock = new Mock<ICompanyRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -140,6 +142,118 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             // Assert
             companyRepositoryMock.Verify(repo => repo.Add(It.IsAny<Company>()), Times.Once);
+        }
+
+        /*
+        [Theory]
+        [InlineData("09.641.757/0001-39", "", "","")] // Nome social, nome fantasia e data de fundação ausentes
+        [InlineData("", "Carrefour", "1234556", "alskçjdsij")] // CNPJ vazio
+        [InlineData(null, "Carrefour", "Carrefour Brasil", null)] // CNPJ nulo
+        public async Task Save_ShouldThrowExceptionForInvalidData(string cnpj, string socialName, string fantasyName, DateTime fundationDate)
+        {
+            // Arrange
+            var createCompanyCommand = new CreateCompanyCommand()
+            {
+                Cnpj = cnpj,
+                SocialName = socialName,
+                FantasyName = fantasyName,
+                FundationDate = fundationDate // Tente converter a data, para lançar a exceção
+            };
+
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CompanyAppService(
+               companyRepositoryMock.Object,
+               mediatorHandlerMock.Object,
+               mapperMock.Object
+            );
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(async () => await customerAppService.Save(createCompanyCommand));
+
+            // Verify (optional)
+            companyRepositoryMock.Verify(repo => repo.Add(It.IsAny<Company>()), Times.Never);
+
+        }*/
+
+        [Fact]
+        public async Task GetCompanyByCnpj_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            companyRepositoryMock.Setup(repo => repo.GetByCnpj(It.IsAny<Cnpj>()))
+                .ReturnsAsync((Company)null); // Simulate null result from the repository
+
+            var cnpj = "75.408.920/0001-42";
+
+            // Act
+            var result = await companyAppService.GetByCnpj(cnpj);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetCompanyByFantasyName_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            companyRepositoryMock.Setup(repo => repo.GetByFantasyName(It.IsAny<string>()))
+                .ReturnsAsync((Company)null); // Simulate null result from the repository
+
+            var fantasyName = "Lojas Americanas";
+
+            // Act
+            var result = await companyAppService.GetByFantasyName(fantasyName);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetCompanyBySocialName_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            companyRepositoryMock.Setup(repo => repo.GetBySocialName(It.IsAny<string>()))
+                .ReturnsAsync((Company)null); // Simulate null result from the repository
+
+            var SocialName = "Lojas Americanas";
+
+            // Act
+            var result = await companyAppService.GetBySocialName(SocialName);
+
+            // Assert
+            Assert.Null(result);
         }
     }
 }

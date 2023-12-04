@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using CloudSuite.Modules.Application.Handlers.Company;
 using CloudSuite.Modules.Application.Handlers.Domains;
+using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
+using CloudSuite.Modules.Commons.Valueobjects;
+using CloudSuite.Modules.Domain.Contracts;
 using CloudSuite.Modules.Domain.Models;
 using Moq;
 using NetDevPack.Mediator;
@@ -91,7 +95,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			Assert.Equal(expectedViewModel, result);
 		}
 
-		[Theory]
+        [Theory]
         [InlineData("example6.com", "Beatriz Souza", "2015-12-31T06:06:06+00:00")]
         [InlineData("example7.com", "Gabriel Lima", "2016-01-01T07:07:07+00:00")]
         [InlineData("example8.com", "Julia Carvalho", "2017-02-02T08:08:08+00:00")]
@@ -135,11 +139,11 @@ namespace CloudSuite.Modules.Application.Tests.Services
         {
             // Arrange
             var createDomainCommand = new CreateDomainCommand()
-			{
+            {
                 DNS = "example.com",
-				OwnerName = "Thiago Farias",
+                OwnerName = "Thiago Farias",
                 CreatedAt = DateTime.Now
-			};
+            };
             var domainRepositoryMock = new Mock<IDomainRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
@@ -155,6 +159,80 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             // Assert
             domainRepositoryMock.Verify(repo => repo.Add(It.IsAny<DomainEntity>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetDomainByCreationDate_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var domainRepositoryMock = new Mock<IDomainRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var domainAppService = new DomainAppService(
+                domainRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            domainRepositoryMock.Setup(repo => repo.GetByCreationDate(It.IsAny<DateTimeOffset>()))
+                .ReturnsAsync((DomainEntity)null); // Simulate null result from the repository
+
+            // Act
+            var result = await domainAppService.GetByCreationDate(DateTimeOffset.Now);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetDomainByOwnerName_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var domainRepositoryMock = new Mock<IDomainRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var domainAppService = new DomainAppService(
+                domainRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            domainRepositoryMock.Setup(repo => repo.GetByOwnerName(It.IsAny<string>()))
+                .ReturnsAsync((DomainEntity)null); // Simulate null result from the repository
+
+            var OwnerName = "Miguel Peewee";
+            // Act
+            var result = await domainAppService.GetByOwnerName(OwnerName);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetDomainByDns_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var domainRepositoryMock = new Mock<IDomainRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var domainAppService = new DomainAppService(
+                domainRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            domainRepositoryMock.Setup(repo => repo.GetByDns(It.IsAny<string>()))
+                .ReturnsAsync((DomainEntity)null); // Simulate null result from the repository
+
+            var dns = "example9.com";
+            // Act
+            var result = await domainAppService.GetByDns(dns);
+
+            // Assert
+            Assert.Null(result);
         }
     }
 }

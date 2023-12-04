@@ -302,5 +302,153 @@ namespace CloudSuite.Modules.Application.Tests.Services
             paymentRepositoryMock.Verify(repo => repo.Add(It.IsAny<Payment>()), Times.Once);
         }
 
+        [Fact]
+        public async Task GetByCnpj_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var paymentAppService = new PaymentAppService(
+                paymentRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            paymentRepositoryMock.Setup(repo => repo.GetByCnpj(It.IsAny<Cnpj>()))
+                .ReturnsAsync((Payment)null); // Simulate null result from the repository
+
+            var cnpj = "54.760.681/0001-15";
+            // Act
+            var result = await paymentAppService.GetByCnpj(cnpj);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetByExpireDate_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var paymentAppService = new PaymentAppService(
+                paymentRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            paymentRepositoryMock.Setup(repo => repo.GetByExpireDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Payment)null); // Simulate null result from the repository
+
+            // Act
+            var result = await paymentAppService.GetByExpireDate(DateTime.UtcNow);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetByNumber_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var paymentAppService = new PaymentAppService(
+                paymentRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            paymentRepositoryMock.Setup(repo => repo.GetByNumber(It.IsAny<string>()))
+                .ReturnsAsync((Payment)null); // Simulate null result from the repository
+
+            var number = "876322798764455";
+
+            // Act
+            var result = await paymentAppService.GetByNumber(number);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetByPaidDate_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var paymentAppService = new PaymentAppService(
+                paymentRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            paymentRepositoryMock.Setup(repo => repo.GetByPaidDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Payment)null); // Simulate null result from the repository
+
+            // Act
+            var result = await paymentAppService.GetByPaidDate(DateTime.Now);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetByPayer_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var paymentAppService = new PaymentAppService(
+                paymentRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            paymentRepositoryMock.Setup(repo => repo.GetByPayer(It.IsAny<string>()))
+                .ReturnsAsync((Payment)null); // Simulate null result from the repository
+
+            var payer = "Joh doe";
+            // Act
+            var result = await paymentAppService.GetByPayer(payer);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetByTotal_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var paymentAppService = new PaymentAppService(
+                paymentRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            paymentRepositoryMock.Setup(repo => repo.GetByTotal(It.IsAny<decimal>()))
+                .ReturnsAsync((Payment)null); // Simulate null result from the repository
+
+            decimal total = 11.2m; 
+            // Act
+            var result = await paymentAppService.GetByTotal(total);
+
+            // Assert
+            Assert.Null(result);
+        }
     }
 }

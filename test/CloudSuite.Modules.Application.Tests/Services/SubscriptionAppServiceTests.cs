@@ -204,43 +204,137 @@ namespace CloudSuite.Modules.Application.Tests.Services
         [Fact]
         public async Task GetByActive_ShouldHandleNullRepositoryResult()
         {
-			// Arrange
-			var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-			var mediatorHandlerMock = new Mock<IMediatorHandler>();
-			var mapperMock = new Mock<IMapper>();
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
 
-			var subscriptionAppService = new SubscriptionAppService(
-				subscriptionRepositoryMock.Object,
-				mediatorHandlerMock.Object,
-				mapperMock.Object
-			);
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
 
-			subscriptionRepositoryMock.Setup(repo => repo.GetByActive(It.IsAny<bool>()))
-				.ReturnsAsync((Subscription)null); // Simulate null result from the repository
+            subscriptionRepositoryMock.Setup(repo => repo.GetByActive(It.IsAny<bool>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
 
-			// Act
-			var result = await subscriptionAppService.GetByActive(true);
+            // Act
+            var result = await subscriptionAppService.GetByActive(true);
 
-			// Assert
-			Assert.Null(result);
-		}
+            // Assert
+            Assert.Null(result);
+        }
 
         [Fact]
-        public async Task GetByActive_ShouldHandleInvalidMappingResult()
+        public async Task GetByCreateDate_ShouldHandleNullRepositoryResult()
         {
-			// Arrange
-			var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-			var mediatorHandlerMock = new Mock<IMediatorHandler>();
-			var mapperMock = new Mock<IMapper>();
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
 
-			var subscriptionAppService = new SubscriptionAppService(
-				subscriptionRepositoryMock.Object,
-				mediatorHandlerMock.Object,
-				mapperMock.Object
-			);
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
 
-            
-		}
+            subscriptionRepositoryMock.Setup(repo => repo.GetByCreateDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
 
-	}
+            // Act
+            var result = await subscriptionAppService.GetByCreateDate(DateTime.Now);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetByExpireDate_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByExpireDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetByExpireDate(DateTime.UtcNow);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetByLastUpdateDate_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByLastUpdateDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetByLastUpdateDate(DateTime.Today);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetBySubscriptionNumber_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetBySubscriptionNumber(It.IsAny<string>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetByLastUpdateDate(DateTime.Today);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task GetBySubscriptionNumber_ShouldHandleInvalidMappingResult()
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+        }
+
+    }
 }

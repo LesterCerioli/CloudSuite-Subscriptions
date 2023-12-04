@@ -200,5 +200,47 @@ namespace CloudSuite.Modules.Application.Tests.Services
             // Assert
             subscriptionRepositoryMock.Verify(repo => repo.Add(It.IsAny<Subscription>()), Times.Once);
         }
-    }
+
+        [Fact]
+        public async Task GetByActive_ShouldHandleNullRepositoryResult()
+        {
+			// Arrange
+			var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+			var mediatorHandlerMock = new Mock<IMediatorHandler>();
+			var mapperMock = new Mock<IMapper>();
+
+			var subscriptionAppService = new SubscriptionAppService(
+				subscriptionRepositoryMock.Object,
+				mediatorHandlerMock.Object,
+				mapperMock.Object
+			);
+
+			subscriptionRepositoryMock.Setup(repo => repo.GetByActive(It.IsAny<bool>()))
+				.ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+			// Act
+			var result = await subscriptionAppService.GetByActive(true);
+
+			// Assert
+			Assert.Null(result);
+		}
+
+        [Fact]
+        public async Task GetByActive_ShouldHandleInvalidMappingResult()
+        {
+			// Arrange
+			var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+			var mediatorHandlerMock = new Mock<IMediatorHandler>();
+			var mapperMock = new Mock<IMapper>();
+
+			var subscriptionAppService = new SubscriptionAppService(
+				subscriptionRepositoryMock.Object,
+				mediatorHandlerMock.Object,
+				mapperMock.Object
+			);
+
+            
+		}
+
+	}
 }

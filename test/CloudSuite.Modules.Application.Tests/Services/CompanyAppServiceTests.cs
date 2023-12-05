@@ -19,8 +19,94 @@ namespace CloudSuite.Modules.Application.Tests.Services
 {
 	public class CompanyAppServiceTests
 	{
+        [Theory]
+        [InlineData("49.859.881/0001-90", "Americanas", "Lojas Americanas", "2017-3-1")]
+        [InlineData("27.562.604/0001-88", "Walmart", "Walmart Brasil", "1999-9-12")]
+        [InlineData("54.628.754/0001-10", "Carrefour", "Carrefour Brasil", "2000-5-11")]
+        public async Task GetCompanyBySocialName_ShouldReturnsCompanyViewModel(string cnpj, string socialName, string fantasyName, DateTime fundationDate)
+        {
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
 
-    	[Theory]
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object);
+
+            var companyEntity = new Company(cnpj, socialName, fantasyName, fundationDate);
+            companyRepositoryMock.Setup(repo => repo.GetBySocialName(cnpj)).ReturnsAsync(companyEntity);
+
+            var expectedViewModel = new CompanyViewModel()
+            {
+                Id = companyEntity.Id,
+                Cnpj = cnpj,
+                SocialName = socialName,
+                FantasyName = fantasyName,
+                FundationDate = fundationDate
+            };
+
+            mapperMock.Setup(mapper => mapper.Map<CompanyViewModel>(companyEntity)).Returns(expectedViewModel);
+
+            // Act
+            var result = await companyAppService.GetBySocialName(cnpj);
+
+            // Assert
+            Assert.Equal(expectedViewModel, result);
+        }
+
+        [Theory]
+        [InlineData("Americanas")]
+        [InlineData("Walmart")]
+        [InlineData("Carrefour")]
+        public async Task GetCompanyBySocialName_ShouldHandleNullRepositoryResult(string socialName)
+        {
+            // Arrange
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            companyRepositoryMock.Setup(repo => repo.GetBySocialName(It.IsAny<string>()))
+                .ReturnsAsync((Company)null); // Simulate null result from the repository
+
+            // Act
+            var result = await companyAppService.GetBySocialName(socialName);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("Americanas")]
+        [InlineData("Walmart")]
+        [InlineData("Carrefour")]
+        public async Task GetCompanyBySocialName_ShouldHandleInvalidMappingResult(string socialName)
+        {
+            // Arrange
+            var companyRepositoryMock = new Mock<ICompanyRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            companyRepositoryMock.Setup(repo => repo.GetBySocialName(It.IsAny<string>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => companyAppService.GetBySocialName(socialName));
+        }
+
+        [Theory]
         [InlineData("49.859.881/0001-90", "Americanas", "Lojas Americanas", "2017-3-1")]
         [InlineData("27.562.604/0001-88", "Walmart", "Walmart Brasil", "1999-9-12")]
         [InlineData("54.628.754/0001-10", "Carrefour", "Carrefour Brasil", "2000-5-11")]
@@ -261,55 +347,6 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
         }*/
 
-        
-        [Fact]
-        public async Task GetCompanyBySocialName_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var companyRepositoryMock = new Mock<ICompanyRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var companyAppService = new CompanyAppService(
-                companyRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
-
-            companyRepositoryMock.Setup(repo => repo.GetBySocialName(It.IsAny<string>()))
-                .ReturnsAsync((Company)null); // Simulate null result from the repository
-
-            var SocialName = "Lojas Americanas";
-
-            // Act
-            var result = await companyAppService.GetBySocialName(SocialName);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetCompanyBySocialName_ShouldHandleInvalidMappingResult()
-        {
-            // Arrange
-            var companyRepositoryMock = new Mock<ICompanyRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var companyAppService = new CompanyAppService(
-                companyRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
-
-            companyRepositoryMock.Setup(repo => repo.GetBySocialName(It.IsAny<string>()))
-                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
-
-            var socialName = "Americanas";
-
-            // Assert
-            await Assert.ThrowsAsync<ArgumentException>(() => companyAppService.GetBySocialName(socialName));
-        }
 
     }
 }

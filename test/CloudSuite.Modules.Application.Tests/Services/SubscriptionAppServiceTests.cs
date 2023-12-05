@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using CloudSuite.Modules.Application.Handlers.Payments;
 using CloudSuite.Modules.Application.Handlers.Subscriptions;
+using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using CloudSuite.Modules.Domain.Models;
 using Moq;
@@ -49,6 +51,56 @@ namespace CloudSuite.Modules.Application.Tests.Services
         }
 
         [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task GetByActive_ShouldHandleInvalidMappingResult(bool active)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByActive(It.IsAny<bool>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => subscriptionAppService.GetByActive(active));
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task GetByActive_ShouldHandleNullRepositoryResult(bool active)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByActive(It.IsAny<bool>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetByActive(active);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+
+        [Theory]
         [InlineData("1234567891234570", "2021-10-26", "2023-11-26", "2023-12-26", false)]
         [InlineData("1234567891234571", "2021-10-27", "2023-11-27", "2023-12-27", true)]
         [InlineData("1234567891234572", "2021-10-28", "2023-11-28", "2023-12-28", false)]
@@ -76,6 +128,57 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             // Assert
             Assert.Equal(expectedViewModel, result);
+        }
+
+        [Theory]
+        [InlineData("2023-11-26")]
+        [InlineData("2021-10-27")]
+        [InlineData("2023-12-28")]
+        public async Task GetByCreateDate_ShouldHandleInvalidMappingResult(DateTime createDate)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByCreateDate(It.IsAny<DateTime>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => subscriptionAppService.GetByCreateDate(createDate));
+        }
+
+        [Theory]
+        [InlineData("2023-11-26")]
+        [InlineData("2021-10-27")]
+        [InlineData("2023-12-28")]
+        public async Task GetByCreateDate_ShouldHandleNullRepositoryResult(DateTime createDate)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByCreateDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetByCreateDate(createDate);
+
+            // Assert
+            Assert.Null(result);
         }
 
         [Theory]
@@ -109,6 +212,57 @@ namespace CloudSuite.Modules.Application.Tests.Services
         }
 
         [Theory]
+        [InlineData("2023-12-29")]
+        [InlineData("2023-11-30")]
+        [InlineData("2021-10-31")]
+        public async Task GetByExpireDate_ShouldHandleInvalidMappingResult(DateTime expireDate)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByExpireDate(It.IsAny<DateTime>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => subscriptionAppService.GetByExpireDate(expireDate));
+        }
+
+        [Theory]
+        [InlineData("2023-12-29")]
+        [InlineData("2023-11-30")]
+        [InlineData("2021-10-31")]
+        public async Task GetByExpireDate_ShouldHandleNullRepositoryResult(DateTime expireDate)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByExpireDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetByExpireDate(expireDate);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
         [InlineData("1234567891234576", "2021-11-01", "2023-12-02", "2024-01-01", false)]
         [InlineData("1234567891234577", "2021-11-02", "2023-12-03", "2024-01-02", true)]
         [InlineData("1234567891234578", "2021-11-03", "2023-12-04", "2024-01-03", false)]
@@ -136,6 +290,57 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             // Assert
             Assert.Equal(expectedViewModel, result);
+        }
+
+        [Theory]
+        [InlineData("2023-12-02")]
+        [InlineData("2024-01-02")]
+        [InlineData("2021-11-03")]
+        public async Task GetByLastUpdateDate_ShouldHandleInvalidMappingResult(DateTime lastUpdate)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByLastUpdateDate(It.IsAny<DateTime>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => subscriptionAppService.GetByLastUpdateDate(lastUpdate));
+        }
+
+        [Theory]
+        [InlineData("2023-12-02")]
+        [InlineData("2024-01-02")]
+        [InlineData("2021-11-03")]
+        public async Task GetByLastUpdateDate_ShouldHandleNullRepositoryResult(DateTime lastUpdate)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetByLastUpdateDate(It.IsAny<DateTime>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetByLastUpdateDate(lastUpdate);
+
+            // Assert
+            Assert.Null(result);
         }
 
         [Theory]
@@ -169,6 +374,58 @@ namespace CloudSuite.Modules.Application.Tests.Services
         }
 
         [Theory]
+        [InlineData("1234567891234579")]
+        [InlineData("1234567891234580")]
+        [InlineData("1234567891234581")]
+        public async Task GetBySubscriptionNumber_ShouldHandleInvalidMappingResult(string subscriptionNumber)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetBySubscriptionNumber(It.IsAny<string>()))
+            .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate invalid data from the repository
+
+            // Act and Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => subscriptionAppService.GetBySubscriptionNumber(subscriptionNumber));
+
+        }
+
+        [Theory]
+        [InlineData("1234567891234579")]
+        [InlineData("1234567891234580")]
+        [InlineData("1234567891234581")]
+        public async Task GetBySubscriptionNumber_ShouldHandleNullRepositoryResult(string subscriptionNumber)
+        {
+            // Arrange
+            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                subscriptionRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            subscriptionRepositoryMock.Setup(repo => repo.GetBySubscriptionNumber(It.IsAny<string>()))
+                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
+
+            // Act
+            var result = await subscriptionAppService.GetBySubscriptionNumber(subscriptionNumber);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
         [InlineData("1234567891234582", "2021-11-07", "2023-12-08", "2024-01-07", false)]
         [InlineData("1234567891234583", "2021-11-08", "2023-12-09", "2024-01-08", true)]
         [InlineData("1234567891234584", "2021-11-09", "2023-12-10", "2024-01-09", false)]
@@ -199,141 +456,6 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             // Assert
             subscriptionRepositoryMock.Verify(repo => repo.Add(It.IsAny<Subscription>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task GetByActive_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var subscriptionAppService = new SubscriptionAppService(
-                subscriptionRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
-
-            subscriptionRepositoryMock.Setup(repo => repo.GetByActive(It.IsAny<bool>()))
-                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
-
-            // Act
-            var result = await subscriptionAppService.GetByActive(true);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetByCreateDate_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var subscriptionAppService = new SubscriptionAppService(
-                subscriptionRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
-
-            subscriptionRepositoryMock.Setup(repo => repo.GetByCreateDate(It.IsAny<DateTime>()))
-                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
-
-            // Act
-            var result = await subscriptionAppService.GetByCreateDate(DateTime.Now);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetByExpireDate_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var subscriptionAppService = new SubscriptionAppService(
-                subscriptionRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
-
-            subscriptionRepositoryMock.Setup(repo => repo.GetByExpireDate(It.IsAny<DateTime>()))
-                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
-
-            // Act
-            var result = await subscriptionAppService.GetByExpireDate(DateTime.UtcNow);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetByLastUpdateDate_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var subscriptionAppService = new SubscriptionAppService(
-                subscriptionRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
-
-            subscriptionRepositoryMock.Setup(repo => repo.GetByLastUpdateDate(It.IsAny<DateTime>()))
-                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
-
-            // Act
-            var result = await subscriptionAppService.GetByLastUpdateDate(DateTime.Today);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetBySubscriptionNumber_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var subscriptionAppService = new SubscriptionAppService(
-                subscriptionRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
-
-            subscriptionRepositoryMock.Setup(repo => repo.GetBySubscriptionNumber(It.IsAny<string>()))
-                .ReturnsAsync((Subscription)null); // Simulate null result from the repository
-
-            // Act
-            var result = await subscriptionAppService.GetByLastUpdateDate(DateTime.Today);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetBySubscriptionNumber_ShouldHandleInvalidMappingResult()
-        {
-            // Arrange
-            var subscriptionRepositoryMock = new Mock<ISubscriptionRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var subscriptionAppService = new SubscriptionAppService(
-                subscriptionRepositoryMock.Object,
-                mediatorHandlerMock.Object,
-                mapperMock.Object
-            );
         }
 
     }

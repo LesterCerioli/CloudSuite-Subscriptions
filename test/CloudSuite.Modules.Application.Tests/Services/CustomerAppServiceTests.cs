@@ -62,7 +62,58 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			Assert.Equal(expectedViewModel, result);
 		}
 
-		[Theory]
+        [Theory]
+        [InlineData("Alicia")]
+        [InlineData("Roberto")]
+        [InlineData("Carlos")]
+        public async Task GetCustomerByBusinessOwner_ShouldHandleNullRepositoryResult(string businessOwner)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByBusinessOwner(It.IsAny<string>()))
+                .ReturnsAsync((Customer)null); // Simulate null result from the repository
+
+            // Act
+            var result = await customerAppService.GetByBusinessOwner(businessOwner);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("Alicia")]
+        [InlineData("Roberto")]
+        [InlineData("Carlos")]
+        public async Task GetCustomerByBusinessOwner_ShouldHandleInvalidMappingResult(string businessOwner)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByBusinessOwner(It.IsAny<string>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => customerAppService.GetByBusinessOwner(businessOwner));
+        }
+
+        [Theory]
         [InlineData("76.883.915/0001-54", "John", "Doe","emaildaempresa@seudominio.com", "Diones", "2021-04-25", "57.344.793/0001-83", "B2W","Lojas Americanas", "1998-03-21" )]
         [InlineData("93.216.371/0001-96", "Jane", "Smith", "email1@dominio.com", "Carlos", "2022-05-30", "31.498.147/0001-87", "Empresa XYZ", "Loja XYZ", "2000-06-15")]
         [InlineData("95.939.218/0001-12", "Bob", "Johnson", "email2@dominio.com", "Roberto", "2022-06-30", "42.124.773/0001-20", "Empresa ABC", "Loja ABC", "2001-07-16")]
@@ -104,6 +155,58 @@ namespace CloudSuite.Modules.Application.Tests.Services
             // Assert
             Assert.Equal(expectedViewModel, result);
         }
+
+        [Theory]
+        [InlineData("1998-03-21")]
+        [InlineData("2000-06-15")]
+        [InlineData("2001-07-16")]
+        public async Task GetCustomerByCreatedOn_ShouldHandleNullRepositoryResult(DateTimeOffset createdOn)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByCreatedOn(It.IsAny<DateTimeOffset>()))
+                .ReturnsAsync((Customer)null); // Simulate null result from the repository
+
+            // Act
+            var result = await customerAppService.GetByCreatedOn(createdOn);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("1998-03-21")]
+        [InlineData("2000-06-15")]
+        [InlineData("2001-07-16")]
+        public async Task GetCustomerByCreatedOn_ShouldHandleInvalidMappingResult(DateTimeOffset createdOn)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByCreatedOn(It.IsAny<DateTimeOffset>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => customerAppService.GetByCreatedOn(createdOn));
+        }
+
 
         [Theory]
         [InlineData("37.840.432/0001-10", "Harry", "Hill", "harry.hill@dominio.com", "Henrique", "2024-03-15", "71.569.663/0001-70", "Empresa YZ", "Loja YZ", "2016-04-16")]
@@ -149,10 +252,65 @@ namespace CloudSuite.Modules.Application.Tests.Services
         }
 
         [Theory]
+        [InlineData("harry.hill@dominio.com")]
+        [InlineData("ivy.iverson@dominio.com")]
+        [InlineData("jack.jackson@dominio.com")]
+        public async Task GetCustomerByEmail_ShouldHandleNullRepositoryResult(string emailAdress)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByEmail(It.IsAny<Email>()))
+                .ReturnsAsync((Customer)null); // Simulate null result from the repository
+
+            var email = new Email("customer@email.com.br");
+
+            // Act
+            var result = await customerAppService.GetByEmail(email);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("harry.hill@dominio.com")]
+        [InlineData("ivy.iverson@dominio.com")]
+        [InlineData("jack.jackson@dominio.com")]
+        public async Task GetCustomerByEmail_ShouldHandleInvalidMappingResult(string emailAdress)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByEmail(It.IsAny<Email>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            var email = new Email("marevic@gmail.com");
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => customerAppService.GetByEmail(email));
+        }
+
+        [Theory]
         [InlineData("50.396.936/0001-51", "Eva", "Evans", "eva.evans@dominio.com", "Eva", "2023-09-09", "04.670.881/0001-09", "Empresa PQR", "Loja PQR", "2010-10-10")]
         [InlineData("27.967.357/0001-08", "Frank", "Franklin", "frank.franklin@dominio.com", "Francisco", "2023-11-11", "52.136.577/0001-29", "Empresa STU", "Loja STU", "2012-12-12")]
         [InlineData("92.807.534/0001-42", "Grace", "Green", "grace.green@dominio.com", "Graça", "2024-01-13", "99.793.557/0001-94", "Empresa VWX", "Loja VWX", "2014-02-14")]
-        public async Task GetByCnpj_ShouldReturnMappedViewModel(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn, string cnpjCompany, string socialName, string fantasyName, DateTime fundationDate)
+        public async Task GetCustomerByCnpj_ShouldReturnMappedViewModel(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn, string cnpjCompany, string socialName, string fantasyName, DateTime fundationDate)
         {
             // Arrange
             var cnpj = new Cnpj(cnpjNumber);
@@ -192,6 +350,57 @@ namespace CloudSuite.Modules.Application.Tests.Services
         }
 
         [Theory]
+        [InlineData("50.396.936/0001-51")]
+        [InlineData("27.967.357/0001-08")]
+        [InlineData("92.807.534/0001-42")]
+        public async Task GetCustomerByCnpj_ShouldHandleNullRepositoryResult(string cnpj)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByCnpj(It.IsAny<Cnpj>()))
+                .ReturnsAsync((Customer)null); // Simulate null result from the repository
+
+            // Act
+            var result = await customerAppService.GetByCnpj(cnpj);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("50.396.936/0001-51")]
+        [InlineData("27.967.357/0001-08")]
+        [InlineData("92.807.534/0001-42")]
+        public async Task GetCustomerByCnpj_ShouldHandleInvalidMappingResult(string cnpj)
+        {
+            // Arrange
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object
+            );
+
+            customerRepositoryMock.Setup(repo => repo.GetByCnpj(It.IsAny<Cnpj>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => customerAppService.GetByCnpj(cnpj));
+        }
+
+        [Theory]
         [InlineData("90.202.251/0001-41", "Bob", "Smith", "bob.smith@dominio.com", "Roberto", "2023-03-03", "47.510.462/0001-12", "Empresa GHI", "Loja GHI", "2004-04-04")]
         [InlineData("43.147.942/0001-00", "Charlie", "Brown", "charlie.brown@dominio.com", "Carlos", "2023-05-05", "95.007.084/0001-00", "Empresa JKL", "Loja JKL", "2006-06-06")]
         [InlineData("39.322.117/0001-27", "David", "Davis", "david.davis@dominio.com", "Davi", "2023-07-07", "89.469.600/0001-07", "Empresa MNO", "Loja MNO", "2008-08-08")]
@@ -225,106 +434,5 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			customerRepositoryMock.Verify(repo => repo.Add(It.IsAny<Customer>()), Times.Once);
 		}
 
-        [Fact]
-        public async Task GetCustomerByBusinessOwner_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var customerAppService = new CustomerAppService(
-                customerRepositoryMock.Object,
-                mapperMock.Object,
-                mediatorHandlerMock.Object
-            );
-
-            customerRepositoryMock.Setup(repo => repo.GetByBusinessOwner(It.IsAny<string>()))
-                .ReturnsAsync((Customer)null); // Simulate null result from the repository
-
-            var businessOwner = "Bruce Wayne";
-
-            // Act
-            var result = await customerAppService.GetByBusinessOwner(businessOwner);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetCustomerByCreatedOn_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var customerAppService = new CustomerAppService(
-                customerRepositoryMock.Object,
-                mapperMock.Object,
-                mediatorHandlerMock.Object
-            );
-
-            customerRepositoryMock.Setup(repo => repo.GetByCreatedOn(It.IsAny<DateTimeOffset>()))
-                .ReturnsAsync((Customer)null); // Simulate null result from the repository
-
-            // Act
-            var result = await customerAppService.GetByCreatedOn(DateTimeOffset.UtcNow);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetCustomerByEmail_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var customerAppService = new CustomerAppService(
-                customerRepositoryMock.Object,
-                mapperMock.Object,
-                mediatorHandlerMock.Object
-            );
-
-            customerRepositoryMock.Setup(repo => repo.GetByEmail(It.IsAny<Email>()))
-                .ReturnsAsync((Customer)null); // Simulate null result from the repository
-
-            var email = new Email("customer@email.com.br");
-
-            // Act
-            var result = await customerAppService.GetByEmail(email);
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetCustomerByCnpj_ShouldHandleNullRepositoryResult()
-        {
-            // Arrange
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
-            var mediatorHandlerMock = new Mock<IMediatorHandler>();
-            var mapperMock = new Mock<IMapper>();
-
-            var customerAppService = new CustomerAppService(
-                customerRepositoryMock.Object,
-                mapperMock.Object,
-                mediatorHandlerMock.Object
-            );
-
-            customerRepositoryMock.Setup(repo => repo.GetByCnpj(It.IsAny<Cnpj>()))
-                .ReturnsAsync((Customer)null); // Simulate null result from the repository
-
-            var cnpj = "79.607.326/0001-31";
-
-            // Act
-            var result = await customerAppService.GetByCnpj(cnpj);
-
-            // Assert
-            Assert.Null(result);
-        }
     }
 }

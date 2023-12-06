@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CloudSuite.Modules.Application.Handlers.Customers;
-using CloudSuite.Modules.Application.Handlers.Domains;
 using CloudSuite.Modules.Application.Handlers.Payments;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
@@ -9,11 +8,7 @@ using CloudSuite.Modules.Domain.Contracts;
 using CloudSuite.Modules.Domain.Models;
 using Moq;
 using NetDevPack.Mediator;
-using NetDevPack.Messaging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

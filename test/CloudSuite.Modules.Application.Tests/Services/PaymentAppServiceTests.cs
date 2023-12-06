@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CloudSuite.Modules.Application.Handlers.Payments;
-using CloudSuite.Modules.Application.Handlers.Subscriptions;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
 using CloudSuite.Modules.Commons.Valueobjects;

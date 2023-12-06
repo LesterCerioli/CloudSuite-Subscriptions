@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CloudSuite.Modules.Application.Handlers.Company;
+using CloudSuite.Modules.Application.Handlers.Customers;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
 using CloudSuite.Modules.Commons.Valueobjects;
@@ -317,28 +318,26 @@ namespace CloudSuite.Modules.Application.Tests.Services
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
-            var customerAppService = new CompanyAppService(
-               companyRepositoryMock.Object,
-               mediatorHandlerMock.Object,
-               mapperMock.Object
-            );
-            companyRepositoryMock.Setup(repo => repo.Add(It.IsAny<Company>())).Throws(new NullReferenceException());
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+                );
+
             CreateCompanyCommand commandCreate = null;
 
-            // Act
-            try
-            {
-                await companyRepositoryMock.Object.Add((Company)null);
-                await customerAppService.Save(commandCreate);
-            }
-            catch (NullReferenceException) { }
+            companyRepositoryMock.Setup(repo => repo.Add(It.IsAny<Company>())).Throws(new NullReferenceException());
 
             // Assert
-            companyRepositoryMock.Verify(repo => repo.Add(It.IsAny<Company>()), Times.Once);
-        }
+            await Assert.ThrowsAsync<NullReferenceException>(() => companyAppService.Save(commandCreate));
 
-        [Fact]
-        public async Task Save_ShouldHandleInvalidMappingResult()
+        }
+        
+        [Theory]
+        [InlineData("09.641.757/0001-39", "Carrefour", "Carrefour Brasil", "2011-08-27")]
+        [InlineData("02.581.860/0001-91", "Zé Ninguém", "Loja do Zé Ninguém", "2012-09-28")]
+        [InlineData("26.613.282/0001-96", "Maria Ninguém", "Restaurante da Maria Ninguém", "2013-10-29")]
+        public async Task Save_ShouldHandleInvalidMappingResult(string cnpj, string socialName, string fantasyName, DateTime fundationDate)
         {
 
             // Arrange
@@ -346,25 +345,26 @@ namespace CloudSuite.Modules.Application.Tests.Services
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
-            var customerAppService = new CompanyAppService(
-               companyRepositoryMock.Object,
-               mediatorHandlerMock.Object,
-               mapperMock.Object
-            );
+            var companyAppService = new CompanyAppService(
+                companyRepositoryMock.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+                );
 
-            CreateCompanyCommand commandCreate = null;
-            companyRepositoryMock.Setup(repo => repo.Add(It.IsAny<Company>())).Throws(new ArgumentException("Invalid data"));
-            // Act
-            try
+            var commandCreate = new CreateCompanyCommand()
             {
-                await companyRepositoryMock.Object.Add((Company)null);
-                await customerAppService.Save(commandCreate);
-            }
-            catch (ArgumentException)
-            { }
+                Cnpj = cnpj,
+                SocialName = socialName,
+                FantasyName = fantasyName,
+                FundationDate = fundationDate
+            };
 
-            // Assert
-            companyRepositoryMock.Verify(repo => repo.Add(It.IsAny<Company>()), Times.Once);
+            // Act       
+            companyRepositoryMock.Setup(repo => repo.Add(It.IsAny<Company>()))
+            .Throws(new ArgumentException("Invalid data"));
+
+            // Act and Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => companyAppService.Save(commandCreate));
         }
 
     }

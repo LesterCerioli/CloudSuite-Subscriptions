@@ -606,58 +606,60 @@ namespace CloudSuite.Modules.Application.Tests.Services
         public async Task Save_ShouldHandleNullRepositoryResult()
         {
             // Arrange
-            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var paymentmockRepository = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
             var paymentAppService = new PaymentAppService(
-                paymentRepositoryMock.Object,
+                paymentmockRepository.Object,
                 mapperMock.Object,
                 mediatorHandlerMock.Object
-                );
-            paymentRepositoryMock.Setup(repo => repo.Add(It.IsAny<Payment>())).Throws(new NullReferenceException());
+            );
+
             CreatePaymentCommand commandCreate = null;
 
-            // Act
-            try
-            {
-                await paymentRepositoryMock.Object.Add((Payment)null);
-                await paymentAppService.Save(commandCreate);
-            }
-            catch (NullReferenceException) { }
+            paymentmockRepository.Setup(repo => repo.Add(It.IsAny<Payment>())).Throws(new NullReferenceException());
 
             // Assert
-            paymentRepositoryMock.Verify(repo => repo.Add(It.IsAny<Payment>()), Times.Once);
+            await Assert.ThrowsAsync<NullReferenceException>(() => paymentAppService.Save(commandCreate));
+
         }
 
-        [Fact]
-        public async Task Save_ShouldHandleInvalidMappingResult()
+        [Theory]
+        [InlineData("1234567891234585", "2022-11-10", "2022-12-11", 40.50, 38.00, "jeffrey", "37.052.551/0001-09", "jeffrey@seudominio.com")]
+        [InlineData("1234567891234586", "2022-11-11", "2022-12-12", 41.50, 39.00, "jodie", "34.981.974/0001-15", "jodie@seudominio.com")]
+        [InlineData("1234567891234587", "2022-11-12", "2022-12-13", 42.50, 40.00, "jerome", "51.017.839/0001-73", "jerome@seudominio.com")]
+        public async Task Save_ShouldHandleInvalidMappingResult(string number, DateTime paidDate, DateTime expireDate, decimal total, decimal totalPaid, string payer, string cnpj1, string email1)
         {
 
             // Arrange
-            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var paymentmockRepository = new Mock<IPaymentRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
             var paymentAppService = new PaymentAppService(
-                paymentRepositoryMock.Object,
+                paymentmockRepository.Object,
                 mapperMock.Object,
                 mediatorHandlerMock.Object
-                );
+            );
 
-            CreatePaymentCommand commandCreate = null;
-            paymentRepositoryMock.Setup(repo => repo.Add(It.IsAny<Payment>())).Throws(new ArgumentException("Invalid data"));
-            // Act
-            try
+            var commandCreate = new CreatePaymentCommand()
             {
-                await paymentRepositoryMock.Object.Add((Payment)null);
-                await paymentAppService.Save(commandCreate);
-            }
-            catch (ArgumentException)
-            {}
+                Number = number,
+                PaidTime = paidDate,
+                ExpireTime = expireDate,
+                TotalPaid = totalPaid,
+                Payer = payer,
+                Cnpj = cnpj1,
+                Email = email1
+            };
 
-            // Assert
-            paymentRepositoryMock.Verify(repo => repo.Add(It.IsAny<Payment>()), Times.Once);
+            // Act       
+            paymentmockRepository.Setup(repo => repo.Add(It.IsAny<Payment>()))
+            .Throws(new ArgumentException("Invalid data"));
+
+            // Act and Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => paymentAppService.Save(commandCreate));
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CloudSuite.Modules.Application.Handlers.Domains;
 using CloudSuite.Modules.Application.Handlers.Payments;
+using CloudSuite.Modules.Application.Handlers.Subscriptions;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
 using CloudSuite.Modules.Domain.Contracts;
@@ -320,50 +321,49 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 domainRepositoryMock.Object,
                 mapperMock.Object,
                 mediatorHandlerMock.Object
-            );
-            domainRepositoryMock.Setup(repo => repo.Add(It.IsAny<DomainEntity>())).Throws(new NullReferenceException());
+                );
+
             CreateDomainCommand commandCreate = null;
 
-            // Act
-            try
-            {
-                await domainRepositoryMock.Object.Add((DomainEntity)null);
-                await domainAppService.Save(commandCreate);
-            }
-            catch (NullReferenceException) { }
+            domainRepositoryMock.Setup(repo => repo.Add(It.IsAny<DomainEntity>())).Throws(new NullReferenceException());
 
             // Assert
-            domainRepositoryMock.Verify(repo => repo.Add(It.IsAny<DomainEntity>()), Times.Once);
+            await Assert.ThrowsAsync<NullReferenceException>(() => domainAppService.Save(commandCreate));
+
         }
 
-        [Fact]
-        public async Task Save_ShouldHandleInvalidMappingResult()
+        [Theory]
+        [InlineData("example9.com", "Rafael Gomes", "2018-03-03T09:09:09+00:00")]
+        [InlineData("example10.com", "Isabella Rocha", "2019-04-04T10:10:10+00:00")]
+        [InlineData("example11.com", "Mateus Alves", "2020-05-05T11:11:11+00:00")]
+        public async Task Save_ShouldHandleInvalidMappingResult(string dns, string ownerName, DateTimeOffset creationDate)
         {
 
             // Arrange
-            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var domainRepositoryMock = new Mock<IDomainRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
-            var paymentAppService = new PaymentAppService(
-                paymentRepositoryMock.Object,
+            var domainAppService = new DomainAppService(
+                domainRepositoryMock.Object,
                 mapperMock.Object,
                 mediatorHandlerMock.Object
                 );
 
-            CreatePaymentCommand commandCreate = null;
-            paymentRepositoryMock.Setup(repo => repo.Add(It.IsAny<Payment>())).Throws(new ArgumentException("Invalid data"));
-            // Act
-            try
+            var commandCreate = new CreateDomainCommand()
             {
-                await paymentRepositoryMock.Object.Add((Payment)null);
-                await paymentAppService.Save(commandCreate);
-            }
-            catch (ArgumentException)
-            { }
+                DNS = dns,
+                OwnerName = ownerName,
+                CreatedAt = creationDate
+            };
 
-            // Assert
-            paymentRepositoryMock.Verify(repo => repo.Add(It.IsAny<Payment>()), Times.Once);
+            // Act       
+            domainRepositoryMock.Setup(repo => repo.Add(It.IsAny<DomainEntity>()))
+            .Throws(new ArgumentException("Invalid data"));
+
+            // Act and Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => domainAppService.Save(commandCreate));
         }
+
     }
 }

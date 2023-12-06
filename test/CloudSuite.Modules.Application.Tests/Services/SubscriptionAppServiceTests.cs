@@ -457,8 +457,6 @@ namespace CloudSuite.Modules.Application.Tests.Services
         {
             // Arrange
             var mockRepository = new Mock<ISubscriptionRepository>();
-            mockRepository.Setup(repo => repo.Add(It.IsAny<Subscription>())).Throws(new NullReferenceException());
-
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
@@ -470,29 +468,22 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             CreateSubscriptionCommand commandCreate = null;
 
-            // Act
-            try
-            {
-                mockRepository.Object.Add((Subscription)null);
-                await subscriptionAppService.Save(commandCreate);
-            }
-            catch (NullReferenceException)
-            {
-                // Exceção esperada
-            }
+            mockRepository.Setup(repo => repo.Add(It.IsAny<Subscription>())).Throws(new NullReferenceException());
 
             // Assert
-            mockRepository.Verify(repo => repo.Add(It.IsAny<Subscription>()), Times.Once);
+            await Assert.ThrowsAsync<NullReferenceException>(() => subscriptionAppService.Save(commandCreate));
+
         }
 
-        [Fact]
-        public async Task Save_ShouldHandleInvalidMappingResult()
+        [Theory]
+        [InlineData("12345678912345","2021-11-07", "2023-12-08", "2024-01-07", false)]
+        [InlineData("1234567891234583", "2021-11-08", "2023-12-09", "2024-01-08", true)]
+        [InlineData("1234567891234584", "2021-11-09", "2023-12-10", "2024-01-09", false)]
+        public async Task Save_ShouldHandleInvalidMappingResult(string subscriptionNumber, DateTime createDate, DateTime lastUpdateDate, DateTime expireDate, bool active)
         {
 
             // Arrange
             var mockRepository = new Mock<ISubscriptionRepository>();
-            mockRepository.Setup(repo => repo.Add(It.IsAny<Subscription>())).Throws(new ArgumentException("Invalid data"));
-
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
@@ -502,20 +493,21 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mapperMock.Object
             );
 
-            CreateSubscriptionCommand commandCreate = null;
-
-            // Act
-            try
+            var commandCreate = new CreateSubscriptionCommand()
             {
-                mockRepository.Object.Add((Subscription)null);
-                await subscriptionAppService.Save(commandCreate);
-            }
-            catch (ArgumentException)
-            {
-            }
-
-            // Assert
-            mockRepository.Verify(repo => repo.Add(It.IsAny<Subscription>()), Times.Once);
+                SubscriptionNumber = subscriptionNumber,
+                CreateDate = createDate,
+                LastUpdateDate = lastUpdateDate,
+                ExpirteDate = expireDate,
+                Active = active
+            };
+            
+            // Act       
+            mockRepository.Setup(repo => repo.Add(It.IsAny<Subscription>()))
+            .Throws(new ArgumentException("Invalid data"));
+           
+            // Act and Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => subscriptionAppService.Save(commandCreate));
         }
 
     }

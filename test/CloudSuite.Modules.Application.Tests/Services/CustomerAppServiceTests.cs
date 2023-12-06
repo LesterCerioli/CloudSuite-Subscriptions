@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CloudSuite.Modules.Application.Handlers.Customers;
+using CloudSuite.Modules.Application.Handlers.Domains;
 using CloudSuite.Modules.Application.Handlers.Payments;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Application.ViewModels;
@@ -443,50 +444,52 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 customerRepositoryMock.Object,
                 mapperMock.Object,
                 mediatorHandlerMock.Object
-            );
-            customerRepositoryMock.Setup(repo => repo.Add(It.IsAny<Customer>())).Throws(new NullReferenceException());
+                );
+
             CreateCustomerCommand commandCreate = null;
 
-            // Act
-            try
-            {
-                await customerRepositoryMock.Object.Add((Customer)null);
-                await customerAppService.Save(commandCreate);
-            }
-            catch (NullReferenceException) { }
+            customerRepositoryMock.Setup(repo => repo.Add(It.IsAny<Customer>())).Throws(new NullReferenceException());
 
             // Assert
-            customerRepositoryMock.Verify(repo => repo.Add(It.IsAny<Customer>()), Times.Once);
+            await Assert.ThrowsAsync<NullReferenceException>(() => customerAppService.Save(commandCreate));
+
         }
 
-        [Fact]
-        public async Task Save_ShouldHandleInvalidMappingResult()
+        [Theory]
+        [InlineData("90.202.251/0001-41", "Bob", "Smith", "bob.smith@dominio.com", "Roberto", "2023-03-03", "47.510.462/0001-12", "Empresa GHI", "Loja GHI", "2004-04-04")]
+        [InlineData("43.147.942/0001-00", "Charlie", "Brown", "charlie.brown@dominio.com", "Carlos", "2023-05-05", "95.007.084/0001-00", "Empresa JKL", "Loja JKL", "2006-06-06")]
+        [InlineData("39.322.117/0001-27", "David", "Davis", "david.davis@dominio.com", "Davi", "2023-07-07", "89.469.600/0001-07", "Empresa MNO", "Loja MNO", "2008-08-08")]
+        public async Task Save_ShouldHandleInvalidMappingResult(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn, string cnpjCompany, string socialName, string fantasyName, DateTime fundationDate)
         {
 
             // Arrange
-            var paymentRepositoryMock = new Mock<IPaymentRepository>();
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
             var mapperMock = new Mock<IMapper>();
 
-            var paymentAppService = new PaymentAppService(
-                paymentRepositoryMock.Object,
+            var customerAppService = new CustomerAppService(
+                customerRepositoryMock.Object,
                 mapperMock.Object,
                 mediatorHandlerMock.Object
                 );
 
-            CreatePaymentCommand commandCreate = null;
-            paymentRepositoryMock.Setup(repo => repo.Add(It.IsAny<Payment>())).Throws(new ArgumentException("Invalid data"));
-            // Act
-            try
+            var commandCreate = new CreateCustomerCommand()
             {
-                await paymentRepositoryMock.Object.Add((Payment)null);
-                await paymentAppService.Save(commandCreate);
-            }
-            catch (ArgumentException)
-            { }
+               FirstName = firstName,
+               LastName = lastName,
+               Cnpj = cnpjNumber,
+               Email = emailAdress,
+               BusinessOwner = bussinessOwner,
+               CreatedOn = createdOn,
+               Company = new Company(cnpjCompany, socialName, fantasyName, fundationDate)
+            };
 
-            // Assert
-            paymentRepositoryMock.Verify(repo => repo.Add(It.IsAny<Payment>()), Times.Once);
+            // Act       
+            customerRepositoryMock.Setup(repo => repo.Add(It.IsAny<Customer>()))
+            .Throws(new ArgumentException("Invalid data"));
+
+            // Act and Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => customerAppService.Save(commandCreate));
         }
     }
 }

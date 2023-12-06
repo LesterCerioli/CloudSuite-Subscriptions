@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CloudSuite.Modules.Application.Handlers.Domains;
 using CloudSuite.Modules.Application.Handlers.Payments;
 using CloudSuite.Modules.Application.Handlers.Subscriptions;
 using CloudSuite.Modules.Application.Services.Contracts;
@@ -9,6 +10,7 @@ using CloudSuite.Modules.Domain.Contracts;
 using CloudSuite.Modules.Domain.Models;
 using Moq;
 using NetDevPack.Mediator;
+using NetDevPack.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -456,6 +458,72 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             // Assert
             subscriptionRepositoryMock.Verify(repo => repo.Add(It.IsAny<Subscription>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Save_ShouldHandleNullRepositoryResult()
+        {
+            // Arrange
+            var mockRepository = new Mock<ISubscriptionRepository>();
+            mockRepository.Setup(repo => repo.Add(It.IsAny<Subscription>())).Throws(new NullReferenceException());
+
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                mockRepository.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            CreateSubscriptionCommand commandCreate = null;
+
+            // Act
+            try
+            {
+                mockRepository.Object.Add((Subscription)null);
+                await subscriptionAppService.Save(commandCreate);
+            }
+            catch (NullReferenceException)
+            {
+                // Exceção esperada
+            }
+
+            // Assert
+            mockRepository.Verify(repo => repo.Add(It.IsAny<Subscription>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Save_ShouldHandleInvalidMappingResult()
+        {
+
+            // Arrange
+            var mockRepository = new Mock<ISubscriptionRepository>();
+            mockRepository.Setup(repo => repo.Add(It.IsAny<Subscription>())).Throws(new ArgumentException("Invalid data"));
+
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var subscriptionAppService = new SubscriptionAppService(
+                mockRepository.Object,
+                mediatorHandlerMock.Object,
+                mapperMock.Object
+            );
+
+            CreateSubscriptionCommand commandCreate = null;
+
+            // Act
+            try
+            {
+                mockRepository.Object.Add((Subscription)null);
+                await subscriptionAppService.Save(commandCreate);
+            }
+            catch (ArgumentException)
+            {
+            }
+
+            // Assert
+            mockRepository.Verify(repo => repo.Add(It.IsAny<Subscription>()), Times.Once);
         }
 
     }

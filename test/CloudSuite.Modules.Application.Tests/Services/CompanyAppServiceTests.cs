@@ -367,5 +367,6 @@ namespace CloudSuite.Modules.Application.Tests.Services
             await Assert.ThrowsAsync<ArgumentException>(() => companyAppService.Save(commandCreate));
         }
 
+
     }
 }

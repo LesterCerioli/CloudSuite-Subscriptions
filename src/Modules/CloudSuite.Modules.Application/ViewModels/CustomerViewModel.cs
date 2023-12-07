@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using CloudSuite.Modules.Commons.Valueobjects;
-using CloudSuite.Modules.Domain.Models;
 
 namespace CloudSuite.Modules.Application.ViewModels
 {
@@ -29,10 +27,6 @@ namespace CloudSuite.Modules.Application.ViewModels
         [DisplayName("Data de criação da Empresa")]
         [Required(ErrorMessage = "O campo Data de criação deve ser preenchido.")]
         public DateTimeOffset? CreatedOn { get; set; }
-
-        [DisplayName("Informações da Empresa")]
-        [Required(ErrorMessage = "O campo Company deve ser preenchido.")]
-        public string? Company { get; set; }
 
     }
 }

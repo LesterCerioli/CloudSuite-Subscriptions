@@ -27,7 +27,6 @@ namespace CloudSuite.Modules.Application.Tests.Services
             var cnpj = new Cnpj(cnpjNumber);
             var name = new Name(firstName, lastName);
             var email = new Email(emailAdress);
-            var company = new Company(new Cnpj(cnpjCompany), socialName, fantasyName, fundationDate);
             var customerRepositoryMock = new Mock<ICustomerRepository>();
 			var mediatorHandlerMock = new Mock<IMediatorHandler>();
 			var mapperMock = new Mock<IMapper>();
@@ -38,17 +37,16 @@ namespace CloudSuite.Modules.Application.Tests.Services
 				mediatorHandlerMock.Object
             );
 
-			var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn, company);
+			var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn);
 			customerRepositoryMock.Setup(repo => repo.GetByBusinessOwner(bussinessOwner)).ReturnsAsync(customerEntity);
 
             var expectedViewModel = new CustomerViewModel()
             {
-                Name = firstName,//verificar com o lester sobre a viewmodel
+                Name = firstName,
                 Cnpj = cnpjNumber,
                 Email = emailAdress,
                 BusinessOwner = bussinessOwner,
-                CreatedOn = createdOn,
-                Company = company.FantasyName
+                CreatedOn = createdOn
                 
             };
 			mapperMock.Setup(mapper => mapper.Map<CustomerViewModel>(customerEntity)).Returns(expectedViewModel);
@@ -121,7 +119,6 @@ namespace CloudSuite.Modules.Application.Tests.Services
             var cnpj = new Cnpj(cnpjNumber);
             var name = new Name(firstName, lastName);
             var email = new Email(emailAdress);
-            var company = new Company(new Cnpj(cnpjCompany), socialName, fantasyName, fundationDate);
 
             var customerRepositoryMock = new Mock<ICustomerRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -133,7 +130,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn, company);
+            var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn);
             customerRepositoryMock.Setup(repo => repo.GetByCreatedOn(createdOn)).ReturnsAsync(customerEntity);
 
             var expectedViewModel = new CustomerViewModel()
@@ -142,8 +139,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 Cnpj = cnpjNumber,
                 Email = emailAdress,
                 BusinessOwner = bussinessOwner,
-                CreatedOn = createdOn,
-                Company = company.FantasyName
+                CreatedOn = createdOn
             };
             mapperMock.Setup(mapper => mapper.Map<CustomerViewModel>(customerEntity)).Returns(expectedViewModel);
 
@@ -207,16 +203,15 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
 
         [Theory]
-        [InlineData("37.840.432/0001-10", "Harry", "Hill", "harry.hill@dominio.com", "Henrique", "2024-03-15", "71.569.663/0001-70", "Empresa YZ", "Loja YZ", "2016-04-16")]
-        [InlineData("68.224.923/0001-60", "Ivy", "Iverson", "ivy.iverson@dominio.com", "Ivone", "2024-05-17", "71.569.663/0001-70", "Empresa ZA", "Loja ZA", "2018-06-18")]
-        [InlineData("17.549.552/0001-56", "Jack", "Jackson", "jack.jackson@dominio.com", "João", "2024-07-19", "15.638.799/0001-13", "Empresa AB", "Loja AB", "2020-08-20")]
-        public async Task GetByEmail_ShouldReturnMappedViewModel(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn, string cnpjCompany, string socialName, string fantasyName, DateTime fundationDate)
+        [InlineData("37.840.432/0001-10", "Harry", "Hill", "harry.hill@dominio.com", "Henrique", "2024-03-15")]
+        [InlineData("68.224.923/0001-60", "Ivy", "Iverson", "ivy.iverson@dominio.com", "Ivone", "2024-05-17")]
+        [InlineData("17.549.552/0001-56", "Jack", "Jackson", "jack.jackson@dominio.com", "João", "2024-07-19")]
+        public async Task GetByEmail_ShouldReturnMappedViewModel(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn)
         {
             // Arrange
             var cnpj = new Cnpj(cnpjNumber);
             var name = new Name(firstName, lastName);
             var email = new Email(emailAdress);
-            var company = new Company(new Cnpj(cnpjCompany), socialName, fantasyName, fundationDate);
 
             var customerRepositoryMock = new Mock<ICustomerRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -228,7 +223,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn, company);
+            var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn);
             customerRepositoryMock.Setup(repo => repo.GetByEmail(email)).ReturnsAsync(customerEntity);
 
             var expectedViewModel = new CustomerViewModel()
@@ -237,8 +232,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 Cnpj = cnpjNumber,
                 Email = emailAdress,
                 BusinessOwner = bussinessOwner,
-                CreatedOn = createdOn,
-                Company = company.FantasyName
+                CreatedOn = createdOn
             };
             mapperMock.Setup(mapper => mapper.Map<CustomerViewModel>(customerEntity)).Returns(expectedViewModel);
 
@@ -269,7 +263,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             customerRepositoryMock.Setup(repo => repo.GetByEmail(It.IsAny<Email>()))
                 .ReturnsAsync((Customer)null); // Simulate null result from the repository
 
-            var email = new Email("customer@email.com.br");
+            var email = new Email(emailAdress);
 
             // Act
             var result = await customerAppService.GetByEmail(email);
@@ -298,23 +292,22 @@ namespace CloudSuite.Modules.Application.Tests.Services
             customerRepositoryMock.Setup(repo => repo.GetByEmail(It.IsAny<Email>()))
                 .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
 
-            var email = new Email("marevic@gmail.com");
+            var email = new Email(emailAdress);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentException>(() => customerAppService.GetByEmail(email));
         }
 
         [Theory]
-        [InlineData("50.396.936/0001-51", "Eva", "Evans", "eva.evans@dominio.com", "Eva", "2023-09-09", "04.670.881/0001-09", "Empresa PQR", "Loja PQR", "2010-10-10")]
-        [InlineData("27.967.357/0001-08", "Frank", "Franklin", "frank.franklin@dominio.com", "Francisco", "2023-11-11", "52.136.577/0001-29", "Empresa STU", "Loja STU", "2012-12-12")]
-        [InlineData("92.807.534/0001-42", "Grace", "Green", "grace.green@dominio.com", "Graça", "2024-01-13", "99.793.557/0001-94", "Empresa VWX", "Loja VWX", "2014-02-14")]
-        public async Task GetCustomerByCnpj_ShouldReturnMappedViewModel(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn, string cnpjCompany, string socialName, string fantasyName, DateTime fundationDate)
+        [InlineData("50.396.936/0001-51", "Eva", "Evans", "eva.evans@dominio.com", "Eva", "2023-09-09")]
+        [InlineData("27.967.357/0001-08", "Frank", "Franklin", "frank.franklin@dominio.com", "Francisco", "2023-11-11")]
+        [InlineData("92.807.534/0001-42", "Grace", "Green", "grace.green@dominio.com", "Graça", "2024-01-13")]
+        public async Task GetCustomerByCnpj_ShouldReturnMappedViewModel(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn)
         {
             // Arrange
             var cnpj = new Cnpj(cnpjNumber);
             var name = new Name(firstName, lastName);
             var email = new Email(emailAdress);
-            var company = new Company(new Cnpj(cnpjCompany), socialName, fantasyName, fundationDate);
 
             var customerRepositoryMock = new Mock<ICustomerRepository>();
             var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -326,7 +319,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 mediatorHandlerMock.Object
             );
 
-            var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn, company);
+            var customerEntity = new Customer(name, cnpj, email, bussinessOwner, createdOn);
             customerRepositoryMock.Setup(repo => repo.GetByCnpj(cnpj)).ReturnsAsync(customerEntity);
 
             var expectedViewModel = new CustomerViewModel()
@@ -335,8 +328,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 Cnpj = cnpjNumber,
                 Email = emailAdress,
                 BusinessOwner = bussinessOwner,
-                CreatedOn = createdOn,
-                Company = company.FantasyName
+                CreatedOn = createdOn
             };
             mapperMock.Setup(mapper => mapper.Map<CustomerViewModel>(customerEntity)).Returns(expectedViewModel);
 
@@ -399,10 +391,10 @@ namespace CloudSuite.Modules.Application.Tests.Services
         }
 
         [Theory]
-        [InlineData("90.202.251/0001-41", "Bob", "Smith", "bob.smith@dominio.com", "Roberto", "2023-03-03", "47.510.462/0001-12", "Empresa GHI", "Loja GHI", "2004-04-04")]
-        [InlineData("43.147.942/0001-00", "Charlie", "Brown", "charlie.brown@dominio.com", "Carlos", "2023-05-05", "95.007.084/0001-00", "Empresa JKL", "Loja JKL", "2006-06-06")]
-        [InlineData("39.322.117/0001-27", "David", "Davis", "david.davis@dominio.com", "Davi", "2023-07-07", "89.469.600/0001-07", "Empresa MNO", "Loja MNO", "2008-08-08")]
-        public async Task Save_ShouldAddCustomerToRepository(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn, string cnpjCompany, string socialName, string fantasyName, DateTime fundationDate)
+        [InlineData("90.202.251/0001-41", "Bob", "Smith", "bob.smith@dominio.com", "Roberto", "2023-03-03")]
+        [InlineData("43.147.942/0001-00", "Charlie", "Brown", "charlie.brown@dominio.com", "Carlos", "2023-05-05")]
+        [InlineData("39.322.117/0001-27", "David", "Davis", "david.davis@dominio.com", "Davi", "2023-07-07")]
+        public async Task Save_ShouldAddCustomerToRepository(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn)
 		{
 			// Arrange
 			var createCustomerCommand = new CreateCustomerCommand()
@@ -412,8 +404,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                 Cnpj = cnpjNumber,
                 Email = emailAdress,
                 BusinessOwner = bussinessOwner,
-                CreatedOn = createdOn,
-                Company = new Company(new Cnpj(cnpjCompany), socialName, fantasyName, fundationDate)
+                CreatedOn = createdOn
             };
 			var customerRepositoryMock = new Mock<ICustomerRepository>();
 			var mediatorHandlerMock = new Mock<IMediatorHandler>();
@@ -456,10 +447,10 @@ namespace CloudSuite.Modules.Application.Tests.Services
         }
 
         [Theory]
-        [InlineData("90.202.251/0001-41", "Bob", "Smith", "bob.smith@dominio.com", "Roberto", "2023-03-03", "47.510.462/0001-12", "Empresa GHI", "Loja GHI", "2004-04-04")]
-        [InlineData("43.147.942/0001-00", "Charlie", "Brown", "charlie.brown@dominio.com", "Carlos", "2023-05-05", "95.007.084/0001-00", "Empresa JKL", "Loja JKL", "2006-06-06")]
-        [InlineData("39.322.117/0001-27", "David", "Davis", "david.davis@dominio.com", "Davi", "2023-07-07", "89.469.600/0001-07", "Empresa MNO", "Loja MNO", "2008-08-08")]
-        public async Task Save_ShouldHandleInvalidMappingResult(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn, string cnpjCompany, string socialName, string fantasyName, DateTime fundationDate)
+        [InlineData("90.202.251/0001-41", "Bob", "Smith", "bob.smith@dominio.com", "Roberto", "2023-03-03")]
+        [InlineData("43.147.942/0001-00", "Charlie", "Brown", "charlie.brown@dominio.com", "Carlos", "2023-05-05")]
+        [InlineData("39.322.117/0001-27", "David", "Davis", "david.davis@dominio.com", "Davi", "2023-07-07")]
+        public async Task Save_ShouldHandleInvalidMappingResult(string cnpjNumber, string firstName, string lastName, string emailAdress, string bussinessOwner, DateTimeOffset createdOn)
         {
 
             // Arrange
@@ -480,8 +471,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
                Cnpj = cnpjNumber,
                Email = emailAdress,
                BusinessOwner = bussinessOwner,
-               CreatedOn = createdOn,
-               Company = new Company(cnpjCompany, socialName, fantasyName, fundationDate)
+               CreatedOn = createdOn
             };
 
             // Act       

@@ -1,4 +1,3 @@
-using CloudSuite.Modules.Application.Core;
 using CloudSuite.Modules.Application.Handlers.Payments.Responses;
 using CloudSuite.Modules.Commons.Valueobjects;
 using MediatR;
@@ -32,7 +31,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 this.Total,
                 this.TotalPaid,
                 this.Payer,
-                this.Cnpj,
+                new Cnpj(this.Cnpj),
                 new Email(this.Email)
                 );
         }

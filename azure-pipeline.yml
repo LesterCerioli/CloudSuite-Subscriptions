@@ -1,4 +1,3 @@
-# ASP.NET Core
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
@@ -8,7 +7,7 @@ trigger:
 
 jobs:
 
-- job: Linux
+- job: LinuxRelease
   pool:
     name: 'DK3'
   steps:
@@ -16,7 +15,7 @@ jobs:
     displayName: 'Use .NET Core sdk'
     inputs:
       packageType: 'sdk'
-      version: '6.0.413'
+      version: '6.0.417'
   - script: dotnet build ./CloudSuite.sln
     displayName: 'dotnet build'
   - task: DotNetCoreCLI@2
@@ -27,16 +26,15 @@ jobs:
       projects: 'test/**/*.csproj'
       nobuild: true
   
-  
-        
+     
   
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+      summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'
 
-- job: LinuxRelease
+- job: Linux
   pool:
     name: 'DK4'
   steps:
@@ -54,10 +52,11 @@ jobs:
       arguments:  '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude=[xunit.*]*%2c[System.*]*'
       projects: 'test/**/*.csproj'
       nobuild: true
-        
+  
+     
   
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+      summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'

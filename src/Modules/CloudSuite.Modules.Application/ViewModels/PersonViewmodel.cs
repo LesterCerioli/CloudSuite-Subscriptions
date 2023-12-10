@@ -6,16 +6,14 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class PersonViewmodel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
-        [Required(ErrorMessage = "O nome deve ser informado.")]
-        [MaxLength(100)]
         [DisplayName("Nome")]
+        [Required(ErrorMessage = "O campo Nome deve ser preenchido.")]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "A idade deve ser informado.")]
-        [MaxLength(3)]
         [DisplayName("Idade")]
+        [Required(ErrorMessage = "O campo Idade deve ser preenchido.")]
         public string? Age { get; set; }
     }
 }

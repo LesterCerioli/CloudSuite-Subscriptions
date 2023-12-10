@@ -20,6 +20,15 @@ namespace CloudSuite.Modules.Domain.Models
             Company = company;
         }
 
+        public Customer(Name name, Cnpj cnpj, Email email, string? businessOwner, DateTimeOffset? createdOn)
+        {
+            Name = name;
+            Cnpj = cnpj;
+            Email = email;
+            BusinessOwner = businessOwner;
+            CreatedOn = createdOn;
+        }
+
         public Name Name { get; private set; }
 
         public Cnpj Cnpj { get; private set; }

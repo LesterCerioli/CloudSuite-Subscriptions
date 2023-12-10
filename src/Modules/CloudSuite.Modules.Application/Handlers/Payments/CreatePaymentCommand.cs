@@ -1,4 +1,3 @@
-using CloudSuite.Modules.Application.Core;
 using CloudSuite.Modules.Application.Handlers.Payments.Responses;
 using CloudSuite.Modules.Commons.Valueobjects;
 using MediatR;
@@ -15,8 +14,8 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
         public decimal Total {  get; set; }
         public decimal TotalPaid {  get; set; }
         public string? Payer { get; set; }
-        public string? Cnpj { get; private set; }
-        public string? Email { get; private set; }
+        public string? Cnpj { get; set; }
+        public string? Email { get; set; }
 
         public CreatePaymentCommand()
         {
@@ -32,7 +31,7 @@ namespace CloudSuite.Modules.Application.Handlers.Payments
                 this.Total,
                 this.TotalPaid,
                 this.Payer,
-                this.Cnpj,
+                new Cnpj(this.Cnpj),
                 new Email(this.Email)
                 );
         }

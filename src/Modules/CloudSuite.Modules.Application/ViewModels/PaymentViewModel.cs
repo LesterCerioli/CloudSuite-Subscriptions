@@ -7,33 +7,38 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class PaymentViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("Número do Pagamento")]
-        public string? Number { get; private set; }
+        [Required(ErrorMessage = "O campo Numero deve ser preenchido.")]
+        public string? Number { get; set; }
 
         [DisplayName("Data de Pagamento")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
-        public DateTime? PaidDate { get; private set; }
+        [Required(ErrorMessage = "O campo Data de Pagamento deve ser preenchido.")]
+        public DateTime? PaidDate { get; set; }
 
         [DisplayName("Data de Vencimento do Pagamento")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
-        public DateTime? ExpireDate { get; private set; }
+        [Required(ErrorMessage = "O campo Data de Vencimento deve ser preenchido.")]
+        public DateTime? ExpireDate { get; set; }
 
         [DisplayName("Total do Pagamento")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
-        public decimal? Total { get; private set; }
+        [Required(ErrorMessage = "O campo Total deve ser preenchido.")]
+        public decimal? Total { get; set; }
 
         [DisplayName("Total Pago")]
-        public decimal? TotalPaid { get; private set; }
+        [Required(ErrorMessage = "O campo Total Pago deve ser preenchido.")]
+        public decimal? TotalPaid { get; set; }
 
         [DisplayName("Pagador")]
-        public string? Payer { get; private set; }
+        [Required(ErrorMessage = "O campo Pagador deve ser preenchido.")]
+        public string? Payer { get; set; }
 
         [DisplayName("Cnpj do pagador")]
-        public Cnpj Cnpj { get; private set; }
+        [Required(ErrorMessage = "O campo Cnpj deve ser preenchido.")]
+        public string? Cnpj { get; set; }
 
         [DisplayName("Email do Pagador")]
-        public Email Email { get; private set; }
+        [Required(ErrorMessage = "O campo Email deve ser preenchido.")]
+        public string? Email { get; set; }
     }
 }

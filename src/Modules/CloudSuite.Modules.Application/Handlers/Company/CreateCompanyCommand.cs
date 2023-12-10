@@ -9,9 +9,9 @@ namespace CloudSuite.Modules.Application.Handlers.Company
     {
         public Guid Id { get; private set; }
         public string? Cnpj { get; set; }
-        public string? SocialName { get; private set; }
-        public string? FantasyName { get; private set; }
-        public DateTime? FundationDate {  get; private set; }
+        public string? SocialName { get; set; }
+        public string? FantasyName { get; set; }
+        public DateTime FundationDate {  get; set; }
 
         public CreateCompanyCommand()
         {
@@ -23,7 +23,8 @@ namespace CloudSuite.Modules.Application.Handlers.Company
             return new CompanyEntity(
                 new Cnpj(this.Cnpj),
                 this.SocialName,
-                this.FantasyName
+                this.FantasyName,
+                this.FundationDate
                 );
         }
 

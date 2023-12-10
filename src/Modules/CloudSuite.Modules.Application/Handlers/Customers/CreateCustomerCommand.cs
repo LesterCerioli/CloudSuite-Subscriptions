@@ -1,6 +1,5 @@
 using CloudSuite.Modules.Commons.Valueobjects;
 using CustomerEntity = CloudSuite.Modules.Domain.Models.Customer;
-using CompanyEntity = CloudSuite.Modules.Domain.Models.Company;
 using MediatR;
 
 namespace CloudSuite.Modules.Application.Handlers.Customers
@@ -21,8 +20,6 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
 
         public DateTimeOffset? CreatedOn { get; set; }
 
-        public CompanyEntity Company { get; set; }
-
         public CreateCustomerCommand()
         {
             Id = Guid.NewGuid();
@@ -35,9 +32,7 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
                 new Cnpj(this.Cnpj),
                 new Email(this.Email),
                 this.BusinessOwner,
-                this.CreatedOn,
-                this.Company
-                //this.Company
+                this.CreatedOn
                 );
         }
     }

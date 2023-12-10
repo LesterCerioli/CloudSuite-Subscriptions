@@ -6,18 +6,19 @@ namespace CloudSuite.Modules.Application.ViewModels
     public class DomainViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("DNS do domínio")]
-        public string? DNS { get; private set; }
+        [Required(ErrorMessage = "O campo Dns deve ser preenchido.")]
+        public string? DNS { get; set; }
 
         [DisplayName("Nome do Proprietario do Dominio")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
-        public string OwnerName { get; private set; }
+        [Required(ErrorMessage = "O campo Nome do Proprietario deve ser preenchido.")]
+        public string OwnerName { get; set; }
 
         [DisplayName("Data de Criação do Dominio")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
-        public DateTimeOffset? CreationDate { get; private set; }
+        [Required(ErrorMessage = "O campo Data de Criação deve ser preenchido.")]
+        public DateTimeOffset? CreationDate { get; set; }
 
     }
 }

@@ -10,16 +10,19 @@ namespace CloudSuite.Modules.Application.ViewModels
         public Guid Id { get; set; }
 
         [DisplayName("Cnpj da Empresa")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
-        public Cnpj Cnpj  { get; set; }
+        [Required(ErrorMessage = "O campo Cnpj deve ser preenchido.")]
+        public string? Cnpj  { get; set; }
 
         [DisplayName("Nome Social da Empresa")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
+        [Required(ErrorMessage = "O campo Nome Social deve ser preenchido.")]
         public string? SocialName { get; set; }
 
         [DisplayName("Nome Fantasia da Empresa")]
-        [Required(ErrorMessage = "O {0} campo deve ser preenchido.")]
+        [Required(ErrorMessage = "O campo Nome Fantasya deve ser preenchido.")]
         public string? FantasyName { get; set; }
 
+        [DisplayName("Data de Fundação da Empresa")]
+        [Required(ErrorMessage = "O campo Data de Fundação deve ser preenchido.")]
+        public DateTime FundationDate { get; set; }
     }
 }

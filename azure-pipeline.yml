@@ -8,7 +8,7 @@ trigger:
 
 jobs:
 
-- job: LinuxRelease Server DK3
+- job: DK3
   pool:
     name: 'DK3'
   steps:
@@ -35,7 +35,7 @@ jobs:
       codeCoverageTool: Cobertura
       summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'
 
-- job: LinuxRelease Azure Pipeline
+- job: Linux Azure Pipeline
   pool:
     vmImage: 'ubuntu-latest'
   steps:

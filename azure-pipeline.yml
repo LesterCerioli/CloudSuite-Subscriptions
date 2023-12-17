@@ -9,7 +9,7 @@ jobs:
 
 - job: LinuxRelease
   pool:
-    name: 'DK3'
+    vmImage: 'ubuntu-latest'
   steps:
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk'

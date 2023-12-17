@@ -4,6 +4,11 @@ namespace CloudSuite.Modules.Domain.Models
 {
     public class Domain : Entity, IAggregateRoot
     {
+        public Domain()
+        {
+
+        }
+        
         public Domain(string? dNS, string ownerName, DateTimeOffset? creationDate)
         {
             DNS = dNS;

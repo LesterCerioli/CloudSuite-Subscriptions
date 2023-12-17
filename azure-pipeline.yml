@@ -3,11 +3,39 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- '*'
+- main
+
 
 jobs:
 
-- job: LinuxRelease
+- job: LinuxRelease Server DK3
+  pool:
+    name: 'DK3'
+  steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core sdk'
+    inputs:
+      packageType: 'sdk'
+      version: '6.0.417'
+  - script: dotnet build ./CloudSuite.sln
+    displayName: 'dotnet build'
+  - task: DotNetCoreCLI@2
+    displayName: 'run tests'
+    inputs:
+      command: test
+      arguments:  '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude=[xunit.*]*%2c[System.*]*'
+      projects: 'test/**/*.csproj'
+      nobuild: true
+  
+     
+  
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'
+
+- job: LinuxRelease Azure Pipeline
   pool:
     vmImage: 'ubuntu-latest'
   steps:
@@ -34,7 +62,7 @@ jobs:
       codeCoverageTool: Cobertura
       summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'
 
-- job: Linux
+- job: Linux Azure Pipeline
   pool:
     vmImage: 'ubuntu-latest'
   steps:
@@ -60,3 +88,31 @@ jobs:
     inputs:
       codeCoverageTool: Cobertura
       summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'
+- job: DeployToAzureWebAppLinux
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core sdk'
+    inputs:
+      packageType: 'sdk'
+      version: '6.0.417'
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish to Azure Web App Service Linux'
+    inputs:
+      command: 'publish'
+      publishWebProjects: true
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: true
+
+  - task: AzureRmWebAppDeployment@4
+    displayName: 'Azure Web App Deploy'
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: '050a3077-9535-49bf-b51e-099b5b3a651b'
+      appType: 'webAppLinux'
+      WebAppName: 'cloudsuite-subscription-api'
+      packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
+      RuntimeStack: 'DOTNETCORE|6.0'
+
+  

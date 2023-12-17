@@ -36,7 +36,7 @@ jobs:
 
 - job: Linux
   pool:
-    name: 'DK4'
+    vmImage: 'ubuntu-latest'
   steps:
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk'

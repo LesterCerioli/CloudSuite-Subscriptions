@@ -8,32 +8,6 @@ trigger:
 
 jobs:
 
-- job: DK3
-  pool:
-    name: 'DK3'
-  steps:
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk'
-    inputs:
-      packageType: 'sdk'
-      version: '6.0.417'
-  - script: dotnet build ./CloudSuite.sln
-    displayName: 'dotnet build'
-  - task: DotNetCoreCLI@2
-    displayName: 'run tests'
-    inputs:
-      command: test
-      arguments:  '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude=[xunit.*]*%2c[System.*]*'
-      projects: 'test/**/*.csproj'
-      nobuild: true
-  
-     
-  
-  - task: PublishCodeCoverageResults@1
-    displayName: 'Publish code coverage'
-    inputs:
-      codeCoverageTool: Cobertura
-      summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'
 
 - job: Linux Azure Pipeline
   pool:

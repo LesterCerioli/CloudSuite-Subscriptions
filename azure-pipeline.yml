@@ -129,12 +129,12 @@ jobs:
       codeCoverageTool: Cobertura
       summaryFileLocation: '$(Build.SourcesDirectory)/test/TestResults/**/*.xml'
 
-  ##- task: AzureRmWebAppDeployment@4
-  ##  displayName: 'Deploy to Azure Web App Linux'
-  ##  inputs:
-  ##    ConnectionType: 'AzureRM'
-  ##    azureSubscription: 'Assinatura do Azure 1'  # Substitua pelo nome da sua conexão de serviço do Azure
-  ##    appType: 'webAppLinux'
-  ##    WebAppName: '<YourWebAppName>'  # Substitua pelo nome do seu aplicativo da web no Azure
-  ##    packageForLinux: '$(Build.ArtifactStagingDirectory)/publish'
+  - task: AzureRmWebAppDeployment@4
+    displayName: 'Deploy to Azure Web App Linux'
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'CloudSuiteSubscr'  # Substitua pelo nome da sua conexão de serviço do Azure
+      appType: 'webAppLinux'
+      WebAppName: 'cloudsuite-subscription-api'  # Substitua pelo nome do seu aplicativo da web no Azure
+      packageForLinux: '$(Build.ArtifactStagingDirectory)/publish'
 

@@ -1,3 +1,4 @@
+using CloudSuite.Modules.Application.Handlers.Company;
 using CloudSuite.Modules.Application.ViewModels;
 using CloudSuite.Modules.Commons.Valueobjects;
 
@@ -11,7 +12,7 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 
         Task<CompanyViewModel> GetByFantasyName(string fantasyName);
 
-        //Task Save(CreateCompanyCommand commandCreate);
+        Task Save(CreateCompanyCommand commandCreate);
          
     }
 }

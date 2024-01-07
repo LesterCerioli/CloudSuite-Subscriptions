@@ -13,7 +13,17 @@ namespace CloudSuite.Infrastructure.Mapping.EFCore
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            throw new NotImplementedException();
-        }
+            builder.HasKey();
+			builder.Property(w => w.Id)
+				.HasColumnName("Id");
+
+            builder.OwnsOne(p => p.Name)
+                .Property(p => p.FirstName).HasColumnName("FirstName").HasMaxLength(100);
+
+            builder.OwnsOne(p => p.Name)
+                .Property(p => p.LastName).HasColumnName("LastName").HasMaxLength(100);
+
+
+		}
     }
 }

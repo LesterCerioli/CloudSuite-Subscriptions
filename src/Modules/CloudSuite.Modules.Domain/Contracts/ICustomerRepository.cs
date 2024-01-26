@@ -22,6 +22,5 @@ namespace CloudSuite.Modules.Domain.Contracts
         void Update(Customer customer);
 
         void Remove(Customer customer);
-        Task<object> GetByName(string name);
     }
 }

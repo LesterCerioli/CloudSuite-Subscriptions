@@ -1,42 +1,62 @@
+using CloudSuite.Infrastructure.Context;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudSuite.Infrastructure.Repositories
 {
     public class DomainRepository : IDomainRepository
     {
-        public async Task Add(Domain company)
+        protected readonly SubscriptionDbContext Db;
+        protected readonly DbSet<Domain> DbSet;
+
+        public DomainRepository(SubscriptionDbContext db, DbSet<Domain> dbSet)
         {
-            throw new NotImplementedException();
+            Db = db;
+            DbSet = dbSet;
+        }
+
+        public async Task Add(Domain domain)
+        {
+            await Task.Run(() => {
+                DbSet.Add(domain);
+                Db.SaveChanges();
+            });
         }
 
         public async Task<Domain> GetByCreationDate(DateTimeOffset creationDate)
         {
-            throw new NotImplementedException();
+            return await DbSet.FirstOrDefaultAsync(a => a.CreationDate == creationDate);
         }
 
         public async Task<Domain> GetByDns(string dns)
         {
-            throw new NotImplementedException();
+            return await DbSet.FirstOrDefaultAsync(a => a.DNS == dns);
         }
 
         public async Task<Domain> GetByOwnerName(string ownerName)
         {
-            throw new NotImplementedException();
+            return await DbSet.FirstOrDefaultAsync(a => a.OwnerName == ownerName);
         }
 
         public async Task<IEnumerable<Domain>> GetList()
         {
-            throw new NotImplementedException();
+            return await DbSet.ToListAsync();
         }
 
         public void RemoveDomainEntity(Domain domain)
         {
-            throw new NotImplementedException();
+            DbSet.Remove(domain);
         }
 
         public void UpdateDomainEntity(Domain domain)
         {
-            throw new NotImplementedException();
+            DbSet.Update(domain);
+        }
+
+        public void Dispose()
+        {
+            Db.Dispose();
         }
     }
 }

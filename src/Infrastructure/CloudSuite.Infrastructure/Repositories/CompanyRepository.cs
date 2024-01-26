@@ -20,8 +20,6 @@ namespace CloudSuite.Infrastructure.Repositories
 
         }
 
-        
-
         public async Task Add(Company company)
         {
             await Task.Run(() => { 

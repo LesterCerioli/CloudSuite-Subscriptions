@@ -56,9 +56,9 @@ namespace CloudSuite.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Customer>> GetList()
+        public async Task<IEnumerable<Customer>> GetList()
         {
-            throw new NotImplementedException();
+            return await DbSet.ToListAsync();
         }
 
         public void Remove(Customer customer)

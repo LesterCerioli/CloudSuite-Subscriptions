@@ -41,7 +41,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByEmail(email));
         }
 
-        public async Task<CustomerViewModel> GetByName(string name)
+        public async Task<CustomerViewModel> GetByName(Name name)
         {
             return _mapper.Map<CustomerViewModel>(await _customerRepository.GetByName(name));
         }
@@ -63,6 +63,6 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             await _customerRepository.Add(commandCreate.GetEntity());
 		}
 
-		
-	}
+        
+    }
 }

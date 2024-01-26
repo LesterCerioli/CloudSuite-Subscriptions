@@ -51,11 +51,6 @@ namespace CloudSuite.Infrastructure.Repositories
             return await DbSet.FirstOrDefaultAsync(a => a.Name == name);
         }
 
-        public Task<object> GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<Customer>> GetList()
         {
             return await DbSet.ToListAsync();

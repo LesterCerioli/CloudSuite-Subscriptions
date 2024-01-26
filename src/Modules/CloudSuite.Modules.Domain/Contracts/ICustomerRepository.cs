@@ -5,7 +5,7 @@ namespace CloudSuite.Modules.Domain.Contracts
 {
     public interface ICustomerRepository
     {
-        Task<Customer> GetByName(string name);
+        Task<Customer> GetByName(Name name);
 
         Task<Customer> GetByCnpj(Cnpj cnpj);
 
@@ -22,5 +22,6 @@ namespace CloudSuite.Modules.Domain.Contracts
         void Update(Customer customer);
 
         void Remove(Customer customer);
+        Task<object> GetByName(string name);
     }
 }

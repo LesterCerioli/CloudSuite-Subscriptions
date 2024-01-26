@@ -1,10 +1,11 @@
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Models;
 
 namespace CloudSuite.Modules.Domain.Contracts
 {
     public interface IPersonRepository
     {
-         Task<Person> GetByName(string name);
+         Task<Person> GetByName(Name name);
 
          Task<Person> GetByAge(string age);
 
@@ -12,7 +13,7 @@ namespace CloudSuite.Modules.Domain.Contracts
 
          Task Add(Person person);
 
-         void update(Person person);
+         void Update(Person person);
 
          void Remove(Person person);
     }

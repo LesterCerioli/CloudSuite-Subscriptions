@@ -4,6 +4,13 @@ namespace CloudSuite.Modules.Commons.Valueobjects
 {
     public class Name : ValueObject
     {
+        private string? name;
+
+        public Name(string? name)
+        {
+            this.name = name;
+        }
+
         public Name(string firstName, string lastName)
         {
             FirstName = firstName;

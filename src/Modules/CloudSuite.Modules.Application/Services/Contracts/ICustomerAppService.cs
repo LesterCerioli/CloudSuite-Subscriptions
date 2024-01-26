@@ -6,7 +6,7 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 {
     public interface ICustomerAppService
     {
-        Task<CustomerViewModel> GetByName(string name);
+        Task<CustomerViewModel> GetByName(Name name);
 
         Task<CustomerViewModel> GetByEmail(Email email);
 

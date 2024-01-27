@@ -21,7 +21,7 @@ namespace CloudSuite.Infrastructure.CrossCutting
 			services.AddScoped<ICustomerRepository>();
 			services.AddScoped<IDomainRepository>();
 			services.AddScoped<IPaymentRepository>();
-			services.AddScoped<IPersonRepository>();
+			//services.AddScoped<IPersonRepository>();
 			services.AddScoped<ISubscriptionRepository>();
 
 

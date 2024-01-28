@@ -16,7 +16,8 @@ namespace CloudSuite.Modules.Application.Services.Contracts
         Task<SubscriptionViewModel> GetByActive(bool active);
 
         Task Save(CreateSubscriptionCommand commandCreate);
-		Task ProcessSubscriptionService();
+		
+        Task ProcessSubscriptionService();
 		
         
 	}

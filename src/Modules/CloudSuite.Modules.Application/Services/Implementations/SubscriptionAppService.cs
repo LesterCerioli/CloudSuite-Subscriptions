@@ -53,7 +53,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 
 		public async Task ProcessSubscriptionService()
 		{
-			throw new NotImplementedException();
+			
 		}
 
 

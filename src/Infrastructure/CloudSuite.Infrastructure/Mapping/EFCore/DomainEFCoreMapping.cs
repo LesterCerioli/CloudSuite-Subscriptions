@@ -13,7 +13,22 @@ namespace CloudSuite.Infrastructure.Mapping.EFCore
     {
         public void Configure(EntityTypeBuilder<Domain> builder)
         {
-            throw new NotImplementedException();
-        }
+            builder.HasKey(f => f.Id);
+
+            builder.Property(f => f.DNS)
+                .HasColumnName("DNS")
+                .HasColumnType("varchar(50")
+                .IsRequired();
+
+            builder.Property(f => f.OwnerName)
+                .HasColumnName("OwnerName")
+                .HasColumnType("varchar(100")
+                .IsRequired();
+
+			builder.Property(f => f.CreationDate)
+				.HasColumnName("CreationDate")
+				.HasColumnType("date")
+				.IsRequired();
+		}
     }
 }

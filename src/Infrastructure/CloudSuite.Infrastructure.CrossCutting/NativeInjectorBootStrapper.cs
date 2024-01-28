@@ -1,4 +1,5 @@
 ﻿using CloudSuite.Infrastructure.Context;
+using CloudSuite.Modules.Application.Jobs;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Domain.Contracts;
@@ -21,7 +22,7 @@ namespace CloudSuite.Infrastructure.CrossCutting
 			services.AddScoped<ICustomerRepository>();
 			services.AddScoped<IDomainRepository>();
 			services.AddScoped<IPaymentRepository>();
-			services.AddScoped<IPersonRepository>();
+			//services.AddScoped<IPersonRepository>();
 			services.AddScoped<ISubscriptionRepository>();
 
 
@@ -33,6 +34,11 @@ namespace CloudSuite.Infrastructure.CrossCutting
 			services.AddScoped<IDomainAppService, DomainAppService>();
 			services.AddScoped<IPaymentAppService, PaymentAppService>();
 			services.AddScoped<ISubscriptionAppService, SubscriptionAppService>();
+			services.AddScoped<SubscriptionWorkService>();
+			services.AddScoped<CompanyWorkService>();
+			services.AddScoped<CustomerWorkService>();
+			services.AddScoped<DomainWorkService>();
+			services.AddScoped<PaymentWorkService>();
 
 		}
 	}

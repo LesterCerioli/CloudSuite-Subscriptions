@@ -17,16 +17,7 @@ namespace CloudSuite.Modules.Application.Validation.Customer
                 .Must(cnpj => IsValid(cnpj))
                 .WithMessage("O campo cnpj é inválido");
 
-            RuleFor(a => new {a.FirstName, a.LastName }).Custom((numDoc, context) => {
-                try
-                {
-                    new Name(numDoc.FirstName, numDoc.LastName);
-                }
-                catch (Exception ex)
-                {
-                    context.AddFailure(ex.Message);
-                }
-            });
+            
 
             RuleFor(a => a.Email)
                 .NotEmpty()

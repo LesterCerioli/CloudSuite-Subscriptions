@@ -18,7 +18,6 @@ namespace CloudSuite.Modules.Domain.Models
             BusinessOwner = businessOwner;
             CreatedOn = createdOn;
             Company = company;
-            
         }
 
         public Customer(Name name, Cnpj cnpj, Email email, string? businessOwner, DateTimeOffset? createdOn)
@@ -41,10 +40,6 @@ namespace CloudSuite.Modules.Domain.Models
         public DateTimeOffset? CreatedOn { get; private set; }
 
         public Company Company { get; private set; }
-
-        public Guid ComoanyId { get; private set; }
-
-        public IList<Company> Companies { get; set; }
         
     }
 }

@@ -29,10 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Services.Subscri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Modules.Commons", "src\Modules\CloudSuite.Modules.Commons\CloudSuite.Modules.Commons.csproj", "{A6A653F3-52AB-4514-9B2C-36D16961789A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{861C0F3B-5744-4EBB-895C-DA623AD782C2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.WorkerServices.Subscriptions", "src\Workers\CloudSuite.WorkerServices.Subscriptions\CloudSuite.WorkerServices.Subscriptions.csproj", "{35D02C5F-71D4-44DD-9918-E813B0792323}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +67,6 @@ Global
 		{A6A653F3-52AB-4514-9B2C-36D16961789A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6A653F3-52AB-4514-9B2C-36D16961789A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6A653F3-52AB-4514-9B2C-36D16961789A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{35D02C5F-71D4-44DD-9918-E813B0792323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{35D02C5F-71D4-44DD-9918-E813B0792323}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{35D02C5F-71D4-44DD-9918-E813B0792323}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{35D02C5F-71D4-44DD-9918-E813B0792323}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,7 +83,8 @@ Global
 		{4F15D698-EBF1-4CD0-83D3-5392D49F452E} = {BA82BDA7-B3A7-4FBA-BF55-AA1E38146368}
 		{DD1FBCC2-8C59-496D-AE04-A89E0C52A375} = {4F15D698-EBF1-4CD0-83D3-5392D49F452E}
 		{A6A653F3-52AB-4514-9B2C-36D16961789A} = {F82DA527-CEE4-42A1-8CC1-999A21A5C006}
-		{861C0F3B-5744-4EBB-895C-DA623AD782C2} = {BA82BDA7-B3A7-4FBA-BF55-AA1E38146368}
-		{35D02C5F-71D4-44DD-9918-E813B0792323} = {861C0F3B-5744-4EBB-895C-DA623AD782C2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42D032F2-59A7-44DF-A201-CFD6B5E6473B}
 	EndGlobalSection
 EndGlobal

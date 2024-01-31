@@ -42,7 +42,7 @@ namespace CloudSuite.Modules.Application.Jobs
 							var subscriptionViewModel = await subscriptionAppService.GetByActive(true);
 							// ... (perform other operations as needed)
 
-							// Example of calling the Save method
+							// calling the Save method
 							var createSubscriptionCommand = new CreateSubscriptionCommand(/* necessary parameters */);
 							await subscriptionAppService.Save(createSubscriptionCommand);
 						}

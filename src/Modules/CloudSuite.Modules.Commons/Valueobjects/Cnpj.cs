@@ -13,8 +13,12 @@ namespace CloudSuite.Modules.Commons.Valueobjects
             SetCnpjNumber(cnpjNumber);
         }
 
-        // Property to access the CNPJ number
-        public string CnpjNumber => _cnpjNumber;
+		public Cnpj()
+		{
+		}
+
+		// Property to access the CNPJ number
+		public string CnpjNumber => _cnpjNumber;
 
         // Private method to set the CNPJ number and validate it
         private void SetCnpjNumber(string cnpjNumber)

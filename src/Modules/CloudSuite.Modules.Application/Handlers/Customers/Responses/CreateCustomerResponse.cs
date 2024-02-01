@@ -11,19 +11,21 @@ namespace CloudSuite.Modules.Application.Handlers.Customers.Responses
     public class CreateCustomerResponse : Response
     {
 
-        public Guid RequestId { get; private set; }
+		public Guid RequestId { get; private set; }
 
-        public CreateCustomerResponse(Guid requestId, ValidationResult result)
-        {
-            RequestId = requestId;
-            foreach(var item in result.Errors) { 
-                this.AddError(item.ErrorMessage);
-            }
-        }
+		public CreateCustomerResponse(Guid requestId, ValidationResult result)
+		{
+			RequestId = requestId;
+			foreach (var item in result.Errors)
+			{
+				this.AddError(item.ErrorMessage);
+			}
+		}
 
-        public CreateCustomerResponse(Guid requestId, string falhaValidacao) {
-            RequestId = requestId;
-            this.AddError(falhaValidacao);
-        }
-    }
+		public CreateCustomerResponse(Guid requestId, string failValidation)
+		{
+			RequestId = requestId;
+			this.AddError(failValidation);
+		}
+	}
 }

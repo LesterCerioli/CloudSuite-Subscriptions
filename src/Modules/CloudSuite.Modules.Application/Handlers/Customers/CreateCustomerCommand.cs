@@ -8,9 +8,7 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
     {
         public Guid Id { get; private set; }
 
-        public string? FirstName { get; set; }
-
-        public string? LastName { get; set; }
+        public string? Name { get; set; }
 
         public string? Cnpj { get; set; }
 
@@ -20,7 +18,9 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
 
         public DateTimeOffset? CreatedOn { get; set; }
 
-        public CreateCustomerCommand()
+		public List<string> Errors { get; set; } = new List<string>();
+
+		public CreateCustomerCommand()
         {
             Id = Guid.NewGuid();
         }
@@ -28,7 +28,7 @@ namespace CloudSuite.Modules.Application.Handlers.Customers
         public CustomerEntity GetEntity()
         {
             return new CustomerEntity(
-                new Name(this.FirstName, this.LastName),
+                new Name(this.Name),
                 new Cnpj(this.Cnpj),
                 new Email(this.Email),
                 this.BusinessOwner,

@@ -399,8 +399,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 			// Arrange
 			var createCustomerCommand = new CreateCustomerCommand()
             {
-                FirstName = firstName,
-                LastName = lastName,
+                
                 Cnpj = cnpjNumber,
                 Email = emailAdress,
                 BusinessOwner = bussinessOwner,
@@ -466,8 +465,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             var commandCreate = new CreateCustomerCommand()
             {
-               FirstName = firstName,
-               LastName = lastName,
+               
                Cnpj = cnpjNumber,
                Email = emailAdress,
                BusinessOwner = bussinessOwner,

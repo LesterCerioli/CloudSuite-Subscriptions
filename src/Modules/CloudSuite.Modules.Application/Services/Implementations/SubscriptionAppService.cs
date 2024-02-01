@@ -51,21 +51,12 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             return _mapper.Map<SubscriptionViewModel>(await _subscriptionRepository.GetBySubscriptionNumber(subscriptionNumber));
         }
 
-		public async Task ProcessSubscriptionService()
-		{
-			
-		}
-
-
-		public void Dispose()
+        public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
 
-		
-
-
-		public async Task Save(CreateSubscriptionCommand commandCreate)
+        public async Task Save(CreateSubscriptionCommand commandCreate)
         {
 			await _subscriptionRepository.Add(commandCreate.GetEntity());
 		}

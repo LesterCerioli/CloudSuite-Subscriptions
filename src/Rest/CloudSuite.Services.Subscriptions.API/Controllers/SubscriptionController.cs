@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CloudSuite.Modules.Application.Handlers.Domains;
+using CloudSuite.Modules.Application.Handlers.Subscriptions;
+using CloudSuite.Modules.Application.Handlers.Subscriptions.Requests;
+using CloudSuite.Modules.Commons.Valueobjects;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +14,55 @@ namespace CloudSuite.Services.Subscriptions.API.Controllers
 	[ApiController]
 	public class SubscriptionController : ControllerBase
 	{
-		// GET: api/<SubscriptionController>
+		private readonly ILogger<SubscriptionController> _logger;
+		private readonly IMediator _mediator;
+
+		public SubscriptionController(ILogger<SubscriptionController> logger, IMediator mediator)
+		{
+			_logger = logger;
+			_mediator = mediator;
+		}
+
+		[AllowAnonymous]
+		[HttpPost("create")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> Post([FromRoute] CreateSubscriptionCommand commandCreate)
+		{
+			var result = await _mediator.Send(commandCreate);
+			if (result.Errors.Any())
+			{
+				return BadRequest(result);
+			}
+			else
+			{
+				return Ok(result);
+			}
+		}
+
+
 		[HttpGet]
-		public IEnumerable<string> Get()
+		[Route("exists/subscriptionnumber/{subscriptionnumber}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		public async Task<IActionResult> NumberExists([FromRoute] string subscriptionNumber)
 		{
-			return new string[] { "value1", "value2" };
+			var result = await _mediator.Send(new CheckSubscriptionExistsBySubscriptionNumberRequest(subscriptionNumber));
+			if (result.Errors.Any())
+			{
+				return BadRequest(result);
+			}
+			if (result.Exists)
+			{
+				return Ok(result);
+			}
+			else
+			{
+				return NotFound(result);
+			}
+
 		}
 
-		// GET api/<SubscriptionController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
-		{
-			return "value";
-		}
-
-		// POST api/<SubscriptionController>
-		[HttpPost]
-		public void Post([FromBody] string value)
-		{
-		}
-
-		// PUT api/<SubscriptionController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
-
-		// DELETE api/<SubscriptionController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
 	}
 }

@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\CloudSuite.Infrastructure\CloudSuite.Infrastructure.csproj" />
+    
     <ProjectReference Include="..\CloudSuite.Modules.Domain\CloudSuite.Modules.Domain.csproj" />
   </ItemGroup>
 

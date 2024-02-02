@@ -11,8 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Modules\CloudSuite.Modules.Application\CloudSuite.Modules.Application.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\CloudSuite.Infrastructure.CrossCutting\CloudSuite.Infrastructure.CrossCutting.csproj" />
+    <ProjectReference Include="..\CloudSuite.Modules.Application\CloudSuite.Modules.Application.csproj" />
   </ItemGroup>
+
+  
 
 </Project>

@@ -1,4 +1,6 @@
 ﻿using CloudSuite.Infrastructure.Context;
+using CloudSuite.Modules.Application.Services.Contracts;
+using CloudSuite.Modules.Application.Services.Implementations;
 using CloudSuite.Modules.Domain.Contracts;
 using CloudSuite.Modules.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;

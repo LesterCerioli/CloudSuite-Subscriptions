@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    
+    <ProjectReference Include="..\..\Modules\CloudSuite.Modules.Application\CloudSuite.Modules.Application.csproj" />
     <ProjectReference Include="..\CloudSuite.Infrastructure\CloudSuite.Infrastructure.csproj" />
-    
-    <ProjectReference Include="..\CloudSuite.Modules.Application\CloudSuite.Modules.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

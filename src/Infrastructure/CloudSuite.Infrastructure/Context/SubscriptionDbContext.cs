@@ -25,7 +25,7 @@ namespace CloudSuite.Infrastructure.Context
 
 		public DbSet<Customer> Customers {get; set;}
 
-		public DbSet<Domain> Domains {get; set;}
+		public DbSet<DomainEntidade> Domains {get; set;}
 
 		public DbSet<Payment> Payments {get; set;}
 
@@ -59,7 +59,7 @@ namespace CloudSuite.Infrastructure.Context
             });
 
 
-            modelBuilder.Entity<Domain>(s =>
+            modelBuilder.Entity<DomainEntidade>(s =>
             {
                 s.ToTable("Domains");
             });

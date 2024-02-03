@@ -2,14 +2,14 @@ using NetDevPack.Domain;
 
 namespace CloudSuite.Modules.Domain.Models
 {
-    public class Domain : Entity, IAggregateRoot
+    public class DomainEntidade : Entity, IAggregateRoot
     {
-        public Domain()
+        public DomainEntidade()
         {
 
         }
         
-        public Domain(string? dNS, string ownerName, DateTimeOffset? creationDate)
+        public DomainEntidade(string? dNS, string ownerName, DateTimeOffset? creationDate)
         {
             DNS = dNS;
             OwnerName = ownerName;

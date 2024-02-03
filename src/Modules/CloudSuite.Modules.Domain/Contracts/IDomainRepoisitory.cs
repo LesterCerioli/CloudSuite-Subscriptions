@@ -7,19 +7,19 @@ namespace CloudSuite.Modules.Domain.Models
 {
 	public interface IDomainRepository
 	{
-		Task<Domain> GetByDns(string dns);
+		Task<DomainEntidade> GetByDns(string dns);
 
-		Task<Domain> GetByOwnerName(string ownerName);
+		Task<DomainEntidade> GetByOwnerName(string ownerName);
 
-		Task<Domain> GetByCreationDate(DateTimeOffset creationDate);
+		Task<DomainEntidade> GetByCreationDate(DateTimeOffset creationDate);
 
-		Task<IEnumerable<Domain>> GetList();
+		Task<IEnumerable<DomainEntidade>> GetList();
 
-		Task Add(Domain company);
+		Task Add(DomainEntidade company);
 
-		void UpdateDomainEntity(Domain domain);
+		void UpdateDomainEntity(DomainEntidade domain);
 
-		void RemoveDomainEntity(Domain domain);
+		void RemoveDomainEntity(DomainEntidade domain);
 		
 	}
 

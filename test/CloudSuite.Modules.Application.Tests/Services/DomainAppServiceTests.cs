@@ -11,7 +11,7 @@ using NetDevPack.Mediator;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using DomainEntity = CloudSuite.Modules.Domain.Models.Domain;
+using DomainEntity = CloudSuite.Modules.Domain.Models.DomainEntidade;
 
 namespace CloudSuite.Modules.Application.Tests.Services
 {

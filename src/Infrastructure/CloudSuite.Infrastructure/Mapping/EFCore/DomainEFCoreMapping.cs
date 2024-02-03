@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CloudSuite.Infrastructure.Mapping.EFCore
 {
-    public class DomainEFCoreMapping : IEntityTypeConfiguration<Domain>
+    public class DomainEFCoreMapping : IEntityTypeConfiguration<DomainEntidade>
     {
-        public void Configure(EntityTypeBuilder<Domain> builder)
+        public void Configure(EntityTypeBuilder<DomainEntidade> builder)
         {
             throw new NotImplementedException();
         }

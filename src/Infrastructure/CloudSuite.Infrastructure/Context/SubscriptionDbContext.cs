@@ -25,9 +25,11 @@ namespace CloudSuite.Infrastructure.Context
 
 		public DbSet<Customer> Customers {get; set;}
 
-		public DbSet<Domain> Domains {get; set;}
+		public DbSet<DomainEntidade> Domains { get; set;}
 
 		public DbSet<Payment> Payments {get; set;}
+
+        public DbSet<Subscription> Subscriptions { get; set;}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -42,9 +44,13 @@ namespace CloudSuite.Infrastructure.Context
 
 			modelBuilder.ApplyConfiguration(new CustomerEFCoreMapping());
 
-			modelBuilder.ApplyConfiguration(new DomainEFCoreMapping());
-
 			modelBuilder.ApplyConfiguration(new PaymentEFCoreMapping());
+
+            modelBuilder.ApplyConfiguration(new SubscriptionEFCoreMapping());
+
+            modelBuilder.ApplyConfiguration(new DomainEFCoreMapping());
+
+            
 
 
             modelBuilder.Entity<Company>(s =>
@@ -59,7 +65,7 @@ namespace CloudSuite.Infrastructure.Context
             });
 
 
-            modelBuilder.Entity<Domain>(s =>
+            modelBuilder.Entity<DomainEntidade>(s =>
             {
                 s.ToTable("Domains");
             });
@@ -68,6 +74,11 @@ namespace CloudSuite.Infrastructure.Context
             modelBuilder.Entity<Payment>(s =>
             {
                 s.ToTable("Payments");
+            });
+
+            modelBuilder.Entity<Subscription>(s =>
+            {
+                s.ToTable("Subscriptions");
             });
 
 			base.OnModelCreating(modelBuilder);

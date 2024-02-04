@@ -11,7 +11,7 @@ using NetDevPack.Mediator;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using DomainEntity = CloudSuite.Modules.Domain.Models.Domain;
+
 
 namespace CloudSuite.Modules.Application.Tests.Services
 {
@@ -34,7 +34,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 				mediatorHandlerMock.Object
 			);
 
-            var domainEntity = new DomainEntity(dns, ownerName, creationDate);
+            var domainEntity = new DomainEntidade(dns, ownerName, creationDate);
             domainRepositoryMock.Setup(repo => repo.GetByCreationDate(creationDate)).ReturnsAsync(domainEntity);
 
             var expectedViewModel = new DomainViewModel()
@@ -72,7 +72,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             );
 
             domainRepositoryMock.Setup(repo => repo.GetByCreationDate(It.IsAny<DateTimeOffset>()))
-                .ReturnsAsync((DomainEntity)null); // Simulate null result from the repository
+                .ReturnsAsync((DomainEntidade)null); // Simulate null result from the repository
 
             // Act
             var result = await domainAppService.GetByCreationDate(creationDate);
@@ -122,7 +122,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 				mediatorHandlerMock.Object
 			);
 
-			var domainEntity = new DomainEntity(dns, ownerName, creationDate);
+			var domainEntity = new DomainEntidade(dns, ownerName, creationDate);
 			domainRepositoryMock.Setup(repo => repo.GetByDns(dns)).ReturnsAsync(domainEntity);
 
 			var expectedViewModel = new DomainViewModel()
@@ -159,7 +159,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             );
 
             domainRepositoryMock.Setup(repo => repo.GetByDns(It.IsAny<string>()))
-                .ReturnsAsync((DomainEntity)null); // Simulate null result from the repository
+                .ReturnsAsync((DomainEntidade)null); // Simulate null result from the repository
 
             // Act
             var result = await domainAppService.GetByDns(dns);
@@ -209,7 +209,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 				mediatorHandlerMock.Object
             );
 
-			var domainEntity = new DomainEntity(dns, ownerName, creationDate);
+			var domainEntity = new DomainEntidade(dns, ownerName, creationDate);
 			domainRepositoryMock.Setup(repo => repo.GetByOwnerName(ownerName)).ReturnsAsync(domainEntity);
 
 			var expectedViewModel = new DomainViewModel()
@@ -246,7 +246,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             );
 
             domainRepositoryMock.Setup(repo => repo.GetByOwnerName(It.IsAny<string>()))
-                .ReturnsAsync((DomainEntity)null); // Simulate null result from the repository
+                .ReturnsAsync((DomainEntidade)null); // Simulate null result from the repository
 
             // Act
             var result = await domainAppService.GetByOwnerName(ownerName);
@@ -306,7 +306,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             await domainAppService.Save(createDomainCommand);
 
             // Assert
-            domainRepositoryMock.Verify(repo => repo.Add(It.IsAny<DomainEntity>()), Times.Once);
+            domainRepositoryMock.Verify(repo => repo.Add(It.IsAny<DomainEntidade>()), Times.Once);
         }
 
         [Fact]
@@ -325,7 +325,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
 
             CreateDomainCommand commandCreate = null;
 
-            domainRepositoryMock.Setup(repo => repo.Add(It.IsAny<DomainEntity>())).Throws(new NullReferenceException());
+            domainRepositoryMock.Setup(repo => repo.Add(It.IsAny<DomainEntidade>())).Throws(new NullReferenceException());
 
             // Assert
             await Assert.ThrowsAsync<NullReferenceException>(() => domainAppService.Save(commandCreate));
@@ -358,7 +358,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
             };
 
             // Act       
-            domainRepositoryMock.Setup(repo => repo.Add(It.IsAny<DomainEntity>()))
+            domainRepositoryMock.Setup(repo => repo.Add(It.IsAny<DomainEntidade>()))
             .Throws(new ArgumentException("Invalid data"));
 
             // Act and Assert

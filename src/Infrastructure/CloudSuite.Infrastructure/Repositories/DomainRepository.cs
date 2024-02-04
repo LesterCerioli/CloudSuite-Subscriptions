@@ -1,62 +1,68 @@
-using CloudSuite.Infrastructure.Context;
-using CloudSuite.Modules.Commons.Valueobjects;
+﻿using CloudSuite.Infrastructure.Context;
 using CloudSuite.Modules.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CloudSuite.Infrastructure.Repositories
 {
-    public class DomainRepository : IDomainRepository
-    {
-        protected readonly SubscriptionDbContext Db;
-        protected readonly DbSet<Domain> DbSet;
+	public class DomainRepository : IDomainRepository
+	{
 
-        public DomainRepository(SubscriptionDbContext db, DbSet<Domain> dbSet)
-        {
-            Db = db;
-            DbSet = dbSet;
-        }
+		protected readonly SubscriptionDbContext Db;
+		protected readonly DbSet<DomainEntidade> DbSet;
 
-        public async Task Add(Domain domain)
-        {
-            await Task.Run(() => {
-                DbSet.Add(domain);
-                Db.SaveChanges();
-            });
-        }
+		public DomainRepository(SubscriptionDbContext context)
+		{
+			Db = context;
+			DbSet = context.Domains;
 
-        public async Task<Domain> GetByCreationDate(DateTimeOffset creationDate)
-        {
-            return await DbSet.FirstOrDefaultAsync(a => a.CreationDate == creationDate);
-        }
+		}
 
-        public async Task<Domain> GetByDns(string dns)
-        {
-            return await DbSet.FirstOrDefaultAsync(a => a.DNS == dns);
-        }
+		public async Task Add(DomainEntidade domainEntidade)
+		{
+			await Task.Run(() => {
+				DbSet.Add(domainEntidade);
+				Db.SaveChanges();
+			});
+		}
 
-        public async Task<Domain> GetByOwnerName(string ownerName)
-        {
-            return await DbSet.FirstOrDefaultAsync(a => a.OwnerName == ownerName);
-        }
+		public async Task<DomainEntidade> GetByCreationDate(DateTimeOffset creationDate)
+		{
+			return await DbSet.FirstOrDefaultAsync(a => a.CreationDate == creationDate);
+		}
 
-        public async Task<IEnumerable<Domain>> GetList()
-        {
-            return await DbSet.ToListAsync();
-        }
+		public async Task<DomainEntidade> GetByDns(string dns)
+		{
+			return await DbSet.FirstOrDefaultAsync(a => a.DNS == dns);
+		}
 
-        public void RemoveDomainEntity(Domain domain)
-        {
-            DbSet.Remove(domain);
-        }
+		public async Task<DomainEntidade> GetByOwnerName(string ownerName)
+		{
+			return await DbSet.FirstOrDefaultAsync(a => a.OwnerName == ownerName);
+		}
 
-        public void UpdateDomainEntity(Domain domain)
-        {
-            DbSet.Update(domain);
-        }
+		public async Task<IEnumerable<DomainEntidade>> GetList()
+		{
+			return await DbSet.ToListAsync();
+		}
 
-        public void Dispose()
-        {
-            Db.Dispose();
-        }
-    }
+		public void Remove(DomainEntidade domainEntidade)
+		{
+			DbSet.Remove(domainEntidade);
+		}
+
+		public void Update(DomainEntidade domainEntidade)
+		{
+			DbSet.Remove(domainEntidade);
+		}
+
+		public void Dispose()
+		{
+			Db.Dispose();
+		}
+	}
 }

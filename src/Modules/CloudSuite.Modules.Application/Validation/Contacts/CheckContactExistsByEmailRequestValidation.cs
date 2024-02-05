@@ -10,5 +10,15 @@ namespace CloudSuite.Modules.Application.Validation.Contacts
 {
     public class CheckContactExistsByEmailRequestValidation : AbstractValidator<CheckContactExistsByEmailRequest>
     {
+        public CheckContactExistsByEmailRequestValidation()
+        {
+            RuleFor(a => a.Email)
+            .NotEmpty()
+            .WithMessage("Email field is required.")
+            .Length(10, 80)
+            .WithMessage("The Email field must be between 1 and 450 characters.")
+            .EmailAddress()
+            .WithMessage("The Email field must be a valid email address.");
+        }
     }
 }

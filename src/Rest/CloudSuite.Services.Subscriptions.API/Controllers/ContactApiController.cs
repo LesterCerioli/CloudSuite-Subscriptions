@@ -1,5 +1,4 @@
-﻿using CloudSuite.Modules.Application.Handlers.Company.Requests;
-using CloudSuite.Modules.Application.Handlers.Contacts;
+﻿using CloudSuite.Modules.Application.Handlers.Contacts;
 using CloudSuite.Modules.Application.Handlers.Contacts.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

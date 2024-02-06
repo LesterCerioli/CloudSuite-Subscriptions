@@ -1,6 +1,6 @@
 using CloudSuite.Modules.Application.Handlers.Domains.Responses;
 using MediatR;
-using DomainEntity = CloudSuite.Modules.Domain.Models.Domain;
+using DomainEntity = CloudSuite.Modules.Domain.Models.DomainEntidade;
 
 namespace CloudSuite.Modules.Application.Handlers.Domains
 {

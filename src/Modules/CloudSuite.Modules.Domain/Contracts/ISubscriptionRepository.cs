@@ -21,4 +21,5 @@ public interface ISubscriptionRepository
     void Update(Subscription subscription);
 
     void Remove(Subscription subscription);
+	
 }

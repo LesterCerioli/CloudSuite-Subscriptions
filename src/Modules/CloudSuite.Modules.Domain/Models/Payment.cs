@@ -33,7 +33,9 @@ namespace CloudSuite.Modules.Domain.Models
         
         public Email Email { get; private set; }
 
-        
-        
-    }
+		public Guid SubscriptionId { get; private set; }
+
+
+
+	}
 }

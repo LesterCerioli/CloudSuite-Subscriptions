@@ -13,5 +13,10 @@ namespace CloudSuite.Modules.Application.Handlers.Subscriptions.Requests
             Id = Guid.NewGuid();
             SubscriptionNumber = subscriptionNumber;
         }
-    }
+
+		public CheckSubscriptionExistsBySubscriptionNumberRequest(string subscriptionNumber)
+		{
+			SubscriptionNumber = subscriptionNumber;
+		}
+	}
 }

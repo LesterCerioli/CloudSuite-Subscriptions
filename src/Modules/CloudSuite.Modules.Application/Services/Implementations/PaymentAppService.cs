@@ -65,5 +65,15 @@ namespace CloudSuite.Modules.Application.Services.Implementations
             await _paymentRepository.Add(commandCreate.GetEntity());
             
         }
-    }
+
+		internal Task GetByNumber(object number)
+		{
+			throw new NotImplementedException();
+		}
+
+		internal Task GetByNumber()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

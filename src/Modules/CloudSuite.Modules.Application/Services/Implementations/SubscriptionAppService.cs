@@ -60,5 +60,7 @@ namespace CloudSuite.Modules.Application.Services.Implementations
         {
 			await _subscriptionRepository.Add(commandCreate.GetEntity());
 		}
-    }
+
+		
+	}
 }

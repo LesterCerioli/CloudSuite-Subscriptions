@@ -12,6 +12,7 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
     public class CreateContactCommand : IRequest<CreateContactResponse>
     {
         public Guid Id { get; private set; }
+
         public string? Name { get; set; }
 
         public string? Email { get; set; }

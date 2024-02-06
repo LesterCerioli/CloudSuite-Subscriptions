@@ -40,6 +40,7 @@ builder.Services.AddTransient<IDomainRepository, DomainRepository>();
 builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+builder.Services.AddTransient<IContactRepository, ContactRepository>();
 
 builder.Services.AddCors(options =>
 {

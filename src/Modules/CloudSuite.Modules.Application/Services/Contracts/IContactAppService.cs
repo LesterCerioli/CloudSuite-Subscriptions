@@ -1,4 +1,5 @@
-﻿using CloudSuite.Modules.Application.ViewModels;
+﻿using CloudSuite.Modules.Application.Handlers.Contacts;
+using CloudSuite.Modules.Application.ViewModels;
 using CloudSuite.Modules.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 
         Task<ContactViewModel> GetByNumber(string number);
 
-
-        //Task Save(CreateContactCommand commandCreate);
+        Task Save(CreateContactCommand commandCreate);
     }
 }

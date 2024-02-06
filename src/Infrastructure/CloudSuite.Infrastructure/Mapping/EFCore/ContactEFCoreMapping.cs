@@ -13,7 +13,29 @@ namespace CloudSuite.Infrastructure.Mapping.EFCore
     {
         public void Configure(EntityTypeBuilder<Contact> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Name)
+                .HasColumnName("Name")
+                .HasColumnType("varchar(100)")
+                .HasMaxLength(100)
+                .IsRequired();
+
+            builder.Property(a => a.Email)
+                .HasColumnName("Email")
+                .HasColumnType("varchar(100)")
+                .HasMaxLength(100)
+                .IsRequired();
+
+            builder.Property(a => a.Number)
+                .HasColumnName("Number")
+                .HasColumnType("varchar(100)")
+                .IsRequired();
+
+            builder.Property(a => a.Description)
+                .HasColumnName("Description")
+                .HasColumnType("varchar(100)");
+
         }
     }
 }

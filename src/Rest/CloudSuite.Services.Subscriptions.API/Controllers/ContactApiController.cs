@@ -60,13 +60,35 @@ namespace CloudSuite.Services.Subscriptions.API.Controllers
         }
 
         [HttpGet]
-        [Route("exists/number/{number}")]
+        [Route("exists/name/{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> NumberExists([FromRoute] string number)
+        public async Task<IActionResult> NameExists([FromRoute] string name)
         {
-            var result = await _mediator.Send(new CheckContactExistsByNameRequest(number));
+            var result = await _mediator.Send(new CheckContactExistsByNameRequest(name));
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            if (result.Exists)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound(result);
+            }
+        }
+
+        [HttpGet]
+        [Route("exists/telephone/{telephone}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> TelephoneExists([FromRoute] string telephone)
+        {
+            var result = await _mediator.Send(new CheckContactExistsByNameRequest(telephone));
             if (result.Errors.Any())
             {
                 return BadRequest(result);

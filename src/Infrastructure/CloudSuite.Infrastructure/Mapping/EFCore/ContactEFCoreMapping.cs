@@ -27,13 +27,13 @@ namespace CloudSuite.Infrastructure.Mapping.EFCore
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(a => a.Number)
-                .HasColumnName("Number")
+            builder.Property(a => a.Telephone)
+                .HasColumnName("Telephone")
                 .HasColumnType("varchar(100)")
                 .IsRequired();
 
-            builder.Property(a => a.Description)
-                .HasColumnName("Description")
+            builder.Property(a => a.BodyMessage)
+                .HasColumnName("BodyMessage")
                 .HasColumnType("varchar(100)");
 
         }

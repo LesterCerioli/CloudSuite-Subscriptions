@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace CloudSuite.Modules.Application.Handlers.Contacts.Requests
 {
-    public class CheckContactExistsByNumberRequest : IRequest<CheckContactExistsByNumberResponse>
+    public class CheckContactExistsByTelephoneRequest : IRequest<CheckContactExistsByTelephoneResponse>
     {
         public Guid Id { get; private set; }
 
-        public string Number { get; set; }
+        public string Telephone { get; set; }
 
-        public CheckContactExistsByNumberRequest(string number)
+        public CheckContactExistsByTelephoneRequest(string telephone)
         {
             Id = Guid.NewGuid();
-            Number = number;
+            Telephone = telephone;
         }
     }
 }

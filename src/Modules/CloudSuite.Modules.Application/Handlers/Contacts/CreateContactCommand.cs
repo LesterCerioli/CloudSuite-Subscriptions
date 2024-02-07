@@ -1,4 +1,5 @@
 ﻿using CloudSuite.Modules.Application.Handlers.Contacts.Responses;
+using CloudSuite.Modules.Commons.Valueobjects;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
 
         public string? Email { get; set; }
 
-        public string? Number { get; set; }
+        public string? Telephone { get; set; }
 
-        public string? Description { get; set; }
+        public string? BodyMessage { get; set; }
 
         public CreateContactCommand()
         {
@@ -29,10 +30,10 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
         public ContactEntity GetEntity()
         {
             return new ContactEntity(
-                this.Name,
-                this.Email,
-                this.Number,
-                this.Description
+                new Name(this.Name),
+                new Email(this.Email),
+                this.BodyMessage,
+                new Telephone(this.BodyMessage)
                 );
         }
     }

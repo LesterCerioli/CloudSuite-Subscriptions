@@ -10,16 +10,18 @@ namespace CloudSuite.Modules.Domain.Contracts
 {
     public interface IContactRepository
     {
-        Task<Contact> GetByEmail(string email);
+        Task<Contact> GetByTelephone(Telephone telephone);
 
-        Task<Contact> GetByNumber(string number);
+        Task<Contact> GetByName(Name name);
+
+        Task<Contact> GetByEmail(Email email);
 
         Task<IEnumerable<Contact>> GetList();
 
-        Task Add(Contact company);
+        Task Add(Contact contact);
 
-        void Update(Contact company);
+        void Update(Contact contact);
 
-        void Remove(Contact company);
+        void Remove(Contact contact);
     }
 }

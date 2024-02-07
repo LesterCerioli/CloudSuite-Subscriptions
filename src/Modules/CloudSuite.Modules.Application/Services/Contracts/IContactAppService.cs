@@ -1,5 +1,6 @@
 ﻿using CloudSuite.Modules.Application.Handlers.Contacts;
 using CloudSuite.Modules.Application.ViewModels;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace CloudSuite.Modules.Application.Services.Contracts
 {
     public interface IContactAppService
     {
-        Task<ContactViewModel> GetByEmail(string email);
+        Task<ContactViewModel> GetByEmail(Email email);
 
-        Task<ContactViewModel> GetByNumber(string number);
+        Task<ContactViewModel> GetByName(Name name);
 
+        Task<ContactViewModel> GetByTelephone(Telephone telephone);
+        
         Task Save(CreateContactCommand commandCreate);
     }
 }

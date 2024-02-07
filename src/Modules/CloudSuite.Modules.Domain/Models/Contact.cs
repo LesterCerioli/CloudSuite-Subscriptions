@@ -2,33 +2,35 @@
 using NetDevPack.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CloudSuite.Modules.Domain.Models
 {
     public class Contact : Entity, IAggregateRoot
     {
+
+        public Contact(Name name, Email email, string? bodyMessage, Telephone telephone)
+        {
+            Name = name;
+            Email = email;
+            BodyMessage = bodyMessage;
+            Telephone = telephone;
+        }
+
         public Contact()
         {
         }
 
-        public Contact(string? name, string? email, string? number, string? description)
-        {
-            Name = name;
-            Email = email;
-            Number = number;
-            Description = description;
-        }
+        public Name Name { get; private set; }
 
-        public string? Name { get; private set; }
+        public Email Email { get; private set; }
 
-        public string? Email { get; private set; }
+        public string? BodyMessage { get; private set; }
 
-        public string? Number { get; private set;}
-
-        public string? Description { get; private set; }
-
+        public Telephone Telephone { get; private set; }
     }
 }

@@ -31,14 +31,19 @@ namespace CloudSuite.Infrastructure.Repositories
             });
         }
 
-        public async Task<Contact> GetByEmail(string email)
+        public async Task<Contact> GetByEmail(Email email)
         {
             return await DbSet.FirstOrDefaultAsync(a => a.Email == email);
         }
 
-        public async Task<Contact> GetByNumber(string number)
+        public async Task<Contact> GetByName(Name name)
         {
-            return await DbSet.FirstOrDefaultAsync(a => a.Number == number);
+            return await DbSet.FirstOrDefaultAsync(a => a.Name == name);
+        }
+
+        public async Task<Contact> GetByTelephone(Telephone telephone)
+        {
+            return await DbSet.FirstOrDefaultAsync(a => a.Telephone == telephone);
         }
 
         public async Task<IEnumerable<Contact>> GetList()
@@ -60,5 +65,6 @@ namespace CloudSuite.Infrastructure.Repositories
         {
             Db.Dispose();
         }
+
     }
 }

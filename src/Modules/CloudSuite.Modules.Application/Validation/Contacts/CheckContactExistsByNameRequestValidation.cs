@@ -1,37 +1,27 @@
-﻿using CloudSuite.Modules.Application.Handlers.Contacts;
+﻿using CloudSuite.Modules.Application.Handlers.Contacts.Requests;
 using FluentValidation;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CloudSuite.Modules.Application.Validation.Contacts
 {
-    public class CreateContactCommandValidation : AbstractValidator<CreateContactCommand>
+    public class CheckContactExistsByNameRequestValidation : AbstractValidator<CheckContactExistsByNameRequest>
     {
-        public CreateContactCommandValidation()
+        public CheckContactExistsByNameRequestValidation()
         {
             RuleFor(a => a.Name)
-           .NotEmpty()
-           .WithMessage("Field is required")
-           .NotNull()
-           .WithMessage("The field cannot be null.")
-           .Must(ValidateFullName)
-           .WithMessage("The full name must be valid (accepts accents and does not contain numbers).");
-
-            RuleFor(a => a.Telephone)
             .NotEmpty()
-            .WithMessage("Telephone field is required.")
-            .Matches(new Regex(@"^\(\d{2}\)\s\d{5}-\d{4}$"))
-            .WithMessage("The Telephone field must be in the format (xx) xxxxx-xxxx.");
-
-            RuleFor(a => a.Email)
-            .NotEmpty()
-            .WithMessage("Email field is required.")
-            .Length(10, 80)
-            .WithMessage("The Email field must be between 1 and 450 characters.")
-            .EmailAddress()
-            .WithMessage("The Email field must be a valid email address.");
+            .WithMessage("Field is required")
+            .NotNull()
+            .WithMessage("The field cannot be null.")
+            .Must(ValidateFullName)
+            .WithMessage("The full name must be valid (accepts accents and does not contain numbers).");
         }
-
 
         private bool ValidateFullName(string name)
         {
@@ -65,6 +55,6 @@ namespace CloudSuite.Modules.Application.Validation.Contacts
             // Se chegou até aqui, o nome completo é válido
             return true;
         }
-
+    
     }
 }

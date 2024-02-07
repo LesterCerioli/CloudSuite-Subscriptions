@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CloudSuite.Modules.Application.Handlers.Contacts.Responses
 {
-    public class CheckContactExistsByNumberResponse : Response
+    public class CheckContactExistsByTelephoneResponse : Response
     {
         public Guid RequestId { get; private set; }
         public bool Exists { get; set; }
 
-        public CheckContactExistsByNumberResponse(Guid requestId, bool exists, ValidationResult result)
+        public CheckContactExistsByTelephoneResponse(Guid requestId, bool exists, ValidationResult result)
         {
             RequestId = requestId;
             Exists = exists;
@@ -23,7 +23,7 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts.Responses
             }
         }
 
-        public CheckContactExistsByNumberResponse(Guid requestId, string falhaValidacao)
+        public CheckContactExistsByTelephoneResponse(Guid requestId, string falhaValidacao)
         {
             RequestId = requestId;
             Exists = false;

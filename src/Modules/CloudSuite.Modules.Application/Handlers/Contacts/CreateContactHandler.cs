@@ -3,6 +3,7 @@ using CloudSuite.Modules.Application.Handlers.Subscriptions;
 using CloudSuite.Modules.Application.Handlers.Subscriptions.Responses;
 using CloudSuite.Modules.Application.Validation.Contacts;
 using CloudSuite.Modules.Application.Validation.Subscription;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -21,6 +22,12 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
         private IContactRepository _repositorioContact;
         private readonly ILogger<CreateContactHandler> _logger;
 
+        public CreateContactHandler(IContactRepository repositorioContact, ILogger<CreateContactHandler> logger)
+        {
+            _repositorioContact = repositorioContact;
+            _logger = logger;
+        }
+
         public async Task<CreateContactResponse> Handle(CreateContactCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"CreateContactCommand: {JsonSerializer.Serialize(command)}");
@@ -30,11 +37,12 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var contactGetByNumber = await _repositorioContact.GetByNumber(command.Number);
-                    var contactGetByEmail = await _repositorioContact.GetByEmail(command.Email);
-                    
+                    var contactGetByName = await _repositorioContact.GetByName(new Name(command.Name));
+                    var contactGetByEmail = await _repositorioContact.GetByEmail(new Email(command.Email));
+                    var contactGetByTelephone = await _repositorioContact.GetByTelephone(new Telephone(command.Telephone));
 
-                    if (contactGetByNumber != null && contactGetByEmail != null)
+
+                    if (contactGetByName != null && contactGetByEmail != null && contactGetByTelephone != null)
                     {
                         return await Task.FromResult(new CreateContactResponse(command.Id, "contact already exists."));
                     }

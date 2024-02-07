@@ -4,6 +4,7 @@ using CloudSuite.Modules.Application.Handlers.Contacts.Requests;
 using CloudSuite.Modules.Application.Handlers.Contacts.Responses;
 using CloudSuite.Modules.Application.Validation.Contacts;
 using CloudSuite.Modules.Application.Validation.Payments;
+using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -36,7 +37,7 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var email = await _repositoryContact.GetByEmail(request.Email);
+                    var email = await _repositoryContact.GetByEmail(new Email(request.Email));
 
                     if (email != null)
                         return await Task.FromResult(new CheckContactExistsByEmailResponse(request.Id, true, validationResult));

@@ -24,9 +24,9 @@ namespace CloudSuite.Modules.Application.ViewModels
 
         [DisplayName("Contact Number")]
         [Required(ErrorMessage = "The Contact Number field must be filled in.")]
-        public string? Number { get; set; }
+        public string? Telephone { get; set; }
 
         [DisplayName("Contact Description")]
-        public string Description { get; set; }
+        public string BodyMessage { get; set; }
     }
 }

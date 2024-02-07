@@ -13,7 +13,8 @@ namespace CloudSuite.Modules.Application.AutoMapper
 			CreateMap<DomainEntidade, DomainViewModel>();
 			CreateMap<Payment, PaymentViewModel>();
 			CreateMap<Subscription, SubscriptionViewModel>();
-		}
+            CreateMap<Contact, ContactViewModel>();
+        }
         
     }
 }

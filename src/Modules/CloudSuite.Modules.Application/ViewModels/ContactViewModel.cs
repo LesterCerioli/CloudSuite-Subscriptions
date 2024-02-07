@@ -19,11 +19,11 @@ namespace CloudSuite.Modules.Application.ViewModels
         public string? Name { get; set; }
 
         [DisplayName("Contact Email")]
-        [Required(ErrorMessage = "The Social Email field must be filled in.")]
+        [Required(ErrorMessage = "The Email field must be filled in.")]
         public string? Email { get; set; }
 
         [DisplayName("Contact Number")]
-        [Required(ErrorMessage = "The Contact Number field must be filled in.")]
+        [Required(ErrorMessage = "The Telephone field must be filled in.")]
         public string? Telephone { get; set; }
 
         [DisplayName("Contact Description")]

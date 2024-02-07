@@ -88,7 +88,7 @@ namespace CloudSuite.Services.Subscriptions.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> TelephoneExists([FromRoute] string telephone)
         {
-            var result = await _mediator.Send(new CheckContactExistsByNameRequest(telephone));
+            var result = await _mediator.Send(new CheckContactExistsByTelephoneRequest(telephone));
             if (result.Errors.Any())
             {
                 return BadRequest(result);

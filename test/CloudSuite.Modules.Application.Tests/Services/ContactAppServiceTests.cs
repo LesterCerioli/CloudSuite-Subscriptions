@@ -168,7 +168,7 @@ namespace CloudSuite.Modules.Application.Tests.Services
         [InlineData("21999887766")]
         [InlineData("85987654321")]
         [InlineData("11988776655")]
-        public async Task GetContactByNumber_ShouldHandleInvalidMappingResult(string name)
+        public async Task GetContactByName_ShouldHandleInvalidMappingResult(string name)
         {
             // Arrange
             var contactRepositoryMock = new Mock<IContactRepository>();
@@ -187,6 +187,93 @@ namespace CloudSuite.Modules.Application.Tests.Services
             await Assert.ThrowsAsync<ArgumentException>(() => contactAppService.GetByName(new Name(name)));
         }
 
+        [Theory]
+        [InlineData("maria silva", "mariasilva@yahoo.com", "1198765432123", "I need help with my math homework.Can you explain how to solve this equation ? 2x + 3 = 7")]
+        [InlineData("rodrigo lima", "rodrigolima@bol.com.br", "8599998877612", "I am interested in learning more about artificial intelligence.Can you recommend me some online courses or books ?")]
+        [InlineData("julia santos", "juliasantos@gmail.com", "3198888777712", "I want to buy a new laptop.What are the best brands and models in the market ?")]
+        public async Task GetContactByTelephone_ShouldReturnsCompanyViewModel(string name, string email, string telephone, string bodyMessage)
+        {
+            var contactRepositoryMock = new Mock<IContactRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var contactAppService = new ContactAppService(
+                contactRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object);
+
+            var contactEntity = new Contact(new Name(name), new Email(email), bodyMessage, new Telephone(telephone));
+            contactRepositoryMock.Setup(repo => repo.GetByTelephone(new Telephone(telephone))).ReturnsAsync(contactEntity);
+
+            var expectedViewModel = new ContactViewModel()
+            {
+                Id = contactEntity.Id,
+                Name = name,
+                Email = email,
+                Telephone = telephone,
+                BodyMessage = bodyMessage
+            };
+
+            mapperMock.Setup(mapper => mapper.Map<ContactViewModel>(contactEntity)).Returns(expectedViewModel);
+
+            // Act
+            var result = await contactAppService.GetByTelephone(new Telephone(telephone));
+
+            // Assert
+            Assert.Equal(expectedViewModel, result);
+        }
+
+        [Theory]
+        [InlineData("51973645298")]
+        [InlineData("77988374932")]
+        [InlineData("71933647382")]
+        public async Task GetContactByTelephone_ShouldHandleNullRepositoryResult(string name)
+        {
+            // Arrange
+
+            var contactRepositoryMock = new Mock<IContactRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var contactAppService = new ContactAppService(
+                contactRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object);
+
+            contactRepositoryMock.Setup(repo => repo.GetByTelephone(It.IsAny<Telephone>()))
+                .ReturnsAsync((Contact)null); // Simulate null result from the repository
+
+            // Act
+            var result = await contactAppService.GetByTelephone(new Telephone(name));
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("21999887766")]
+        [InlineData("85987654321")]
+        [InlineData("11988776655")]
+        public async Task GetContactByTelephone_ShouldHandleInvalidMappingResult(string telephone)
+        {
+            // Arrange
+            var contactRepositoryMock = new Mock<IContactRepository>();
+            var mediatorHandlerMock = new Mock<IMediatorHandler>();
+            var mapperMock = new Mock<IMapper>();
+
+            var contactAppService = new ContactAppService(
+                contactRepositoryMock.Object,
+                mapperMock.Object,
+                mediatorHandlerMock.Object);
+
+            contactRepositoryMock.Setup(repo => repo.GetByTelephone(It.IsAny<Telephone>()))
+                .ThrowsAsync(new ArgumentException("Invalid data")); // Simulate null result from the repository
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => contactAppService.GetByTelephone(new Telephone(telephone)));
+        }
+
+        [Theory]
         [InlineData("carlos pereira", "carlospereira@hotmail.com", "21987651234", "I want to travel to Europe next year.What are the best destinations and tips ?")]
         [InlineData("ana clara", "anaclara@outlook.com", "71988896655", "I love reading books.Can you suggest me some good novels or authors ?")]
         [InlineData("pedro henrique", "pedrohenrique@gmail.com", "41999994444", "I need to improve my English skills.Can you help me with some exercises or resources ?")]

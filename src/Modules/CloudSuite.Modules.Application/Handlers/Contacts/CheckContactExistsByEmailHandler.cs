@@ -22,9 +22,9 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
         private IContactRepository _contactRepository;
         private readonly ILogger<CheckContactExistsByEmailHandler> _logger;
 
-        public CheckContactExistsByEmailHandler(IContactRepository repositoryContact, ILogger<CheckContactExistsByEmailHandler> logger)
+        public CheckContactExistsByEmailHandler(IContactRepository contactRepository, ILogger<CheckContactExistsByEmailHandler> logger)
         {
-            _contactRepository = repositoryContact;
+            _contactRepository = contactRepository;
             _logger = logger;
         }
 

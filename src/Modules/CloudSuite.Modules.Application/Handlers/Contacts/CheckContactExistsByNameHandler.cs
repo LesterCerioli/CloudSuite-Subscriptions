@@ -34,9 +34,9 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var name = await _repositoryContact.GetByName(new Name(request.Name));
+                    var contactName = await _repositoryContact.GetByName(new Name(request.Name));
 
-                    if (name != null)
+                    if (contactName != null)
                         return await Task.FromResult(new Responses.CheckContactExistsByNameResponse(request.Id, true, validationResult));
                 }
                 catch (Exception ex)

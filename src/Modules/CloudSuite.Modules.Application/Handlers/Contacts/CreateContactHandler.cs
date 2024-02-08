@@ -37,12 +37,12 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var contactGetByName = await _repositorioContact.GetByName(new Name(command.Name));
-                    var contactGetByEmail = await _repositorioContact.GetByEmail(new Email(command.Email));
-                    var contactGetByTelephone = await _repositorioContact.GetByTelephone(new Telephone(command.Telephone));
+                    var contactName = await _repositorioContact.GetByName(new Name(command.Name));
+                    var contactEmail = await _repositorioContact.GetByEmail(new Email(command.Email));
+                    var contactTelephone = await _repositorioContact.GetByTelephone(new Telephone(command.Telephone));
 
 
-                    if (contactGetByName != null && contactGetByEmail != null && contactGetByTelephone != null)
+                    if (contactName != null && contactEmail != null && contactTelephone != null)
                     {
                         return await Task.FromResult(new CreateContactResponse(command.Id, "contact already exists."));
                     }

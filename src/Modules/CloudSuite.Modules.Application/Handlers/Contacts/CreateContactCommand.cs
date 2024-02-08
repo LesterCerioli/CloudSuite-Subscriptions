@@ -33,7 +33,7 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
                 new Name(this.Name),
                 new Email(this.Email),
                 this.BodyMessage,
-                new Telephone(this.BodyMessage)
+                new Telephone(this.Telephone)
                 );
         }
     }

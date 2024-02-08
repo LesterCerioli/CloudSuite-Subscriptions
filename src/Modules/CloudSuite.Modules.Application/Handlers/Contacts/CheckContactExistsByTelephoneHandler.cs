@@ -5,12 +5,7 @@ using CloudSuite.Modules.Commons.Valueobjects;
 using CloudSuite.Modules.Domain.Contracts;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace CloudSuite.Modules.Application.Handlers.Contacts
 {
@@ -34,9 +29,9 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var name = await _repositoryContact.GetByTelephone(new Telephone(request.Telephone));
+                    var contactTelephone = await _repositoryContact.GetByTelephone(new Telephone(request.Telephone));
 
-                    if (name != null)
+                    if (contactTelephone != null)
                         return await Task.FromResult(new CheckContactExistsByTelephoneResponse(request.Id, true, validationResult));
                 }
                 catch (Exception ex)

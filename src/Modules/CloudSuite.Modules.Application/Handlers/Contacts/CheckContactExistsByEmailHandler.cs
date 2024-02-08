@@ -37,9 +37,9 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var email = await _repositoryContact.GetByEmail(new Email(request.Email));
+                    var contactEmail = await _repositoryContact.GetByEmail(new Email(request.Email));
 
-                    if (email != null)
+                    if (contactEmail != null)
                         return await Task.FromResult(new CheckContactExistsByEmailResponse(request.Id, true, validationResult));
                 }
                 catch (Exception ex)

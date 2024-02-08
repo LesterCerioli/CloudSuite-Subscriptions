@@ -11,12 +11,12 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
 {
     public class CheckContactExistsByTelephoneHandler : IRequestHandler<CheckContactExistsByTelephoneRequest, CheckContactExistsByTelephoneResponse>
     {
-        private IContactRepository _repositoryContact;
+        private IContactRepository _contactRepository;
         private readonly ILogger<CheckContactExistsByNameHandler> _logger;
 
-        public CheckContactExistsByTelephoneHandler(IContactRepository repositoryContact, ILogger<CheckContactExistsByNameHandler> logger)
+        public CheckContactExistsByTelephoneHandler(IContactRepository contactRepository, ILogger<CheckContactExistsByNameHandler> logger)
         {
-            _repositoryContact = repositoryContact;
+            _contactRepository = contactRepository;
             _logger = logger;
         }
 
@@ -29,7 +29,7 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var contactTelephone = await _repositoryContact.GetByTelephone(new Telephone(request.Telephone));
+                    var contactTelephone = await _contactRepository.GetByTelephone(new Telephone(request.Telephone));
 
                     if (contactTelephone != null)
                         return await Task.FromResult(new CheckContactExistsByTelephoneResponse(request.Id, true, validationResult));

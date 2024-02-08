@@ -19,12 +19,12 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
 {
     public class CreateContactHandler : IRequestHandler<CreateContactCommand, CreateContactResponse>
     {
-        private IContactRepository _repositorioContact;
+        private IContactRepository _contactRepository;
         private readonly ILogger<CreateContactHandler> _logger;
 
-        public CreateContactHandler(IContactRepository repositorioContact, ILogger<CreateContactHandler> logger)
+        public CreateContactHandler(IContactRepository contactRepository, ILogger<CreateContactHandler> logger)
         {
-            _repositorioContact = repositorioContact;
+            _contactRepository = contactRepository;
             _logger = logger;
         }
 
@@ -37,9 +37,9 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var contactName = await _repositorioContact.GetByName(new Name(command.Name));
-                    var contactEmail = await _repositorioContact.GetByEmail(new Email(command.Email));
-                    var contactTelephone = await _repositorioContact.GetByTelephone(new Telephone(command.Telephone));
+                    var contactName = await _contactRepository.GetByName(new Name(command.Name));
+                    var contactEmail = await _contactRepository.GetByEmail(new Email(command.Email));
+                    var contactTelephone = await _contactRepository.GetByTelephone(new Telephone(command.Telephone));
 
 
                     if (contactName != null && contactEmail != null && contactTelephone != null)
@@ -47,7 +47,7 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
                         return await Task.FromResult(new CreateContactResponse(command.Id, "contact already exists."));
                     }
 
-                    await _repositorioContact.Add(command.GetEntity());
+                    await _contactRepository.Add(command.GetEntity());
                     return await Task.FromResult(new CreateContactResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)

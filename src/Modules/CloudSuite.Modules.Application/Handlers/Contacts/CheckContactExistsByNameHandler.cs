@@ -16,16 +16,16 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
 {
     public class CheckContactExistsByNameHandler : IRequestHandler<CheckContactExistsByNameRequest, CheckContactExistsByNameResponse>
     {
-        private IContactRepository _repositoryContact;
+        private IContactRepository _contactRepository;
         private readonly ILogger<CheckContactExistsByNameHandler> _logger;
 
-        public CheckContactExistsByNameHandler(IContactRepository repositoryContact, ILogger<CheckContactExistsByNameHandler> logger)
+        public CheckContactExistsByNameHandler(IContactRepository contactRepository, ILogger<CheckContactExistsByNameHandler> logger)
         {
-            _repositoryContact = repositoryContact;
+            _contactRepository = contactRepository;
             _logger = logger;
         }
 
-        public async Task<Responses.CheckContactExistsByNameResponse> Handle(Requests.CheckContactExistsByNameRequest request, CancellationToken cancellationToken)
+        public async Task<CheckContactExistsByNameResponse> Handle(CheckContactExistsByNameRequest request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"CheckContactExistsByNameRequest: {JsonSerializer.Serialize(request)}");
             var validationResult = new CheckContactExistsByNameRequestValidation().Validate(request);
@@ -34,18 +34,18 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var contactName = await _repositoryContact.GetByName(new Name(request.Name));
+                    var contactName = await _contactRepository.GetByName(new Name(request.Name));
 
                     if (contactName != null)
-                        return await Task.FromResult(new Responses.CheckContactExistsByNameResponse(request.Id, true, validationResult));
+                        return await Task.FromResult(new CheckContactExistsByNameResponse(request.Id, true, validationResult));
                 }
                 catch (Exception ex)
                 {
                     _logger.LogCritical(ex.Message);
-                    return await Task.FromResult(new Responses.CheckContactExistsByNameResponse(request.Id, "The request could not be processed."));
+                    return await Task.FromResult(new CheckContactExistsByNameResponse(request.Id, "The request could not be processed."));
                 }
             }
-            return await Task.FromResult(new Responses.CheckContactExistsByNameResponse(request.Id, false, validationResult));
+            return await Task.FromResult(new CheckContactExistsByNameResponse(request.Id, false, validationResult));
         }
     }
 }

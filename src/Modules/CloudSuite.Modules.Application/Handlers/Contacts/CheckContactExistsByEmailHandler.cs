@@ -19,12 +19,12 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
 {
     public class CheckContactExistsByEmailHandler : IRequestHandler<CheckContactExistsByEmailRequest, CheckContactExistsByEmailResponse>
     {
-        private IContactRepository _repositoryContact;
+        private IContactRepository _contactRepository;
         private readonly ILogger<CheckContactExistsByEmailHandler> _logger;
 
         public CheckContactExistsByEmailHandler(IContactRepository repositoryContact, ILogger<CheckContactExistsByEmailHandler> logger)
         {
-            _repositoryContact = repositoryContact;
+            _contactRepository = repositoryContact;
             _logger = logger;
         }
 
@@ -37,7 +37,7 @@ namespace CloudSuite.Modules.Application.Handlers.Contacts
             {
                 try
                 {
-                    var contactEmail = await _repositoryContact.GetByEmail(new Email(request.Email));
+                    var contactEmail = await _contactRepository.GetByEmail(new Email(request.Email));
 
                     if (contactEmail != null)
                         return await Task.FromResult(new CheckContactExistsByEmailResponse(request.Id, true, validationResult));

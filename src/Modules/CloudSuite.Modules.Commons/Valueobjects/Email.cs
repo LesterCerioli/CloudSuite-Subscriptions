@@ -13,7 +13,7 @@ namespace CloudSuite.Modules.Commons.Valueobjects
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            throw new NotImplementedException();
+            yield return Address;
         }
     }
 }

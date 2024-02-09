@@ -35,6 +35,7 @@ builder.Services.AddTransient<IDomainAppService, DomainAppService>();
 builder.Services.AddTransient<IPaymentAppService, PaymentAppService>();
 builder.Services.AddTransient<ISubscriptionAppService, SubscriptionAppService>();
 builder.Services.AddTransient<ICompanyAppService, CompanyAppService>();
+builder.Services.AddTransient<IContactAppService, ContactAppService>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<IDomainRepository, DomainRepository>();
 builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();

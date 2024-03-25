@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CloudSuite.Subscriptions.Domain\CloudSuite.Subscriptions.Domain.csproj" />
+    <ProjectReference Include="..\CloudSuite.Commons\CloudSuite.Commons.csproj" />
   </ItemGroup>
 
 </Project>

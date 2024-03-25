@@ -1,6 +1,6 @@
 using CloudSuite.Subscriptions.Domain.Models;
 
-amespace CloudSuite.Subscriptions.Domain.Contracts
+namespace CloudSuite.Subscriptions.Domain.Contracts
 {
     public interface ISubscriptionRepository
     {

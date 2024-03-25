@@ -1,8 +1,8 @@
 using System.Reflection.PortableExecutable;
-using CloudSuite.Commons.Valueobjects;
+using CloudSuite.Commons.ValueObjects;
 using NetDevPack.Domain;
 
-nnmespace CloudSuite.Subscriptions.Domain.Model
+namespace CloudSuite.Subscriptions.Domain.Models
 {
     public class Company : Entity, IAggregateRoot
     {

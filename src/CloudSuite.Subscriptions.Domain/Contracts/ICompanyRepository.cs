@@ -1,4 +1,4 @@
-using CloudSuite.Subscriptions.Domain.Models/
+using CloudSuite.Subscriptions.Domain.Models;
 using CloudSuite.Commons.ValueObjects;
 
 namespace CloudSuite.Subscriptions.Domain.Contracts

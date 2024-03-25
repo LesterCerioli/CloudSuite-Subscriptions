@@ -1,11 +1,10 @@
 namespace CloudSuite.Subscriptions.Domain.Exceptions
 {
-    public abstract class BadRequestException 
+    public abstract class BadRequestException : Exception // Certifique-se de importar System;
     {
         protected BadRequestException(string message)
-            : base("Bad Request", message)
+            : base(message) // Chama o construtor da classe base (Exception)
         {
         }
-        
     }
 }

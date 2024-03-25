@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CloudSuite.Commons.ValueObjects;
+using CloudSuite.Subscriptions.Domain.Models;
 
 namespace CloudSuite.Subscriptions.Domain.Contracts
 {

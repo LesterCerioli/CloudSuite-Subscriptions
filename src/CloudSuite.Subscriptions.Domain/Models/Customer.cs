@@ -12,25 +12,27 @@ namespace CloudSuite.Subscriptions.Domain.Models
 {
     public class Customer : Entity, IAggregateRoot
     {
-        public Contact(Name name, Email email, string? bodyMessage, Telephone telephone)
+        public Customer(Name name, Cnpj cnpj, Email email, string? businessOwner, DateTimeOffset? createdOn, Company company)
         {
             Name = name;
+            Cnpj = cnpj;
             Email = email;
-            BodyMessage = bodyMessage;
-            Telephone = telephone;
-        }
-
-        public Contact()
-        {
+            BusinessOwner = businessOwner;
+            CreatedOn = DateTime.Now;
+            Company = company;
         }
 
         public Name Name { get; private set; }
 
+        public Cnpj Cnpj { get; private set; }
+
         public Email Email { get; private set; }
 
-        public string? BodyMessage { get; private set; }
+        public string? BusinessOwner { get; private set; }
 
-        public Telephone Telephone { get; private set; }
+        public DateTimeOffset? CreatedOn { get; private set; }
+
+        public Company Company { get; private set; }
         
     }
 }

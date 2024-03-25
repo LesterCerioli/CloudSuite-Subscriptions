@@ -1,0 +1,6 @@
+@CloudSuite.Services.Subscriptions.Api_HostAddress = http://localhost:5157
+
+GET {{CloudSuite.Services.Subscriptions.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

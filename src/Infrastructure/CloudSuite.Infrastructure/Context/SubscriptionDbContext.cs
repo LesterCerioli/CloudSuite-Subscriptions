@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CloudSuite.Infrastructure.Mapping.Dapper;
 using CloudSuite.Infrastructure.Mapping.EFCore;
 using CloudSuite.Modules.Domain.Models;
 using FluentValidation.Results;
@@ -23,7 +24,9 @@ namespace CloudSuite.Infrastructure.Context
 
 		public DbSet<Company> Companies {get; set;}
 
-		public DbSet<Customer> Customers {get; set;}
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<Customer> Customers {get; set;}
 
 		public DbSet<DomainEntidade> Domains { get; set;}
 
@@ -42,7 +45,9 @@ namespace CloudSuite.Infrastructure.Context
 
 			modelBuilder.ApplyConfiguration(new CompanyEFCoreMapping());
 
-			modelBuilder.ApplyConfiguration(new CustomerEFCoreMapping());
+            modelBuilder.ApplyConfiguration(new ContactEFCoreMapping());
+
+            modelBuilder.ApplyConfiguration(new CustomerEFCoreMapping());
 
 			modelBuilder.ApplyConfiguration(new PaymentEFCoreMapping());
 
@@ -52,12 +57,18 @@ namespace CloudSuite.Infrastructure.Context
 
             
 
+            
+
 
             modelBuilder.Entity<Company>(s =>
             {
                 s.ToTable("Companiess");
             });
 
+            modelBuilder.Entity<Contact>(s =>
+            {
+                s.ToTable("Contacts");
+            });
 
             modelBuilder.Entity<Customer>(s =>
             {

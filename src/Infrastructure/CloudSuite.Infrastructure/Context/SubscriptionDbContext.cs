@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CloudSuite.Infrastructure.Mapping.Dapper;
 using CloudSuite.Infrastructure.Mapping.EFCore;
 using CloudSuite.Modules.Domain.Models;
 using FluentValidation.Results;
@@ -53,6 +54,8 @@ namespace CloudSuite.Infrastructure.Context
             modelBuilder.ApplyConfiguration(new SubscriptionEFCoreMapping());
 
             modelBuilder.ApplyConfiguration(new DomainEFCoreMapping());
+
+            
 
             
 

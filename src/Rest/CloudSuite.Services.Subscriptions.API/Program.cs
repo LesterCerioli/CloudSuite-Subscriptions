@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using CloudSuite.Infrastructure.Context;
 using CloudSuite.Infrastructure.CrossCutting.DependencyInjector;
 using CloudSuite.Infrastructure.CrossCutting.HealthChecks;
